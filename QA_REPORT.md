@@ -1,30 +1,41 @@
-# Paws & Plumes v0.2.0 QA
+# Paws & Plumes v0.3.0 QA
 
-Validated after the traditional-RPG rebuild.
+Validated after the dynamic-world, audio and PWA-install pass.
 
-## Automated checks
+## Static validation
 
 - `game.js` passes Node syntax validation.
-- `manifest.webmanifest` and runtime Tiled JSON parse successfully.
-- `port_felin_world.tmx` re-exports successfully through Tiled 1.12.2 as a 24 × 16 map.
-- Headless Chromium validation at 390 × 844 completed with no JavaScript/page errors.
-- Main menu renders all expected controls.
-- Character creation completes and enters the world.
-- Top-down world canvas loads its map, sprites and UI.
-- Guildmaster interaction works after walking into range.
-- Guild quest acceptance works.
-- Keyboard movement and contextual world interaction work.
-- Rosemary gathering updates the character state.
-- Road-bandit targeting, automatic attacks, retaliation, defeat and rewards complete successfully.
-- Mobile character panel and minimap render correctly after opening.
-- Desktop layout was visually checked at 1365 × 768.
+- `sw.js` passes Node syntax validation.
+- `manifest.webmanifest` parses successfully.
+- PWA icons are true 192 × 192 and 512 × 512 PNG files.
+- All eleven new OGG files decode successfully with FFmpeg/FFprobe.
+- Manifest now has an explicit same-origin `id`, `start_url`, scope, standalone display mode, required icon sizes and `prefer_related_applications: false`.
+- Service-worker cache was bumped to `paws-plumes-v030-20261006` and includes the new audio assets.
+
+## Browser/runtime regression
+
+Headless Chromium was run against the exact v0.3 HTML/CSS/JS with local asset/network mocks because localhost navigation is blocked by the container policy.
+
+Validated:
+
+- 390 × 844 phone main menu renders without JavaScript/page errors.
+- A simulated Chromium `beforeinstallprompt` event causes the **Install App** button to appear and remain actionable.
+- Settings renders music, ambience and effects sliders plus install/update controls.
+- Character creation still enters the world successfully.
+- All four named NPCs moved from their initial positions during a 3.5-second dynamic-world test.
+- Decorative townsfolk render and wander independently.
+- Rosemary gathering increases inventory and creates floating world feedback.
+- A real runtime bandit strike reduced enemy HP and created combat feedback.
+- Audio calls execute through the runtime paths with no JavaScript exceptions; source OGG files were independently decode-validated.
+- Dynamic screenshots taken several seconds apart produce substantial pixel differences, confirming active world motion.
+- 320 × 568 small-phone menu keeps Characters, New Character, Install App and Settings inside the visible viewport.
+- 1365 × 768 desktop gameplay has no page-level horizontal overflow.
 
 ## Reference screenshots
 
-- `docs/screenshots/v020_menu_mobile.png`
-- `docs/screenshots/v020_character_create_mobile.png`
-- `docs/screenshots/v020_character_select_mobile.png`
-- `docs/screenshots/v020_world_mobile.png`
-- `docs/screenshots/v020_panel_mobile.png`
-- `docs/screenshots/v020_combat_test.png`
-- `docs/screenshots/v020_world_desktop.png`
+- `docs/screenshots/v030_menu_mobile.png`
+- `docs/screenshots/v030_settings_mobile.png`
+- `docs/screenshots/v030_world_mobile.png`
+- `docs/screenshots/v030_world_dynamic_mobile.png`
+- `docs/screenshots/v030_menu_small_phone.png`
+- `docs/screenshots/v030_world_desktop.png`
