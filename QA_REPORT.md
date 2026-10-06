@@ -1,54 +1,76 @@
-# Paws & Plumes v0.4.0 QA
+# Paws & Plumes v0.6.1 QA — Pathfinding
 
-Validated after the fishing/cooking, quest-chain, ground-loot and day/night pass.
+## Static checks
 
-## Static validation
+- `game.js` passes `node --check`.
+- `sw.js` passes `node --check`.
+- Version advanced to `0.6.1`.
+- Stable save key remains `paws_plumes_traditional_v020`.
+- Stable PWA identity remains `./paws-and-plumes-rpg`.
+- Service-worker cache bumped to `paws-plumes-v061-20261006`.
 
-- `game.js` passes Node syntax validation.
-- `sw.js` passes Node syntax validation.
-- `manifest.webmanifest` parses successfully.
-- `port_felin_world.json` parses successfully.
-- `port_felin_world.tmx` parses successfully as XML.
-- Tiled source and runtime JSON both contain Mina Whiskerpot and the two new fishing spots.
-- Existing PWA identity remains unchanged so v0.4 updates the v0.3 install instead of creating another app identity.
-- Service-worker cache bumped to `paws-plumes-v040-20261006`.
-- New fishing, cooking and loot OGG effects decode successfully.
+## Navigation implementation
 
-## Browser/runtime regression
+The old straight-line tap movement has been replaced with an A* navigation layer using a 24 px navigation grid.
 
-A controlled headless Chromium harness ran the exact built CSS/JS and actual image assets, with browser storage/audio/network mocked only where the container blocks normal localhost navigation.
+Validated implementation behavior:
 
-Validated at 390 × 844 unless otherwise noted:
+- Static collisions include blocked ground tiles and authored building bounds.
+- Navigation points sample clearance around the player footprint.
+- Eight-direction movement is supported.
+- Diagonal neighbor expansion checks both orthogonal neighbors to prevent corner cutting.
+- Resulting A* paths are line-of-sight smoothed before movement.
+- Blocked terrain taps fall back to a nearby reachable navigation point.
+- A short stuck detector triggers route replanning if a route segment unexpectedly cannot advance.
+- Keyboard movement cancels tap navigation immediately.
+- Completed terrain routes explicitly save the final position.
 
-- Character creation enters the top-down world successfully.
-- The first quest shows an in-world `!` marker over Guildmaster Luca.
-- A river fishing spot can be clicked and catches a Silver Dace.
-- Fishing increments inventory and the Fishing gameplay path without runtime exceptions.
-- Mina Whiskerpot is reachable through contextual interaction.
-- A Silver Dace can be cooked into Grilled Silver Dace at the Warm Saucer.
-- Cooking increments the real Cooking gameplay path.
-- The follow-on quest **A Proper Supper** appears after its prerequisite and can be accepted.
-- A one-HP road bandit is defeated by the normal runtime combat loop.
-- Defeating the bandit creates one persistent physical ground-loot object rather than directly awarding the loot.
-- Clicking the ground drop removes it from the world and transfers the reward to the character.
-- The in-world clock displays approximately `21:01` when seeded at 21:00.
-- Night rendering visibly darkens the scene and turns on building windows.
-- Desktop rendering at 1365 × 768 has no page-level horizontal overflow.
-- No JavaScript page errors occurred during the complete fishing → cooking → quest → combat → loot → night sequence.
+## Phone corner-routing regression
 
-## Audio validation
+Controlled Chromium harness, 390×844:
 
-- `fish_splash.ogg` decodes successfully.
-- `cook_sizzle.ogg` decodes successfully.
-- `loot_pickup.ogg` decodes successfully.
-- The three effects are included in the service-worker cache list.
-- Corresponding editable Csound `.csd` sources are retained under `assets/src/audio_v040/`.
+- Seeded player at world `(120, 440)`, immediately left of the Guild Hall.
+- Tapped world `(350, 440)`, directly on the opposite side of the Guild Hall.
+- A straight line between those points crosses the Guild Hall collision and would fail under v0.6.
+- v0.6.1 routed south around the building and then back toward the target.
+- Final saved position: approximately `(349.4, 442.3)`.
+- No runtime errors occurred.
+- No repeated manual taps were required.
 
-## Reference screenshots
+Visual capture:
 
-- `docs/screenshots/v040_world_day_mobile.png`
-- `docs/screenshots/v040_fishing_mobile.png`
-- `docs/screenshots/v040_innkeeper_mobile.png`
-- `docs/screenshots/v040_ground_loot_mobile.png`
-- `docs/screenshots/v040_night_mobile.png`
-- `docs/screenshots/v040_world_desktop.png`
+- `docs/screenshots/v061_pathfinding_route_mobile.png`
+
+## Interaction routing regression
+
+Controlled Chromium harness, 390×844:
+
+- Seeded player at `(120, 440)`.
+- Tapped Guildmaster Luca from the opposite side of the Guild Hall corner.
+- The direct line intersects Guild Hall collision.
+- Character routed around the corner into interaction range.
+- Guildmaster Luca dialogue opened automatically after arrival.
+- No runtime errors occurred.
+
+Visual capture:
+
+- `docs/screenshots/v061_interaction_path_mobile.png`
+
+## Small-phone regression
+
+Controlled Chromium harness, 320×568:
+
+- Seeded player at `(220, 350)`, above the Guild Hall.
+- Tapped `(350, 520)`, below/right of the building.
+- Pathfinding routed around the obstacle and arrived at approximately `(348.7, 515.6)`.
+- `scrollWidth = clientWidth = 320`.
+- `scrollHeight = clientHeight = 568`.
+- No page-level overflow and no browser runtime errors.
+
+Visual capture:
+
+- `docs/screenshots/v061_pathfinding_small_phone.png`
+
+## Save / migration
+
+No persistent schema migration is required. All A* path state is transient. Existing v0.3–v0.6 saves continue to use the same key and data structure.

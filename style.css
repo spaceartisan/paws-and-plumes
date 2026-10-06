@@ -132,3 +132,25 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid 
 .hud-money{text-align:right}
 .hud-clock{display:block;margin-top:4px;color:#b9cfca;font:800 10px/1 system-ui,sans-serif;letter-spacing:.08em}
 @media(max-width:520px){.hud-clock{font-size:9px;margin-top:3px}}
+
+/* v0.6 combat, contracts and commerce */
+.target-intent{display:block;margin-top:3px;color:#b8ae97;font:800 9px/1.2 system-ui,sans-serif;letter-spacing:.03em}
+.target-intent.warning{color:#f0cb63}
+.hotkey.cooldown{opacity:.46;filter:grayscale(.35)}
+.hotkey.guarding{border-color:#9bd1b6;box-shadow:inset 0 0 0 2px rgba(155,209,182,.45)}
+.trade-heading{margin:16px 0 4px;padding-top:12px;border-top:2px solid #a48f63;color:#4c3d2e;font-size:15px}
+.contract-list{display:grid;gap:8px;margin-top:12px}
+.contract-card{width:100%;min-height:66px;border:1px solid #8f7d58;border-radius:8px;background:#f1e3bf;color:#30281f;padding:10px 12px;text-align:left;box-shadow:inset 0 1px rgba(255,255,255,.5)}
+.contract-card strong{display:block;font-size:14px;color:#54383a}.contract-card span{display:block;margin-top:3px;font:600 11px/1.35 system-ui,sans-serif;color:#625747}.contract-card small{display:block;margin-top:6px;color:#31544e;font:800 10px/1.2 system-ui,sans-serif}
+.contract-title{margin-top:15px;padding-top:10px;border-top:1px solid #5d543f}
+
+@media(max-width:520px){
+  .hotkey{width:39px;height:43px;font-size:18px}
+  .hotkey:nth-child(n+5){display:inline-block}
+}
+@media(max-width:360px){
+  .hotkey{width:34px;height:40px;font-size:16px}
+  .utility-btn{width:36px;height:40px;font-size:16px}
+  .mobile-panel-btn{width:36px}
+  .hotbar{gap:2px}
+}
