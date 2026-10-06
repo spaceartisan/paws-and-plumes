@@ -127,3 +127,8 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid 
 
 /* v0.3 settings / install controls */
 .settings-group{border-top:1px solid #b7a57c;padding-top:12px;margin-top:14px}.settings-group:first-of-type{margin-top:8px}.settings-group h3{margin:0 0 9px;color:#3d3428}.range-row{display:grid;grid-template-columns:92px 1fr;align-items:center;gap:10px;margin:10px 0;font-weight:700;color:#53493b}.range-row input[type="range"]{width:100%;accent-color:#365d56}.install-box{background:rgba(82,107,94,.08);border:1px solid #b8aa83;border-radius:8px;padding:12px}.install-box p{margin:6px 0 10px}.utility-btns{display:flex;gap:6px}
+
+/* v0.4 world clock */
+.hud-money{text-align:right}
+.hud-clock{display:block;margin-top:4px;color:#b9cfca;font:800 10px/1 system-ui,sans-serif;letter-spacing:.08em}
+@media(max-width:520px){.hud-clock{font-size:9px;margin-top:3px}}

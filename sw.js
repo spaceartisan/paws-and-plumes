@@ -1,4 +1,4 @@
-const CACHE='paws-plumes-v030-20261006';
+const CACHE='paws-plumes-v040-20261006';
 const CORE=[
   './','./index.html','./style.css','./game.js','./manifest.webmanifest',
   './assets/icons/icon-192.png','./assets/icons/icon-512.png',
@@ -7,7 +7,8 @@ const CORE=[
   './assets/maps/port_felin_world.json',
   './assets/audio/music_port_felin.ogg','./assets/audio/ambience_town.ogg','./assets/audio/ambience_wild.ogg',
   './assets/audio/ui_click.ogg','./assets/audio/footstep.ogg','./assets/audio/sword_hit.ogg','./assets/audio/hurt.ogg',
-  './assets/audio/gather.ogg','./assets/audio/coin.ogg','./assets/audio/quest.ogg','./assets/audio/level_up.ogg'
+  './assets/audio/gather.ogg','./assets/audio/coin.ogg','./assets/audio/quest.ogg','./assets/audio/level_up.ogg',
+  './assets/audio/fish_splash.ogg','./assets/audio/cook_sizzle.ogg','./assets/audio/loot_pickup.ogg'
 ];
 self.addEventListener('install',event=>event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(CORE)).then(()=>self.skipWaiting())));
 self.addEventListener('activate',event=>event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key.startsWith('paws-plumes-')&&key!==CACHE).map(key=>caches.delete(key)))).then(()=>self.clients.claim())));
