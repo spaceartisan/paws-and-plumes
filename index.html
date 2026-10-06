@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no" />
+  <meta name="theme-color" content="#2d514d" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>Paws &amp; Plumes</title>
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" href="assets/icons/icon-192.png" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="appShell">
+    <header class="topbar">
+      <div class="brand">
+        <img src="assets/icons/icon-192.png" alt="Paws & Plumes crest" class="brand-mark" />
+        <div><span class="eyebrow">THE GILDED PAW</span><h1>Paws &amp; Plumes</h1></div>
+      </div>
+      <button class="icon-button" id="settingsBtn" aria-label="Open settings">⚙</button>
+    </header>
+
+    <section class="hero-strip" aria-label="Character status">
+      <img src="assets/art/player_cat.png" alt="Milo, orange cat duelist" class="avatar" />
+      <div class="hero-copy">
+        <div class="hero-line"><strong id="heroName">Milo</strong><span class="level-badge" id="levelBadge">Lv. 1</span></div>
+        <div class="xp-track"><span id="xpBar"></span></div>
+        <div class="meters">
+          <span>♥ <b id="hpText">50/50</b></span>
+          <span>⚡ <b id="energyText">12/12</b></span>
+          <span>◈ <b id="coinsText">40</b></span>
+        </div>
+      </div>
+    </section>
+
+    <main id="screen" tabindex="-1"></main>
+
+    <nav class="bottom-nav" aria-label="Main navigation">
+      <button class="nav-btn active" data-screen="town"><span class="nav-icon">⌂</span><span>Town</span></button>
+      <button class="nav-btn" data-screen="explore"><span class="nav-icon">⌖</span><span>Explore</span></button>
+      <button class="nav-btn" data-screen="workshop"><span class="nav-icon">⚒</span><span>Craft</span></button>
+      <button class="nav-btn" data-screen="journal"><span class="nav-icon">✦</span><span>Journal</span></button>
+    </nav>
+  </div>
+
+  <div id="modalLayer" aria-live="polite"></div>
+  <div id="toastLayer" aria-live="polite"></div>
+  <script src="game.js"></script>
+</body>
+</html>
