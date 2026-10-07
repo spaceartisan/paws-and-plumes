@@ -1,76 +1,72 @@
-# Paws & Plumes v0.6.1 QA — Pathfinding
+# Paws & Plumes v0.11.0 QA Report
+
+Date: 2026-10-07
 
 ## Static checks
 
-- `game.js` passes `node --check`.
-- `sw.js` passes `node --check`.
-- Version advanced to `0.6.1`.
-- Stable save key remains `paws_plumes_traditional_v020`.
-- Stable PWA identity remains `./paws-and-plumes-rpg`.
-- Service-worker cache bumped to `paws-plumes-v061-20261006`.
+- `node --check game.js` — passed.
+- `node --check sw.js` — passed.
+- Updated Quarry Underworks TMX exported/validated successfully through Tiled 1.12.2 from `DEV_TOOLS` using its AppImage extraction path under Xvfb.
+- New Rat Hexer SVG rendered successfully with Inkscape into the shared 832×64 sprite sheet.
+- Service-worker cache includes both new Aethercraft audio files.
 
-## Navigation implementation
+## Save migration
 
-The old straight-line tap movement has been replaced with an A* navigation layer using a 24 px navigation grid.
+A v0.10-style character was loaded through the v0.11 migration path.
 
-Validated implementation behavior:
+Passed:
+- Aethercraft skill added at level 1.
+- Focus initialized to 30/30.
+- Existing equipment, inventory, quests, dungeon state, bank, and character identity remained usable.
+- `Glass and Thunder` becomes available when `Beneath the Old Quarry` was already completed.
+- New `magic_kills` combat counter initialized without altering ranged counters.
 
-- Static collisions include blocked ground tiles and authored building bounds.
-- Navigation points sample clearance around the player footprint.
-- Eight-direction movement is supported.
-- Diagonal neighbor expansion checks both orthogonal neighbors to prevent corner cutting.
-- Resulting A* paths are line-of-sight smoothed before movement.
-- Blocked terrain taps fall back to a nearby reachable navigation point.
-- A short stuck detector triggers route replanning if a route segment unexpectedly cannot advance.
-- Keyboard movement cancels tap navigation immediately.
-- Completed terrain routes explicitly save the final position.
+## Saffron / crafting / quest
 
-## Phone corner-routing regression
+Passed:
+- Saffron's dialogue renders the Glass and Thunder quest.
+- Blue Focus Tonic crafting consumes the intended ingredients and increments its crafted counter.
+- Glass Aether Rod, Scholar's Coat, and Quarry Catalyst entries render with their progression requirements.
+- Town-note option records The Hermetic Arts persistently.
 
-Controlled Chromium harness, 390×844:
+## Aethercraft combat
 
-- Seeded player at world `(120, 440)`, immediately left of the Guild Hall.
-- Tapped world `(350, 440)`, directly on the opposite side of the Guild Hall.
-- A straight line between those points crosses the Guild Hall collision and would fail under v0.6.
-- v0.6.1 routed south around the building and then back toward the target.
-- Final saved position: approximately `(349.4, 442.3)`.
-- No runtime errors occurred.
-- No repeated manual taps were required.
+Passed:
+- Glass Rod normal cast consumes Focus.
+- Successful cast grants Aethercraft XP.
+- Magic range is distinct from melee and Archery range.
+- Arc Burst uses the larger Focus cost.
+- A forced two-target Arc Burst regression killed both adjacent Rat Hexers, recorded **2 magic kills**, recorded **2 Rat Hexer kills**, created **2 physical loot drops**, and completed the combat portion of Glass and Thunder.
+- With Hermetic Wand and Scholar's Coat, the same forced Arc Burst spent exactly **9 Focus** (4 base + 5 burst).
+- Scholar's Coat raises maximum Focus to 40 and displays +10% magic accuracy / +10 Focus.
+- Swapping from Scholar's Coat to Padded Doublet immediately clamps a full 40 Focus back to the normal 30-point maximum.
+- No runtime/page errors were produced by the forced multi-target combat regression.
 
-Visual capture:
+## Rat Hexer enemy behavior
 
-- `docs/screenshots/v061_pathfinding_route_mobile.png`
+Passed:
+- Both Rat Hexer objects exist on the exported Quarry Underworks map.
+- Hexers use ranged/kiting behavior rather than closing to melee.
+- Violet Hex telegraph appears.
+- Violet Hex uses the magic projectile/sound path.
+- A successful Violet Hex drains 4 Focus in addition to its damage.
+- Guarded magic attacks are reported as blocked spells rather than shots and do not incorrectly grant a melee riposte.
 
-## Interaction routing regression
+## Character creation and responsive layout
 
-Controlled Chromium harness, 390×844:
+Passed:
+- Character creation shows all four backgrounds, including Apothecary's Apprentice.
+- Apothecary's Apprentice starts with the intended Aethercraft/Alchemy bonuses, Glass Rod, ingredients, and Focus Tonic.
+- 390×844 phone gameplay render completed with Focus HUD and Aethercraft hotbar.
+- 320×568 regression completed with zero horizontal page overflow and no runtime errors.
 
-- Seeded player at `(120, 440)`.
-- Tapped Guildmaster Luca from the opposite side of the Guild Hall corner.
-- The direct line intersects Guild Hall collision.
-- Character routed around the corner into interaction range.
-- Guildmaster Luca dialogue opened automatically after arrival.
-- No runtime errors occurred.
+## Visual captures
 
-Visual capture:
+- `docs/screenshots/v011_apothecary_mobile.png`
+- `docs/screenshots/v011_magic_combat_mobile.png`
+- `docs/screenshots/v011_character_create_mobile.png`
+- `docs/screenshots/v011_small_phone.png`
 
-- `docs/screenshots/v061_interaction_path_mobile.png`
+## Notes
 
-## Small-phone regression
-
-Controlled Chromium harness, 320×568:
-
-- Seeded player at `(220, 350)`, above the Guild Hall.
-- Tapped `(350, 520)`, below/right of the building.
-- Pathfinding routed around the obstacle and arrived at approximately `(348.7, 515.6)`.
-- `scrollWidth = clientWidth = 320`.
-- `scrollHeight = clientHeight = 568`.
-- No page-level overflow and no browser runtime errors.
-
-Visual capture:
-
-- `docs/screenshots/v061_pathfinding_small_phone.png`
-
-## Save / migration
-
-No persistent schema migration is required. All A* path state is transient. Existing v0.3–v0.6 saves continue to use the same key and data structure.
+The container blocks normal localhost/file navigation for the headless browser, so browser QA used an isolated in-memory harness built from the release HTML/CSS/JS and preloaded map data. Test-only hooks were injected into the harness; they are not present in the release files.

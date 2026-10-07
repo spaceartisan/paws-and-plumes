@@ -2,7 +2,7 @@
   "id": "./paws-and-plumes-rpg",
   "name": "Paws & Plumes",
   "short_name": "Paws & Plumes",
-  "description": "A traditional top-down Renaissance-fantasy cat RPG with obstacle-aware tap-to-move pathfinding, reactive combat, repeatable guild contracts, quest chains, gathering, crafting, fishing, exploration and use-based skills.",
+  "description": "A traditional top-down Renaissance-fantasy cat RPG with a persistent world, enterable interiors, obstacle-aware tap pathfinding, melee, ranged and Aethercraft combat, dungeons, quests, gathering, crafting, banking and use-based skills.",
   "start_url": "./?source=pwa",
   "scope": "./",
   "display": "standalone",

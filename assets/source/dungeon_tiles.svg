@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="384" height="64" viewBox="0 0 384 64">
+  <defs>
+    <pattern id="stone" width="32" height="16" patternUnits="userSpaceOnUse">
+      <rect width="32" height="16" fill="#585a55"/>
+      <path d="M0 0H32M0 16H32M16 0V8M0 8H16M24 8V16" stroke="#6f7169" stroke-width="1" opacity=".55"/>
+      <path d="M0 15H32" stroke="#343733" stroke-width="1" opacity=".55"/>
+    </pattern>
+    <pattern id="brick" width="32" height="20" patternUnits="userSpaceOnUse">
+      <rect width="32" height="20" fill="#3e403d"/>
+      <path d="M0 0H32M0 10H32M0 20H32M16 0V10M8 10V20M24 10V20" stroke="#242724" stroke-width="2"/>
+      <path d="M1 1H31M1 11H31" stroke="#5b5d56" stroke-width="1" opacity=".6"/>
+    </pattern>
+  </defs>
+  <!-- 1: walkable dungeon floor -->
+  <g transform="translate(0)">
+    <rect width="64" height="64" fill="#66675f"/>
+    <rect x="3" y="3" width="58" height="58" fill="url(#stone)"/>
+    <path d="M8 44l10-9 8 6 12-16 12 7" fill="none" stroke="#454842" stroke-width="2" opacity=".55"/>
+  </g>
+  <!-- 2: rubble floor -->
+  <g transform="translate(64)">
+    <rect width="64" height="64" fill="#5d5f58"/>
+    <rect x="2" y="2" width="60" height="60" fill="url(#stone)"/>
+    <g fill="#77796f" stroke="#393c38" stroke-width="1">
+      <path d="M10 45l9-8 8 9-6 8z"/><path d="M38 16l8-5 7 7-7 8z"/><path d="M41 43l10-4 4 9-9 6z"/>
+    </g>
+  </g>
+  <!-- 3: blocked wall -->
+  <g transform="translate(128)">
+    <rect width="64" height="64" fill="#262824"/>
+    <rect x="3" y="3" width="58" height="58" fill="url(#brick)"/>
+    <path d="M7 58h50" stroke="#171a17" stroke-width="5"/>
+  </g>
+  <!-- 4: old quarry paving -->
+  <g transform="translate(192)">
+    <rect width="64" height="64" fill="#76684f"/>
+    <path d="M0 16H64M0 32H64M0 48H64M16 0V16M48 0V16M32 16V32M16 32V48M48 32V48M32 48V64" stroke="#524733" stroke-width="2"/>
+    <path d="M3 3H61V61H3Z" fill="none" stroke="#96866a" stroke-width="1" opacity=".5"/>
+  </g>
+  <!-- 5: mossy floor -->
+  <g transform="translate(256)">
+    <rect width="64" height="64" fill="#54584d"/>
+    <rect x="2" y="2" width="60" height="60" fill="url(#stone)"/>
+    <path d="M4 17c14-8 18 5 29-1s18 7 27 0M6 51c9-10 18 5 29-3s16 5 25-2" fill="none" stroke="#6e7b53" stroke-width="5" opacity=".65"/>
+  </g>
+  <!-- 6: blocked chasm/water -->
+  <g transform="translate(320)">
+    <rect width="64" height="64" fill="#151d1e"/>
+    <path d="M0 17c11-6 20 6 32 0s20 5 32 0M0 35c11-6 20 6 32 0s20 5 32 0M0 53c11-6 20 6 32 0s20 5 32 0" fill="none" stroke="#2d4748" stroke-width="3" opacity=".8"/>
+    <circle cx="14" cy="11" r="2" fill="#517172"/><circle cx="48" cy="29" r="2" fill="#517172"/><circle cx="27" cy="47" r="1.5" fill="#517172"/>
+  </g>
+</svg>

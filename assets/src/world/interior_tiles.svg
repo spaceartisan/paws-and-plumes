@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="384" height="64" viewBox="0 0 384 64">
+  <!-- 1: warm timber floor -->
+  <g transform="translate(0 0)">
+    <rect width="64" height="64" fill="#8f704d"/>
+    <path d="M0 16H64M0 32H64M0 48H64" stroke="#74583d" stroke-width="2"/>
+    <path d="M12 0V16M44 16V32M20 32V48M51 48V64" stroke="#a98860" stroke-width="1.5" opacity=".7"/>
+    <path d="M3 7h16M34 24h21M5 41h25M38 57h18" stroke="#a98860" stroke-width="1" opacity=".5"/>
+  </g>
+  <!-- 2: pale stone floor -->
+  <g transform="translate(64 0)">
+    <rect width="64" height="64" fill="#9b9585"/>
+    <path d="M0 21H64M0 43H64M21 0v21M45 21v22M16 43v21M49 43v21" stroke="#746f65" stroke-width="2"/>
+    <path d="M7 7l5-2M32 13l7 2M8 35l8-3M38 53l9 2" stroke="#b7b09d" stroke-width="1.2" opacity=".8"/>
+  </g>
+  <!-- 3: dark wall / blocked -->
+  <g transform="translate(128 0)">
+    <rect width="64" height="64" fill="#3d322b"/>
+    <rect x="4" y="4" width="56" height="56" rx="3" fill="#584436" stroke="#261f1a" stroke-width="3"/>
+    <path d="M7 21H57M7 41H57M23 7v14M43 21v20M19 41v16" stroke="#745845" stroke-width="2"/>
+  </g>
+  <!-- 4: burgundy rug -->
+  <g transform="translate(192 0)">
+    <rect width="64" height="64" fill="#8f704d"/>
+    <rect x="5" y="7" width="54" height="50" rx="2" fill="#714044" stroke="#d0ad68" stroke-width="3"/>
+    <rect x="12" y="14" width="40" height="36" fill="#82494b" stroke="#3e2930" stroke-width="2"/>
+    <path d="M20 32l12-11 12 11-12 11z" fill="#c29b58" opacity=".85"/>
+  </g>
+  <!-- 5: forge / soot stone -->
+  <g transform="translate(256 0)">
+    <rect width="64" height="64" fill="#777168"/>
+    <path d="M0 20H64M0 42H64M20 0v20M44 20v22M15 42v22M49 42v22" stroke="#55504c" stroke-width="2"/>
+    <circle cx="12" cy="11" r="2" fill="#4d4945"/><circle cx="52" cy="33" r="3" fill="#4d4945"/><circle cx="31" cy="54" r="2" fill="#4d4945"/>
+    <path d="M8 57c11-8 17-6 26 0" stroke="#60463b" stroke-width="3" opacity=".65"/>
+  </g>
+  <!-- 6: deep shadow / blocked -->
+  <g transform="translate(320 0)">
+    <rect width="64" height="64" fill="#211d1a"/>
+    <path d="M0 0L64 64M64 0L0 64" stroke="#2b2521" stroke-width="3" opacity=".65"/>
+  </g>
+</svg>

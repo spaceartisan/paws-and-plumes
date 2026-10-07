@@ -1,0 +1,119 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="20" height="14" tilewidth="64" tileheight="64" infinite="0" nextlayerid="3" nextobjectid="219">
+  <tileset firstgid="1" name="dungeon_tiles" tilewidth="64" tileheight="64" tilecount="6" columns="6">
+    <image source="../world/dungeon_tiles.png" width="384" height="64" />
+  </tileset>
+  <layer id="1" name="Ground" width="20" height="14">
+    <data encoding="csv">3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,2,2,2,3,3,3,3,3,3,1,1,1,1,1,1,3,3,3,3,3,2,2,2,3,1,1,1,1,3,1,1,1,6,1,5,5,5,3,3,3,2,2,2,5,1,6,1,1,3,1,1,1,1,1,5,5,5,3,3,3,5,5,5,5,1,1,4,4,3,1,1,1,1,1,5,5,5,3,3,3,5,6,6,5,5,5,4,4,1,1,1,2,2,2,2,3,3,3,3,3,5,5,5,5,5,5,4,4,1,1,1,2,2,6,6,6,3,3,3,3,3,3,3,2,2,2,4,4,1,1,1,4,4,4,4,4,4,3,3,1,1,1,1,2,2,2,4,4,3,1,1,4,4,4,4,4,4,3,3,1,1,1,1,2,2,2,4,4,3,4,4,4,4,4,4,4,4,3,3,1,1,1,1,1,1,3,3,3,3,4,4,4,4,4,4,4,4,3,3,1,1,1,1,1,1,3,3,3,3,4,4,4,4,4,4,4,4,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3</data>
+  </layer>
+  <objectgroup id="2" name="World Objects">
+    <object id="201" name="Quarry Stair" type="door" x="100" y="740" width="64" height="44">
+      <properties>
+        <property name="destination" type="string" value="port_felin" />
+        <property name="spawn_x" type="int" value="2055" />
+        <property name="spawn_y" type="int" value="540" />
+        <property name="label" type="string" value="Old Quarry" />
+      </properties>
+    </object>
+    <object id="202" name="Tunnel Rat" type="enemy" x="260" y="665" width="50" height="50">
+      <properties>
+        <property name="enemy" type="string" value="rat_skirmisher" />
+        <property name="sprite" type="string" value="8" />
+      </properties>
+    </object>
+    <object id="203" name="Rubble Rat" type="enemy" x="385" y="565" width="50" height="50">
+      <properties>
+        <property name="enemy" type="string" value="rat_skirmisher" />
+        <property name="sprite" type="string" value="8" />
+      </properties>
+    </object>
+    <object id="204" name="Rat Skirmisher" type="enemy" x="480" y="390" width="50" height="50">
+      <properties>
+        <property name="enemy" type="string" value="rat_skirmisher" />
+        <property name="sprite" type="string" value="8" />
+      </properties>
+    </object>
+    <object id="205" name="Abandoned Supply Chest" type="landmark" x="185" y="230" width="42" height="42">
+      <properties>
+        <property name="kind" type="string" value="supply_chest" />
+        <property name="chest_id" type="string" value="quarry_supply" />
+      </properties>
+    </object>
+    <object id="206" name="Rat Foreman" type="enemy" x="615" y="255" width="52" height="52">
+      <properties>
+        <property name="enemy" type="string" value="rat_foreman" />
+        <property name="sprite" type="string" value="9" />
+      </properties>
+    </object>
+    <object id="207" name="Iron Quarry Gate" type="landmark" x="670" y="384" width="38" height="192">
+      <properties>
+        <property name="kind" type="string" value="locked_gate" />
+        <property name="flag" type="string" value="quarry_gate" />
+        <property name="key" type="string" value="quarry_key" />
+      </properties>
+    </object>
+    <object id="208" name="Rat Sapper" type="enemy" x="820" y="260" width="50" height="50">
+      <properties>
+        <property name="enemy" type="string" value="rat_skirmisher" />
+        <property name="sprite" type="string" value="8" />
+      </properties>
+    </object>
+    <object id="209" name="Rat Guard" type="enemy" x="970" y="335" width="50" height="50">
+      <properties>
+        <property name="enemy" type="string" value="rat_foreman" />
+        <property name="sprite" type="string" value="9" />
+      </properties>
+    </object>
+    <object id="210" name="Rat Cutpurse" type="enemy" x="850" y="545" width="50" height="50">
+      <properties>
+        <property name="enemy" type="string" value="rat_skirmisher" />
+        <property name="sprite" type="string" value="8" />
+      </properties>
+    </object>
+    <object id="211" name="Foreman Cache" type="landmark" x="1080" y="210" width="42" height="42">
+      <properties>
+        <property name="kind" type="string" value="cache_chest" />
+        <property name="chest_id" type="string" value="foreman_cache" />
+      </properties>
+    </object>
+    <object id="212" name="Underboss Vetch" type="enemy" x="1050" y="660" width="56" height="56">
+      <properties>
+        <property name="enemy" type="string" value="rat_captain" />
+        <property name="sprite" type="string" value="10" />
+      </properties>
+    </object>
+    <object id="213" name="Guild Strongbox" type="landmark" x="1110" y="755" width="46" height="46">
+      <properties>
+        <property name="kind" type="string" value="boss_chest" />
+        <property name="chest_id" type="string" value="guild_strongbox" />
+      </properties>
+    </object>
+    <object id="214" name="Collapsed Lift" type="landmark" x="885" y="705" width="40" height="40">
+      <properties>
+        <property name="kind" type="string" value="collapsed_lift" />
+      </properties>
+    </object>
+    <object id="215" name="Old Guild Mark" type="landmark" x="345" y="300" width="40" height="40">
+      <properties>
+        <property name="kind" type="string" value="old_guild_mark" />
+      </properties>
+    </object>
+    <object id="216" name="Quarry Notice" type="landmark" x="155" y="650" width="40" height="40">
+      <properties>
+        <property name="kind" type="string" value="dungeon_notice" />
+      </properties>
+    </object>
+    <object id="217" name="Rat Hexer" type="enemy" x="792" y="430" width="50" height="50">
+      <properties>
+        <property name="enemy" type="string" value="rat_hexer" />
+        <property name="sprite" type="string" value="12" />
+      </properties>
+    </object>
+    <object id="218" name="Violet Rat Hexer" type="enemy" x="1015" y="500" width="50" height="50">
+      <properties>
+        <property name="enemy" type="string" value="rat_hexer" />
+        <property name="sprite" type="string" value="12" />
+      </properties>
+    </object>
+  </objectgroup>
+</map>
