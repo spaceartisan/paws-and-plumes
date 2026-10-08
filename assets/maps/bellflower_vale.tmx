@@ -1,0 +1,144 @@
+<?xml version='1.0' encoding='utf-8'?>
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="18" tilewidth="64" tileheight="64" infinite="0" nextlayerid="3" nextobjectid="530">
+  <tileset firstgid="1" name="world_tiles" tilewidth="64" tileheight="64" tilecount="6" columns="6">
+    <image source="../world/world_tiles.png" width="384" height="64" />
+  </tileset>
+  <layer id="1" name="Ground" width="30" height="18">
+    <data encoding="csv">6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,6,6,6,6,6,1,1,1,1,1,1,1,1,4,4,1,2,2,2,2,2,2,1,1,1,6,1,6,1,6,6,6,6,6,6,1,5,5,5,5,5,5,1,4,4,1,2,2,2,2,2,2,1,1,1,1,6,1,6,1,6,6,6,6,6,1,5,5,5,5,5,5,1,4,4,1,2,2,2,2,2,2,1,1,1,6,1,6,1,6,6,6,6,6,6,1,5,5,5,5,5,5,1,4,4,1,2,2,2,2,2,2,1,1,1,1,6,1,6,1,6,6,1,1,1,1,5,5,5,5,5,5,1,4,4,1,1,1,1,1,1,1,1,1,1,6,1,6,1,6,6,6,1,1,1,1,1,1,1,1,1,1,1,4,4,1,1,1,1,1,1,1,1,1,1,1,6,1,6,1,6,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,6,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,4,1,1,1,1,1,1,1,6,6,1,6,6,1,6,6,1,1,1,1,1,1,1,1,4,4,4,4,4,4,4,4,1,1,1,1,1,1,6,6,1,6,1,6,6,1,1,1,1,1,1,1,1,1,4,4,4,4,4,4,4,4,1,3,3,3,3,1,6,6,1,1,6,6,1,6,1,1,1,1,1,1,1,1,4,4,4,4,4,4,4,4,1,3,3,3,3,1,6,6,1,6,6,1,6,6,1,1,1,1,1,1,1,1,4,4,4,4,4,4,4,4,1,3,3,3,3,1,6,6,1,6,1,6,6,1,1,1,1,1,1,1,1,1,4,4,4,4,4,4,4,4,1,3,3,3,3,1,6,6,1,1,6,6,1,6,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6</data>
+  </layer>
+  <objectgroup id="2" name="World Objects">
+    <object id="500" name="Road to Port Felin" type="door" x="46" y="545" width="62" height="52">
+      <properties>
+        <property name="destination" value="port_felin" />
+        <property name="spawn_x" value="2040" type="int" />
+        <property name="spawn_y" value="610" type="int" />
+        <property name="label" value="Road to Port Felin" />
+        <property name="style" value="road" />
+      </properties>
+    </object>
+    <object id="501" name="Bellflower Tollhouse" type="building" x="190" y="400" width="155" height="105">
+      <properties>
+        <property name="kind" value="vale_tollhouse" />
+        <property name="blocking" value="true" />
+      </properties>
+    </object>
+    <object id="502" name="Warden Maribel" type="npc" x="300" y="535" width="48" height="48">
+      <properties>
+        <property name="kind" value="vale_warden" />
+        <property name="sprite" value="3" />
+      </properties>
+    </object>
+    <object id="503" name="Bellflower Lavender" type="resource" x="430" y="300" width="46" height="46">
+      <properties>
+        <property name="resource" value="lavender" />
+      </properties>
+    </object>
+    <object id="504" name="Field Lavender" type="resource" x="620" y="360" width="46" height="46">
+      <properties>
+        <property name="resource" value="lavender" />
+      </properties>
+    </object>
+    <object id="505" name="Old Vale Oak" type="resource" x="470" y="760" width="46" height="46">
+      <properties>
+        <property name="resource" value="old_oak" />
+      </properties>
+    </object>
+    <object id="506" name="Aqueduct Iron Vein" type="resource" x="1040" y="230" width="46" height="46">
+      <properties>
+        <property name="resource" value="rich_iron" />
+      </properties>
+    </object>
+    <object id="507" name="South Pond Ripples" type="resource" x="1640" y="850" width="46" height="46">
+      <properties>
+        <property name="resource" value="river_dace" />
+      </properties>
+    </object>
+    <object id="508" name="Vintner Rows" type="resource" x="720" y="240" width="46" height="46">
+      <properties>
+        <property name="resource" value="grape" />
+      </properties>
+    </object>
+    <object id="509" name="Roadside Rosemary" type="resource" x="900" y="610" width="46" height="46">
+      <properties>
+        <property name="resource" value="rosemary" />
+      </properties>
+    </object>
+    <object id="510" name="Sable Pikeman" type="enemy" x="980" y="600" width="50" height="50">
+      <properties>
+        <property name="enemy" value="vale_pikeman" />
+        <property name="sprite" value="13" />
+      </properties>
+    </object>
+    <object id="511" name="Sable Pikeman" type="enemy" x="1110" y="690" width="50" height="50">
+      <properties>
+        <property name="enemy" value="vale_pikeman" />
+        <property name="sprite" value="13" />
+      </properties>
+    </object>
+    <object id="512" name="Sable Pikeman" type="enemy" x="1260" y="760" width="50" height="50">
+      <properties>
+        <property name="enemy" value="vale_pikeman" />
+        <property name="sprite" value="13" />
+      </properties>
+    </object>
+    <object id="513" name="Sable Arquebusier" type="enemy" x="1180" y="520" width="50" height="50">
+      <properties>
+        <property name="enemy" value="vale_arquebusier" />
+        <property name="sprite" value="14" />
+      </properties>
+    </object>
+    <object id="514" name="Sable Arquebusier" type="enemy" x="1390" y="820" width="50" height="50">
+      <properties>
+        <property name="enemy" value="vale_arquebusier" />
+        <property name="sprite" value="14" />
+      </properties>
+    </object>
+    <object id="515" name="Captain Vellum" type="enemy" x="1490" y="700" width="50" height="50">
+      <properties>
+        <property name="enemy" value="vale_captain" />
+        <property name="sprite" value="13" />
+      </properties>
+    </object>
+    <object id="516" name="Vale Bristleback" type="enemy" x="760" y="930" width="50" height="50">
+      <properties>
+        <property name="enemy" value="boar" />
+        <property name="sprite" value="6" />
+      </properties>
+    </object>
+    <object id="520" name="Bellflower Road Marker" type="landmark" x="530" y="560" width="36" height="36">
+      <properties>
+        <property name="kind" value="bellflower_marker" />
+      </properties>
+    </object>
+    <object id="521" name="Old Aqueduct" type="landmark" x="1080" y="260" width="36" height="36">
+      <properties>
+        <property name="kind" value="vale_ruins" />
+      </properties>
+    </object>
+    <object id="522" name="Sable Company Camp" type="landmark" x="1380" y="710" width="36" height="36">
+      <properties>
+        <property name="kind" value="vale_camp" />
+      </properties>
+    </object>
+    <object id="523" name="Bellflower Wayshrine" type="landmark" x="840" y="420" width="36" height="36">
+      <properties>
+        <property name="kind" value="vale_shrine" />
+      </properties>
+    </object>
+    <object id="524" name="Camp Supply Chest" type="landmark" x="1540" y="760" width="40" height="38">
+      <properties>
+        <property name="kind" value="vale_chest" />
+        <property name="chest_id" value="vale_supply" />
+      </properties>
+    </object>
+    <object id="525" name="East Road Exit" type="door" x="1810" y="545" width="62" height="52">
+      <properties>
+        <property name="destination" value="port_felin" />
+        <property name="spawn_x" value="2040" type="int" />
+        <property name="spawn_y" value="610" type="int" />
+        <property name="label" value="Eastroad to Port Felin" />
+        <property name="style" value="road" />
+      </properties>
+    </object>
+  </objectgroup>
+</map>

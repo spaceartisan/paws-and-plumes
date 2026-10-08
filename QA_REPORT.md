@@ -1,72 +1,62 @@
-# Paws & Plumes v0.11.0 QA Report
+# Paws & Plumes v0.13.1 QA Report
 
 Date: 2026-10-07
 
+## Reported issue
+
+The Warm Saucer interior entrance was reproduced as an invalid spawn. The old destination point `(384, 410)` lies inside the expanded collision bounds of the lower inn table, which can leave a character unable to move after entering the building.
+
+## Fixes validated
+
+Passed:
+
+- Warm Saucer destination spawn changed to `(384, 470)` in the editable `port_felin_world.tmx`.
+- The map was re-exported with the supplied **Tiled 1.12.2 AppImage** under Xvfb.
+- Exported `port_felin_world.json` contains the corrected spawn.
+- New Warm Saucer spawn passes full A* navigation-clearance probes.
+- Old bad position `(384, 410)` is still correctly detected as obstructed.
+- The automatic recovery search resolves that old trapped position to a nearby safe navigation node around `(372, 468)`.
+- `loadMap()` now runs the recovery check on every map load, so previously trapped saved characters self-repair after update.
+- Movement now slides on a free axis when a diagonal step collides, reducing corner/furniture snagging.
+
+## Transition-spawn audit
+
+Every current destination spawn passed the same navigation-clearance test:
+
+- Port Felin → Guild Hall
+- Port Felin → Ironpaw Forge
+- Port Felin → Warm Saucer
+- Port Felin → Mercato
+- Port Felin → Felin Exchange
+- Port Felin → Quarry Underworks
+- Port Felin → Bellflower Vale
+- Every corresponding return route back to Port Felin
+
+No current transition spawn overlaps blocking geometry or blocked ground.
+
+## Interior reachability audit
+
+From each entrance spawn, a navigation-grid reachability test successfully found paths to the interior exit plus all primary NPC/service interactions.
+
+- Guild Hall: Luca, contract board, clerk, exit
+- Ironpaw Forge: Bia, forge, Masterwork Bench, exit
+- Warm Saucer: Mina, cooking hearth, guest bed, fiddler, exit
+- Mercato: Neri, Saffron, exit
+- Felin Exchange: Aurelia, vault chest, clerk, exit
+
 ## Static checks
 
-- `node --check game.js` — passed.
-- `node --check sw.js` — passed.
-- Updated Quarry Underworks TMX exported/validated successfully through Tiled 1.12.2 from `DEV_TOOLS` using its AppImage extraction path under Xvfb.
-- New Rat Hexer SVG rendered successfully with Inkscape into the shared 832×64 sprite sheet.
-- Service-worker cache includes both new Aethercraft audio files.
-
-## Save migration
-
-A v0.10-style character was loaded through the v0.11 migration path.
-
 Passed:
-- Aethercraft skill added at level 1.
-- Focus initialized to 30/30.
-- Existing equipment, inventory, quests, dungeon state, bank, and character identity remained usable.
-- `Glass and Thunder` becomes available when `Beneath the Old Quarry` was already completed.
-- New `magic_kills` combat counter initialized without altering ranged counters.
 
-## Saffron / crafting / quest
+- `node --check game.js`
+- `node --check sw.js`
+- JSON parsing for the manifest and all runtime map JSON files
+- Save key remains `paws_plumes_traditional_v020`
+- PWA identity remains unchanged
+- Service-worker cache bumped to `paws-plumes-v0131-20261007`
 
-Passed:
-- Saffron's dialogue renders the Glass and Thunder quest.
-- Blue Focus Tonic crafting consumes the intended ingredients and increments its crafted counter.
-- Glass Aether Rod, Scholar's Coat, and Quarry Catalyst entries render with their progression requirements.
-- Town-note option records The Hermetic Arts persistently.
+## Diagnostic capture
 
-## Aethercraft combat
+- `docs/screenshots/v0131_warm_saucer_spawn_fix.png`
 
-Passed:
-- Glass Rod normal cast consumes Focus.
-- Successful cast grants Aethercraft XP.
-- Magic range is distinct from melee and Archery range.
-- Arc Burst uses the larger Focus cost.
-- A forced two-target Arc Burst regression killed both adjacent Rat Hexers, recorded **2 magic kills**, recorded **2 Rat Hexer kills**, created **2 physical loot drops**, and completed the combat portion of Glass and Thunder.
-- With Hermetic Wand and Scholar's Coat, the same forced Arc Burst spent exactly **9 Focus** (4 base + 5 burst).
-- Scholar's Coat raises maximum Focus to 40 and displays +10% magic accuracy / +10 Focus.
-- Swapping from Scholar's Coat to Padded Doublet immediately clamps a full 40 Focus back to the normal 30-point maximum.
-- No runtime/page errors were produced by the forced multi-target combat regression.
-
-## Rat Hexer enemy behavior
-
-Passed:
-- Both Rat Hexer objects exist on the exported Quarry Underworks map.
-- Hexers use ranged/kiting behavior rather than closing to melee.
-- Violet Hex telegraph appears.
-- Violet Hex uses the magic projectile/sound path.
-- A successful Violet Hex drains 4 Focus in addition to its damage.
-- Guarded magic attacks are reported as blocked spells rather than shots and do not incorrectly grant a melee riposte.
-
-## Character creation and responsive layout
-
-Passed:
-- Character creation shows all four backgrounds, including Apothecary's Apprentice.
-- Apothecary's Apprentice starts with the intended Aethercraft/Alchemy bonuses, Glass Rod, ingredients, and Focus Tonic.
-- 390×844 phone gameplay render completed with Focus HUD and Aethercraft hotbar.
-- 320×568 regression completed with zero horizontal page overflow and no runtime errors.
-
-## Visual captures
-
-- `docs/screenshots/v011_apothecary_mobile.png`
-- `docs/screenshots/v011_magic_combat_mobile.png`
-- `docs/screenshots/v011_character_create_mobile.png`
-- `docs/screenshots/v011_small_phone.png`
-
-## Notes
-
-The container blocks normal localhost/file navigation for the headless browser, so browser QA used an isolated in-memory harness built from the release HTML/CSS/JS and preloaded map data. Test-only hooks were injected into the harness; they are not present in the release files.
+The diagnostic shows the old spawn inside the table collision region and the corrected entrance position below it.

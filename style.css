@@ -164,3 +164,8 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid 
 .bars{grid-template-columns:repeat(3,1fr)}
 .focus span{background:#7182c7}
 @media(max-width:520px){.bars{grid-template-columns:1fr;gap:3px}}
+/* v0.12 discipline/contract cards inside parchment dialogs need their own dark-card contrast. */
+.modal .quest-item{color:#f0e3c2}
+.modal .quest-item strong{color:#f6e9c7}
+.modal .quest-item p{color:#c7bda5}
+.modal .quest-item .small,.modal .quest-item .muted{color:#aea58f}

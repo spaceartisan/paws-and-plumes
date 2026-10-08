@@ -159,6 +159,24 @@
                  "width":68,
                  "x":350,
                  "y":505
+                }, 
+                {
+                 "height":40,
+                 "id":207,
+                 "name":"Masterwork Bench",
+                 "opacity":1,
+                 "properties":[
+                        {
+                         "name":"kind",
+                         "type":"string",
+                         "value":"masterwork_bench"
+                        }],
+                 "rotation":0,
+                 "type":"landmark",
+                 "visible":true,
+                 "width":54,
+                 "x":185,
+                 "y":248
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -167,7 +185,7 @@
          "y":0
         }],
  "nextlayerid":3,
- "nextobjectid":207,
+ "nextobjectid":208,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.12.2",

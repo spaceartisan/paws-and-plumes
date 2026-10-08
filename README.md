@@ -1,66 +1,99 @@
-# Paws & Plumes v0.11.0 — Aethercraft & Hermetic Arts
+# Paws & Plumes v0.13.1 — Interior Collision Hotfix
 
-Paws & Plumes is a traditional top-down browser RPG built for GitHub Pages. The game is designed like a compact Tibia/RuneScape-style RPG that also controls comfortably on a phone: title screen, multiple character slots, persistent world exploration, tap-to-pathfind, real interiors/dungeons, quests, gathering, crafting, skills, equipment, combat, banking, and local saves.
+Paws & Plumes is a traditional top-down browser RPG for GitHub Pages, designed like a compact Tibia/RuneScape-style adventure that also controls comfortably on a phone. The game uses persistent characters, direct world movement, use-based skills, quests, gathering, crafting, banking, dungeons, and combat that happens in the world rather than on a separate battle screen.
 
-## v0.11 highlights
 
-### Aethercraft combat style
-Aethercraft is now a third combat path beside melee and Archery. Magic weapons use a regenerating **Focus** resource rather than ammunition. Focus regenerates quickly outside combat and more slowly while fighting.
+## v0.13.1 hotfix
 
-- **Glass Aether Rod** — inexpensive starter focus.
-- **Hermetic Wand** — quest reward with stronger range and partial armor penetration.
-- **Quarry Catalyst** — advanced slow, hard-hitting focus crafted from Underworks materials.
-- **Arc Burst** — the magic secondary attack; costs extra Focus and splashes nearby enemies.
-- Magic accuracy scales with Aethercraft skill and equipment. Heavy defensive gear slightly interferes with casting.
-- **Scholar's Coat** gives +10% magic accuracy and +10 maximum Focus, trading raw defense for spellcasting performance.
-- **Blue Focus Tonic** restores 16 Focus.
+This focused update fixes an interior collision trap found in the **Warm Saucer** and hardens every map transition against similar problems.
 
-### New character path
-Character creation now has four backgrounds. **Apothecary's Apprentice** starts with Alchemy 2, Aethercraft 2, a Glass Aether Rod, ingredients, and a Focus Tonic.
+- Warm Saucer entrance spawn moved from `(384, 410)` to the clear `(384, 470)` position.
+- The previous spawn overlapped the padded collision region of the lower inn table.
+- Every map load now checks whether the saved player position has valid navigation clearance. If not, the character is moved to the nearest safe A* node automatically. This also rescues characters already saved in the old bad inn position.
+- Manual and path-following movement now slides along a free X/Y axis when diagonal movement hits an obstacle, reducing snagging on furniture and wall corners.
+- All current map-transition spawn points were audited for navigation clearance.
+- Each town interior was checked for a valid route from its entrance to its exit, primary NPCs, and service objects.
+- Save key and PWA identity are unchanged.
 
-### Rat Hexers
-Two Rat Hexers now inhabit the Quarry Underworks. They fight from range, back away when crowded, and periodically telegraph **Violet Hex**. Violet Hex deals increased damage and drains 4 Focus when it lands.
+## v0.13 highlights
 
-Rat Hexers can drop **Aether Salt**, Rat Brass Tokens, and occasionally a Blue Focus Tonic.
+### Tradecraft refinement
+High-level crafting now has a material-refinement loop rather than ending when the first good equipment set is obtained.
 
-### Saffron progression
-Saffron's apothecary services now support the magic path:
+At the new **Ironpaw Masterwork Bench** inside the authored Ironpaw Forge map, characters can refine:
 
-- Brew Red Tonic.
-- Distill Blue Focus Tonic.
-- Assemble Glass Aether Rod.
-- Tailor Scholar's Coat.
-- Build the Quarry Catalyst after progressing far enough.
-- Learn the permanent Town Note **The Hermetic Arts**.
+- **Forge Charcoal** — 2 Oak Logs, Crafting 3.
+- **Quarry Steel Billet** — 2 Iron Ore + 1 Forge Charcoal, Smithing 4.
+- **Foxhide Lining** — 2 Red Fox Pelts + 2 River Reed, Tailoring 4.
 
-Her new quest **Glass and Thunder** asks the player to distill two Focus Tonics and defeat two Rat Hexers, rewarding the Hermetic Wand. Completing it also unlocks the repeatable **Hexer Suppression** guild contract.
+Saffron's apothecary work now continues the chain:
+
+- **Bellflower Oil** — 3 Bellflower Lavender + 1 Black Grape, Alchemy 4.
+- **Aetherglass Lens** — 2 Aether Salt + 1 Bellflower Oil, Alchemy 5 / Crafting 4.
+
+These refined materials are persistent inventory items, can be banked or sold, grant the appropriate trade-skill XP, and update normal crafted-item counters.
+
+### A Maker's Mark
+After completing **Terms of the Vale**, Bia Ironpaw offers a new permanent trade quest, **A Maker's Mark**.
+
+The quest asks the character to demonstrate all three core guild trades by producing:
+
+- 2 Quarry Steel Billets
+- 1 Foxhide Lining
+- 1 Bellflower Oil
+
+Reward:
+
+- 190 crowns
+- 150 Adventure XP
+- **Gilded Maker's Seal**
+
+Claiming the quest unlocks the masterwork recipes at Bia's bench. Existing v0.12 characters that already completed Terms of the Vale receive A Maker's Mark as available after migration.
+
+### Masterwork equipment
+Masterworks consume the original equipment plus refined materials. They are upgrades to gear the player has already earned, not extra random drops.
+
+- **Masterwork Quarry Sabre** — Attack 13 and +6% melee critical chance.
+- **Reinforced Brigandine** — Defense 5 with a smaller ranged-accuracy penalty than the original brigandine.
+- **Bellflower Recurve** — Attack 9, longer bow range, faster shot cycle, and +12% weapon accuracy.
+- **Oiled Foxhide Jerkin** — Defense 3 and +13% ranged accuracy.
+- **Aetherglass Wand** — Attack 10, Focus cost 3, strong magic accuracy, and modest armor penetration.
+- **Aetherwoven Scholar Coat** — Defense 2, +14% magic accuracy, and +15 maximum Focus.
+
+If the base item being upgraded is currently equipped, it is automatically replaced by the new masterwork. This prevents an equipped base item from surviving as an invisible duplicate after its inventory copy is consumed.
+
+### Repeatable trade work
+The Guild contract board now includes **Guild Steel Order** after A Maker's Mark is complete. It tracks only Quarry Steel Billets refined after the contract is accepted and rewards 118 crowns / 72 Adventure XP for three billets.
+
+### Authored Forge update
+The Ironpaw Forge TMX now contains a physical **Masterwork Bench** landmark layered over the existing work bench. It can be tapped/pathfound to like other world interactions and opens the refinement/masterwork interface directly.
 
 ## Existing game systems
 
-- Main menu, character selection, four character backgrounds, and separate persistent saves.
-- Continuous Port Felin overworld with Eastroad, Mosswood, Old Quarry, riverlands, and day/night cycle.
-- Obstacle-aware A* tap pathfinding plus desktop WASD/arrow movement.
+- Traditional title screen, character selection/creation, and three persistent character slots.
+- Continuous Port Felin region plus Bellflower Vale.
+- Obstacle-aware A* tap pathfinding and desktop WASD/arrow movement.
 - Enterable Guild Hall, Ironpaw Forge, Warm Saucer, Mercato, and Felin Exchange.
-- Quarry Underworks dungeon with persistent gate/key progression, chests, boss, and strongbox.
-- Melee Fencing with telegraphed enemy attacks, Guard, ripostes, and Flourish.
-- Archery with ranged positioning, ammunition, Aimed Shot, marksmen, bows/crossbow, and armor accuracy tradeoffs.
-- Aethercraft with Focus, ranged spell positioning, Arc Burst, spellcasting gear, and enemy hexers.
-- Gathering, Woodcutting, Mining, Fishing, Cooking, Smithing, Tailoring, Alchemy, Crafting, and use-based skill progression.
-- Permanent quests plus repeatable guild contracts.
+- Quarry Underworks dungeon with persistent gate/key/chest/boss progression.
+- Fencing, Archery, and Aethercraft combat styles with optional combat disciplines.
+- Gathering, Woodcutting, Mining, Fishing, Cooking, Smithing, Tailoring, Alchemy, and Crafting.
+- Permanent quests and repeatable guild contracts.
 - Physical ground loot and merchant buy/sell economy.
-- Character bank/vault with safe banked crowns.
-- NPC schedules, persistent Town Notes, world discoveries, ambient motion, music, ambience, and effects.
-- Installable PWA with update controls while retaining the same stable app identity from prior releases.
+- Persistent bank/vault with safe banked crowns.
+- NPC routines, Town Notes, day/night, music, ambience, and sound effects.
+- Installable PWA with the same stable application identity used by prior releases.
 
 ## Controls
 
 ### Phone / touch
-- Tap terrain to pathfind to that point.
-- Tap NPCs, doors, enemies, gathering nodes, loot, chests, and other world objects to route into interaction range automatically.
-- Bottom hotbar provides Attack/Cast, Flourish/Aimed Shot/Arc Burst, Guard, Tonic, and Interact.
-- Inventory, Skills, Quests, and Equipment are in the in-game side panel.
+
+- Tap terrain to pathfind there.
+- Tap NPCs, doors, enemies, resources, loot, benches, chests, signposts, and other world objects to route into interaction range automatically.
+- Bottom hotbar provides Attack/Cast/Shoot, Flourish/Aimed Shot/Arc Burst, Guard, Tonic, and Interact.
+- Inventory, Skills, Quests, and Equipment remain in-game panels over the live world.
 
 ### Desktop
+
 - **WASD / arrow keys** — move and cancel active tap navigation.
 - **1** — attack / shoot / cast.
 - **2** — Flourish / Aimed Shot / Arc Burst.
@@ -71,19 +104,20 @@ Her new quest **Glass and Thunder** asks the player to distill two Focus Tonics 
 
 ## GitHub Pages deployment
 
-No build step or server runtime is required. Put the contents of this `PawsAndPlumes` folder at the root of a GitHub Pages branch/folder and enable Pages in repository settings.
+There is no build step or server runtime. Put the contents of this `PawsAndPlumes` folder at the root of the GitHub Pages branch/folder and enable Pages.
 
-The PWA keeps the stable `paws-and-plumes-rpg` application identity used since the install fix, so v0.11 updates the existing installed app instead of creating a new one. The service worker cache has been bumped for this release.
+The PWA retains the stable `paws-and-plumes-rpg` application identity. The v0.13 service-worker cache is `paws-plumes-v0130-20261007`, so an existing installed copy updates in place rather than becoming a second app.
 
 ## Save compatibility
 
-v0.11 keeps the existing local save key (`paws_plumes_traditional_v020`). Older characters are migrated in place with Aethercraft level 1, a 30-point Focus pool, the new combat counters, and quest availability based on their existing Underworks progress.
+v0.13 deliberately retains the existing save key (`paws_plumes_traditional_v020`). Older characters migrate in place. The migration adds A Maker's Mark without resetting equipment, bank contents, disciplines, quest history, character identity, or world state.
 
 ## Authored-source workflow
 
-- **Tiled 1.12.2 from the user's `DEV_TOOLS` folder** was used to validate/export the updated Quarry Underworks map with Rat Hexer placements.
-- **Inkscape 1.4** was used to render the new Rat Hexer sprite from `assets/src/world/rat_hexer.svg` into the shared sprite sheet.
-- The v0.11 spell effects are reproducibly synthesized from `assets/src/audio_v011/synth_magic.py` and encoded as `arcane_bolt.ogg` / `arcane_burst.ogg`.
-- Editable Tiled TMX, SVG, and audio-generation sources remain in the project.
+The project retains editable sources next to runtime exports.
 
-See `QA_REPORT.md` for the regression checklist and results.
+- **Tiled 1.12.2 from `DEV_TOOLS`** was used under Xvfb to update `assets/maps/ironpaw_forge.tmx` with the Masterwork Bench and export the runtime JSON.
+- Existing Inkscape-authored map/sprite sources remain under `assets/src/` and `assets/source/`.
+- Existing Csound sources remain beside the locally authored audio effects.
+
+See `QA_REPORT.md` for this release's regression results.
