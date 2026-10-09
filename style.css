@@ -169,3 +169,29 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid 
 .modal .quest-item strong{color:#f6e9c7}
 .modal .quest-item p{color:#c7bda5}
 .modal .quest-item .small,.modal .quest-item .muted{color:#aea58f}
+
+/* v0.14 exploration atlas */
+.panel-tabs{grid-template-columns:repeat(5,1fr)}
+.mini-map{cursor:pointer}
+.atlas-summary{display:flex;justify-content:space-between;gap:8px;align-items:end;border:1px solid #5d543f;background:#292a25;border-radius:6px;padding:8px 9px}.atlas-summary strong{font-size:12px;color:#eee1bf}.atlas-summary span{font:800 9px/1 system-ui,sans-serif;color:#c9b55d;text-transform:uppercase;letter-spacing:.07em;white-space:nowrap}.atlas-fog{height:5px;background:#1e211e;border-radius:999px;overflow:hidden;margin:6px 0 9px}.atlas-fog span{display:block;height:100%;background:#b59c4a}.atlas-place-list{display:grid;gap:5px;margin:8px 0}.atlas-place{min-height:50px;border:1px solid #544e3d;border-radius:6px;background:#292a25;color:#d7cbae;text-align:left;padding:7px 8px;display:grid;grid-template-columns:1fr auto;gap:2px 6px}.atlas-place.local{border-color:#84713d;background:#303028}.atlas-place strong{font-size:11px}.atlas-place span{grid-column:1/-1;font:600 9px/1.25 system-ui,sans-serif;color:#a9a18e}.atlas-place small{grid-column:2;grid-row:1;color:#cbb45f;font:800 8px/1 system-ui,sans-serif;text-transform:uppercase}.waypoint-list{display:grid;gap:5px}.waypoint-row{display:grid;grid-template-columns:22px 1fr;gap:6px;align-items:center;border:1px solid #4f4b3b;background:#292a25;border-radius:6px;padding:7px;color:#827b69}.waypoint-row.active{border-color:#6f866f;color:#a9d5c3}.waypoint-row>span{font-size:18px;text-align:center}.waypoint-row strong{display:block;font-size:10px;color:#d9cfb2}.waypoint-row small{display:block;margin-top:2px;font:600 8px/1.2 system-ui,sans-serif;color:#968e7c}
+
+/* v0.15 guild standing & faction reputation */
+.rep-grid{display:grid;gap:7px;margin:7px 0 10px}.rep-card{border:1px solid #5d543f;background:#292a25;border-radius:6px;padding:8px 9px;color:#d9cfb2}.rep-card.vale{border-color:#4d6559}.rep-head{display:flex;justify-content:space-between;gap:8px;align-items:center}.rep-head strong{font-size:11px;color:#eee1bf}.rep-head span{font:800 8px/1 system-ui,sans-serif;color:#d7bd62;text-transform:uppercase;letter-spacing:.08em}.rep-card.vale .rep-head span{color:#9ecbb3}.rep-bar{height:5px;background:#1d201d;border-radius:999px;overflow:hidden;margin:6px 0}.rep-bar span{display:block;height:100%;background:#b59c4a}.rep-card.vale .rep-bar span{background:#6a9b83}.rep-card small{display:block;color:#9f9784;font:700 8px/1.2 system-ui,sans-serif}.rep-card p{margin:5px 0 0;color:#aaa18d;font:600 8px/1.3 system-ui,sans-serif}
+@media(max-width:360px){.rep-head{align-items:flex-start;flex-direction:column;gap:3px}}
+
+/* v0.17 festival-week event indicator */
+.hud-event-chip{display:none;margin-top:3px;padding:2px 5px;border:1px solid rgba(225,195,91,.48);border-radius:999px;background:rgba(109,78,30,.36);color:#f0d77c;font:800 8px/1.15 system-ui,sans-serif;letter-spacing:.04em;max-width:180px;overflow:hidden;text-overflow:ellipsis}
+.hud-event-chip.show{display:block}
+@media(max-width:520px){.hud-event-chip{font-size:7px;max-width:115px;padding:2px 4px}}
+/* v0.19: weather integrates with the existing narrow RPG HUD. */
+.hud-weather-chip{display:block;margin-top:3px;color:#d5e7df;font:800 10px/1.15 system-ui,sans-serif;letter-spacing:.015em;white-space:nowrap}
+.hud-weather-chip.weather-rain{color:#a8d6e2}
+.weather-forecast{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin:10px 0}
+.forecast-row{padding:10px;border:1px solid #ac946d;border-radius:6px;background:#f1e4c5;display:flex;flex-direction:column;gap:4px;min-width:0}
+.forecast-row strong{font-size:13px}.forecast-row small{color:#635847;font:700 10px/1.2 system-ui,sans-serif}
+@media(max-width:520px){.hud-weather-chip{font-size:8px;max-width:116px;overflow:hidden;text-overflow:ellipsis}.weather-forecast{gap:5px}.forecast-row{padding:8px}.forecast-row strong{font-size:11px}}
+@media(max-width:360px){.hud-weather-chip{max-width:93px;font-size:7px}}
+
+/* v0.20: field almanac is tucked into the atlas instead of crowding phone HUD. */
+.atlas-weather-button{width:100%;margin:7px 0 10px;min-height:36px;padding:8px 10px;text-align:left;border:1px solid #786d4c;border-radius:6px;background:#343b35;color:#e2d4a5;font:800 11px/1.2 system-ui,sans-serif;cursor:pointer}
+.atlas-weather-button:hover{background:#3f4b42}

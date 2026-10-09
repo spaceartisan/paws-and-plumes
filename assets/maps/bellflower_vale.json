@@ -471,6 +471,26 @@
                          "name":"kind",
                          "type":"string",
                          "value":"vale_shrine"
+                        }, 
+                        {
+                         "name":"spawn_x",
+                         "type":"int",
+                         "value":858
+                        }, 
+                        {
+                         "name":"spawn_y",
+                         "type":"int",
+                         "value":480
+                        }, 
+                        {
+                         "name":"waypoint_id",
+                         "type":"string",
+                         "value":"bellflower"
+                        }, 
+                        {
+                         "name":"waypoint_label",
+                         "type":"string",
+                         "value":"Bellflower Vale"
                         }],
                  "rotation":0,
                  "type":"landmark",
@@ -539,6 +559,105 @@
                  "width":62,
                  "x":1810,
                  "y":545
+                }, 
+                {
+                 "height":50,
+                 "id":530,
+                 "name":"Sable Deserter",
+                 "opacity":1,
+                 "properties":[
+                        {
+                         "name":"contract_id",
+                         "type":"string",
+                         "value":"vale_fair_watch"
+                        }, 
+                        {
+                         "name":"enemy",
+                         "type":"string",
+                         "value":"vale_raider"
+                        }, 
+                        {
+                         "name":"event_id",
+                         "type":"string",
+                         "value":"vale"
+                        }, 
+                        {
+                         "name":"sprite",
+                         "type":"string",
+                         "value":"13"
+                        }],
+                 "rotation":0,
+                 "type":"enemy",
+                 "visible":true,
+                 "width":50,
+                 "x":720,
+                 "y":555
+                }, 
+                {
+                 "height":50,
+                 "id":531,
+                 "name":"Sable Deserter",
+                 "opacity":1,
+                 "properties":[
+                        {
+                         "name":"contract_id",
+                         "type":"string",
+                         "value":"vale_fair_watch"
+                        }, 
+                        {
+                         "name":"enemy",
+                         "type":"string",
+                         "value":"vale_raider"
+                        }, 
+                        {
+                         "name":"event_id",
+                         "type":"string",
+                         "value":"vale"
+                        }, 
+                        {
+                         "name":"sprite",
+                         "type":"string",
+                         "value":"13"
+                        }],
+                 "rotation":0,
+                 "type":"enemy",
+                 "visible":true,
+                 "width":50,
+                 "x":860,
+                 "y":720
+                }, 
+                {
+                 "height":50,
+                 "id":532,
+                 "name":"Sable Deserter",
+                 "opacity":1,
+                 "properties":[
+                        {
+                         "name":"contract_id",
+                         "type":"string",
+                         "value":"vale_fair_watch"
+                        }, 
+                        {
+                         "name":"enemy",
+                         "type":"string",
+                         "value":"vale_raider"
+                        }, 
+                        {
+                         "name":"event_id",
+                         "type":"string",
+                         "value":"vale"
+                        }, 
+                        {
+                         "name":"sprite",
+                         "type":"string",
+                         "value":"13"
+                        }],
+                 "rotation":0,
+                 "type":"enemy",
+                 "visible":true,
+                 "width":50,
+                 "x":1010,
+                 "y":890
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -547,7 +666,7 @@
          "y":0
         }],
  "nextlayerid":3,
- "nextobjectid":530,
+ "nextobjectid":533,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.12.2",

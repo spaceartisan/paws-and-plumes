@@ -2,7 +2,7 @@
   "id": "./paws-and-plumes-rpg",
   "name": "Paws & Plumes",
   "short_name": "Paws & Plumes",
-  "description": "A traditional top-down Renaissance-fantasy cat RPG with persistent characters, obstacle-aware exploration, melee, archery and Aethercraft combat, Bellflower Vale, dungeons, quests, gathering, banking, tradecraft refinement, and masterwork equipment.",
+  "description": "A traditional top-down Renaissance fantasy cat RPG with gathering, skills, combat disciplines, town interiors, guild renown, dungeons, fast travel, a living calendar and changing outdoor weather.",
   "start_url": "./?source=pwa",
   "scope": "./",
   "display": "standalone",

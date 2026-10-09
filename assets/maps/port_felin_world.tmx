@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="34" height="20" tilewidth="64" tileheight="64" infinite="0" nextlayerid="3" nextobjectid="49">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="34" height="20" tilewidth="64" tileheight="64" infinite="0" nextlayerid="3" nextobjectid="62">
   <tileset firstgid="1" name="world_tiles" tilewidth="64" tileheight="64" tilecount="6" columns="6">
     <image source="../world/world_tiles.png" width="384" height="64" />
   </tileset>
@@ -250,6 +250,106 @@
         <property name="spawn_y" value="575" type="int" />
         <property name="label" value="Bellflower Vale" />
         <property name="style" value="road" />
+      </properties>
+    </object>
+    <object id="49" name="Port Felin Wayshrine" type="landmark" x="555" y="640" width="40" height="40">
+      <properties>
+        <property name="kind" value="waystone" />
+        <property name="waypoint_id" value="port_felin" />
+        <property name="waypoint_label" value="Port Felin" />
+        <property name="spawn_x" value="575" type="int" />
+        <property name="spawn_y" value="690" type="int" />
+      </properties>
+    </object>
+    <object id="50" name="Old Quarry Wayshrine" type="landmark" x="1875" y="520" width="40" height="40">
+      <properties>
+        <property name="kind" value="waystone" />
+        <property name="waypoint_id" value="old_quarry" />
+        <property name="waypoint_label" value="Old Quarry" />
+        <property name="spawn_x" value="1875" type="int" />
+        <property name="spawn_y" value="580" type="int" />
+      </properties>
+    </object>
+    <object id="51" name="Town Bell &amp; Calendar" type="landmark" x="325" y="520" width="40" height="40">
+      <properties>
+        <property name="kind" value="calendar_bell" />
+      </properties>
+    </object>
+    <object id="52" name="Market Day Traveling Stall" type="landmark" x="535" y="585" width="44" height="44">
+      <properties>
+        <property name="kind" value="market_stall" />
+      </properties>
+    </object>
+    <object id="53" name="Market Cutpurse" type="enemy" x="690" y="760" width="50" height="50">
+      <properties>
+        <property name="enemy" value="market_cutpurse" />
+        <property name="sprite" value="15" />
+        <property name="event_id" value="market" />
+        <property name="contract_id" value="market_watch" />
+      </properties>
+    </object>
+    <object id="54" name="Market Cutpurse" type="enemy" x="790" y="690" width="50" height="50">
+      <properties>
+        <property name="enemy" value="market_cutpurse" />
+        <property name="sprite" value="15" />
+        <property name="event_id" value="market" />
+        <property name="contract_id" value="market_watch" />
+      </properties>
+    </object>
+    <object id="55" name="Market Cutpurse" type="enemy" x="845" y="820" width="50" height="50">
+      <properties>
+        <property name="enemy" value="market_cutpurse" />
+        <property name="sprite" value="15" />
+        <property name="event_id" value="market" />
+        <property name="contract_id" value="market_watch" />
+      </properties>
+    </object>
+    <object id="56" name="Redtail Saboteur" type="enemy" x="1280" y="420" width="50" height="50">
+      <properties>
+        <property name="enemy" value="muster_raider" />
+        <property name="sprite" value="7" />
+        <property name="event_id" value="guild" />
+        <property name="contract_id" value="muster_watch" />
+      </properties>
+    </object>
+    <object id="57" name="Redtail Saboteur" type="enemy" x="1390" y="600" width="50" height="50">
+      <properties>
+        <property name="enemy" value="muster_raider" />
+        <property name="sprite" value="7" />
+        <property name="event_id" value="guild" />
+        <property name="contract_id" value="muster_watch" />
+      </properties>
+    </object>
+    <object id="58" name="Redtail Saboteur" type="enemy" x="1510" y="715" width="50" height="50">
+      <properties>
+        <property name="enemy" value="muster_raider" />
+        <property name="sprite" value="7" />
+        <property name="event_id" value="guild" />
+        <property name="contract_id" value="muster_watch" />
+      </properties>
+    </object>
+    <object id="59" name="Fox Poacher" type="enemy" x="1010" y="390" width="50" height="50">
+      <properties>
+        <property name="enemy" value="river_poacher" />
+        <property name="sprite" value="11" />
+        <property name="event_id" value="river" />
+        <property name="contract_id" value="river_watch" />
+      </properties>
+    </object>
+    <object id="60" name="Fox Poacher" type="enemy" x="1135" y="455" width="50" height="50">
+      <properties>
+        <property name="enemy" value="river_poacher" />
+        <property name="sprite" value="11" />
+        <property name="event_id" value="river" />
+        <property name="contract_id" value="river_watch" />
+      </properties>
+    </object>
+    <object id="61" name="Fox Poacher" type="enemy" x="1040" y="775" width="50" height="50">
+      <properties>
+        <property name="enemy" value="river_poacher" />
+        <property name="sprite" value="11" />
+        <property name="event_id" value="river" />
+        <property name="contract_id" value="river_watch" />
       </properties>
     </object>
   </objectgroup>

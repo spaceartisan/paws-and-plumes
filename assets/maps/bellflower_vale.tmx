@@ -1,5 +1,5 @@
-<?xml version='1.0' encoding='utf-8'?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="18" tilewidth="64" tileheight="64" infinite="0" nextlayerid="3" nextobjectid="530">
+<?xml version='1.0' encoding='UTF-8'?>
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="18" tilewidth="64" tileheight="64" infinite="0" nextlayerid="3" nextobjectid="533">
   <tileset firstgid="1" name="world_tiles" tilewidth="64" tileheight="64" tilecount="6" columns="6">
     <image source="../world/world_tiles.png" width="384" height="64" />
   </tileset>
@@ -123,6 +123,10 @@
     <object id="523" name="Bellflower Wayshrine" type="landmark" x="840" y="420" width="36" height="36">
       <properties>
         <property name="kind" value="vale_shrine" />
+        <property name="waypoint_id" value="bellflower" />
+        <property name="waypoint_label" value="Bellflower Vale" />
+        <property name="spawn_x" value="858" type="int" />
+        <property name="spawn_y" value="480" type="int" />
       </properties>
     </object>
     <object id="524" name="Camp Supply Chest" type="landmark" x="1540" y="760" width="40" height="38">
@@ -138,6 +142,30 @@
         <property name="spawn_y" value="610" type="int" />
         <property name="label" value="Eastroad to Port Felin" />
         <property name="style" value="road" />
+      </properties>
+    </object>
+    <object id="530" name="Sable Deserter" type="enemy" x="720" y="555" width="50" height="50">
+      <properties>
+        <property name="enemy" value="vale_raider" />
+        <property name="sprite" value="13" />
+        <property name="event_id" value="vale" />
+        <property name="contract_id" value="vale_fair_watch" />
+      </properties>
+    </object>
+    <object id="531" name="Sable Deserter" type="enemy" x="860" y="720" width="50" height="50">
+      <properties>
+        <property name="enemy" value="vale_raider" />
+        <property name="sprite" value="13" />
+        <property name="event_id" value="vale" />
+        <property name="contract_id" value="vale_fair_watch" />
+      </properties>
+    </object>
+    <object id="532" name="Sable Deserter" type="enemy" x="1010" y="890" width="50" height="50">
+      <properties>
+        <property name="enemy" value="vale_raider" />
+        <property name="sprite" value="13" />
+        <property name="event_id" value="vale" />
+        <property name="contract_id" value="vale_fair_watch" />
       </properties>
     </object>
   </objectgroup>
