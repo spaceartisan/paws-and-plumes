@@ -1,3 +1,163 @@
+# Paws & Plumes v0.25.0 — Turning Tides (Directional Characters)
+
+This release continues directly from v0.24.0 Living Characters. It gives the player, townsfolk, and hostile creatures **readable compass facing** while keeping the traditional overworld RPG gameplay unchanged.
+
+## Changes
+
+- **Actual new vector views, not just a stretched original sprite:** all **16** characters/enemy silhouettes now have dedicated side and back illustrations, aligned to the original 64×64 front views. The East view uses the new side view; West mirrors it. Orange, tuxedo, silver, bandit, fox, rat, boar, mage and armed variants all remain distinct.
+- **Real movement facing:** walking north shows the back; south shows the original front; left/right display the side profile. NPCs and enemies use the same direction rules, including tap-to-walk, standard roaming, and enemy pursuit. Facing remains stable when stopped.
+- **Combat orientation:** player and enemy turn toward opponents when attacking. Enemy special windups gain a ground warning ring and a rising warning glint; melee, ranged, magic and hit motions gain style-specific directional emphasis. This changes **rendering only**, not attack timing, accuracy, damage, AI or guard logic.
+- **Grounded, legible motion:** shadows stay anchored when the player turns, the existing footfall timing remains, and blinking happens only on front-facing faces. Reduced-motion preferences continue to suppress exaggerated motion without hiding facing or the combat alert.
+
+## Editable art
+
+`assets/src/world/directional_sprites.svg` contains the Inkscape-rendered side and back views. These complement the original front-facing `assets/world/cat_sprites.png` and existing editable sprite art. The runtime-composed sheet is `assets/world/directional_sprites.png` (16 columns × 3 rows, 64×64 cells). Old assets are unchanged and retained.
+
+## Compatibility
+
+Existing saved characters use the **same `paws_plumes_traditional_v020` key**, and the PWA manifest identity stays `./paws-and-plumes-rpg`. All Tiled maps, objects, door positions and quests are preserved. Upload the contents of `PawsAndPlumes` to the GitHub Pages root; there is no build process. The service-worker cache becomes `paws-plumes-v0250-20261009` so installed PWAs fetch the new directional sheet.
+
+## Screenshots / QA
+
+`docs/screenshots/v025_four_directions_review.png`, `v025_enemy_windup_mobile.png`, `v025_enemy_attack_mobile.png`, and `v025_east_desktop.png` are real in-browser game captures, inspected by eye before release. See `QA_REPORT.md` for measured tests. A real physical mobile device has not been tested in this environment.
+
+---
+
+# Paws & Plumes v0.24.0 — Living Characters
+
+A focused animation pass built on **v0.23.0 Wilderness Renewal**. The game is still a traditional, continuous-world cat RPG; controls, map interactions, enemy mechanics, weather, progression, quests, and saves are unchanged.
+
+## What's new
+
+- **Movement-responsive walk cycles:** player, NPCs, civilians, and enemies use short, restrained sprite lean, bounce, and body compression tied to distance actually traveled, with alternating front footfalls for upright cat silhouettes. Stationary characters settle gradually rather than snapping between walk and idle poses.
+- **Grounded presentation:** a subtle oval ground shadow stays at the actor's world position while the body moves, avoiding the illusion that characters float across streets and forest paths.
+- **Idle life:** characters have restrained breathing and occasional brief eye-blink details on face-forward cat sprites.
+- **Combat animation:** player attacks and enemy attacks now trigger a short visual action cue, with separate art for melee, bows, magic, and incoming hits. Damage flashes and stagger are only visual; they don't move collision bodies, alter timings, or change damage.
+- **Editable art:** the four-frame action-effects atlas comes from an Inkscape-authored `assets/src/world/animation_fx.svg`; its runtime output is `assets/world/animation_fx.png`. Existing character and enemy art remain unchanged.
+- **Reduced-motion support:** preference reduces or eliminates continuous movement, tilt, idle breathing, and blinking while retaining a static transient action indicator.
+
+These are lightweight animated poses and effects on top of the existing sprite designs, **not a newly drawn eight-direction character animation set**. An eventual directional sprite-sheet pass can extend the same hooks.
+
+## Compatibility and deploy
+
+Upload the `PawsAndPlumes` folder contents to the root of the current GitHub Pages site. No build step is required. The save key stays `paws_plumes_traditional_v020`, and the manifest ID stays `./paws-and-plumes-rpg`. The service-worker cache is now `paws-plumes-v0240-20261009` and precaches the action artwork for offline play. Existing saves and previously installed PWAs continue in place.
+
+## Evidence
+
+Validated with the actual browser game code in desktop Chromium at 390×844, 320×568, and 1280×720. See `QA_REPORT.md` and the inspected screenshots `docs/screenshots/v024_walk_mobile.png`, `v024_melee_mobile.png`, `v024_magic_mobile.png`, `v024_hit_mobile.png`, and `v024_town_desktop.png`. `v024_walk_preview.gif` contains a short sampled walking sequence. Physical-phone animation cadence and power use still require real-device checks.
+
+---
+
+# Paws & Plumes v0.23.0 — Wilderness Renewal
+
+This is a world-art update building on **v0.22.0 Living Streets**. It brings the surrounding countryside closer to Port Felin's refined style without changing the traditional RPG, character data, quest progression, interactive objects, or navigation.
+
+## New artwork and map authoring
+
+- **14 new Inkscape-authored vector assets**, exported to transparent PNG: broadleaf oak, tall pine, ferns, brambles, mushrooms, moss-covered boulder, river reeds, fallen timber, lavender, wildflowers, quarry rubble, ruined stone arch, and two tile-border treatments.
+- **60 explicitly placed wilderness decorations** in separate **Wild Scenery** layers: **31** on Port Felin's wide map (South Road, riverbanks, Eastroad, Mosswood, and the Quarry), and **29** in Bellflower Vale (meadows, vineyard road, Old Aqueduct and Sable camp).
+- **More natural forest and stream margins**, drawn by orienting the editable forest-edge and riverbank sprites along the actual blocked terrain boundary. No new physical barriers or pathfinding rules.
+- **Composition corrections after browser review:** relocated large trees and boulders onto already-blocked forest margins; removed rubble that crowded the quarry building; kept NPCs, harvest markers, and road entrances readable. Small low flora may remain on walkable terrain, intentionally nonblocking.
+
+Editable art: `assets/src/world/wilderness/*.svg`, PNG exports: `assets/world/wilderness/*.png`; map placements are in `assets/maps/port_felin_world.tmx` and `assets/maps/bellflower_vale.tmx` (their separate `Wild Scenery` layers), with matching JSON exports. Gameplay objects remain in the original `World Objects` layer.
+
+## Compatibility and deployment
+
+The game's save key remains **`paws_plumes_traditional_v020`**, and the PWA identity remains **`./paws-and-plumes-rpg`**. The offline cache is bumped to `paws-plumes-v0230-20261009` and contains all 14 new runtime PNG assets. Upload the contents of `PawsAndPlumes/` to GitHub Pages with no build step. Existing saves, map entrances, weather, loot, and progression are not reset.
+
+## Testing and screenshots
+
+Headless Chromium loaded the actual game at **320×568**, **390×844** and **1280×720**; all new images loaded, both outdoor maps rendered without browser errors or horizontal overflow. Every original Ground tile and gameplay `World Objects` entry in both edited maps is exactly identical to v0.22 (parsed JSON comparison). Map SVGs, exported JSONs, PNGs, and precache targets validated. See `QA_REPORT.md` for details.
+
+- `docs/screenshots/v023_comparison_mosswood.png` — the forest before/after.
+- `docs/screenshots/v023_comparison_bellflower.png` — field and vineyard before/after.
+- `docs/screenshots/v023_comparison_south_road.png` — riverbank before/after.
+- `docs/screenshots/v023_after_quarry_mobile.png` / `v023_after_aqueduct_mobile.png` — other updated areas.
+- `docs/screenshots/v023_after_mosswood_small_phone.png` and `v023_after_bellflower_desktop.png` — viewport coverage.
+
+Screenshots come from the running game with the same save-state/map position in both versions; they were reviewed before release. Real-device installed-PWA testing is still recommended.
+
+---
+
+# Paws & Plumes v0.22.0 — Living Streets & Garden Edges
+
+Port Felin's new facades now sit in a more detailed town environment. This graphics-focused release builds on v0.21.0, using **editable Inkscape SVG art** and **explicit Tiled scenery placements** rather than anonymous runtime-generated decorations.
+
+## Visual changes
+
+- **Ten authored scenery sprites:** cast-iron lantern, wooden planter, flower trough, paired barrels, bench, green hedge, wildflower cluster, supply crates, rowan tree, and wooden fence, all retained as editable SVGs with transparent PNG runtime exports.
+- **25 hand-placed non-interactive decorations** in the separate `Scenery` layer of `port_felin_world.tmx`, mirrored in exported JSON. Street furniture, potted greenery, south-green flowerbeds, and orchard edges add detail while preserving the open paths.
+- **Stone-to-grass curb edging** now uses an Inkscape-authored transparent tile along paving boundaries; the orientation follows neighboring authored Ground tiles, with the original terrain/collision data unchanged.
+- **Night lantern glow:** subtle warm lighting around existing authored lanterns when the game's normal world clock reaches darkness.
+- **Composition clean-up:** removed flower troughs that overlapped building labels, moved a barrel stack away from NPC traffic, and omitted uncoupled decorative fences that falsely suggested barriers across walkable terrain.
+
+## Authoring and deployment
+
+Editable scenery: `assets/src/world/scenery/*.svg`; PNG exports: `assets/world/scenery/*.png`. The town's Tiled `Scenery` object layer is purely decorative and deliberately excluded from pathfinding and clickable targets. It does not replace `World Objects` or move entrance hitboxes. The entire previous `World Objects` layer and `Ground` tile data are byte-for-byte equivalent as parsed JSON to v0.21.0.
+
+The save key **`paws_plumes_traditional_v020`**, three character slots, equipment, quests, weather, and PWA identity **`./paws-and-plumes-rpg`** remain unchanged. The offline cache is updated to **`paws-plumes-v0220-20261009`** and precaches the new scene sprites. Deploy the contents of `PawsAndPlumes/` to GitHub Pages; no build is required.
+
+## Visual QA and limitations
+
+The real game ran in headless Chromium at **320×568**, **390×844** and **1280×720**, with all 11 new PNG resources loaded, no page errors, and no horizontal overflow. A real canvas click entered Felin Exchange. I inspected the three viewport captures and a southern-green capture and adjusted the compositions before release.
+
+Screenshots: `docs/screenshots/v022_before_after_mobile.png`, `v022_town_mobile.png`, `v022_town_small_phone.png`, `v022_town_desktop.png`, `v022_south_green_mobile.png`. The screenshots were captured from the running game, not mockups. A real phone or installed PWA is still required to evaluate visual comfort, audio, and installed-cache refresh on hardware.
+
+---
+
+# Paws & Plumes v0.21.0 — Port Felin Art Pass
+
+The town has been reworked with six editable, Inkscape-authored vector facade sprites and an improved stone street tile. This pass builds directly on **v0.20.2 Door Alignment Hotfix**, preserves the complete game world, and addresses the visible visual inconsistencies in the previous screenshots.
+
+## Visual changes
+
+- **Six new authored facades:** Guild Hall, Ironpaw Forge, Warm Saucer Inn, Mercato, Felin Exchange and the Quarry Hut each have their own SVG master and exported transparent PNG. Renaissance-style timberwork, stonework, tiled roofs, inset doors, shuttered windows, chimneys, awning and business crests give the buildings distinct identities while retaining the established low-resolution world style.
+- **Doors stay aligned to the maps.** The art's door positions are authored at exactly the centers of the real five Port Felin doorway objects; clickable interactions and collision use the existing Tiled definitions. The duplicate exterior door glyph from pre-v0.20.2 does not return.
+- **Cleaner signage.** Building names are below their fronts. Nearby unselected exterior-door labels no longer cover windows or doors; tapping a door still enters immediately.
+- **Warmer hand-set cobbles.** Replaced the repeating rectangular street brick tile with a more varied authored SVG paving treatment, exported through Inkscape to the existing `world_tiles.png` runtime atlas.
+- **Time-of-day response:** the new facade windows retain subtle lighting as night sets in. The previous Canvas facade painter remains as an offline asset-failure fallback.
+
+## Artwork workflow
+
+Editable masters: `assets/src/world/facades/*.svg` and `assets/src/world/world_tiles.svg`.
+Runtime exports: `assets/world/facades/*.png` and `assets/world/world_tiles.png`.
+See `assets/src/world/facades/README.md` for export commands and strict map/door alignment guidance. No live-rendered geometry was added; this is art keyed to map-authored footprints.
+
+## Save, PWA and deployment
+
+No gameplay systems, map geometry, collisions, quests, or character progression were changed. The existing save key **`paws_plumes_traditional_v020`** and manifest identity **`./paws-and-plumes-rpg`** are retained. The service worker caches the six new facade PNGs for offline play under **`paws-plumes-v0210-20261009`**.
+
+Unzip and deploy the **contents of `PawsAndPlumes/`** to the GitHub Pages site root. No build step is needed. Keep your current installed PWA; it will update in place.
+
+## Visual review and QA
+
+Before: `docs/screenshots/v0202_port_doors_mobile.png`. A side-by-side inspected comparison is saved as `docs/screenshots/v021_before_after_mobile.png`.
+After: `docs/screenshots/v021_town_mobile.png`, `v021_town_small_phone.png`, `v021_town_desktop.png`, and `v021_exchange_mobile.png`.
+All four after screenshots were opened and visually checked prior to release. The bank door was actually tapped from the canvas to enter the interior and then tapped again to exit. See `QA_REPORT.md` for exact tested cases.
+
+---
+
+# Paws & Plumes v0.20.2 — Door Alignment Hotfix
+
+This is a quick corrective follow-up to the facade polish pass. The previous door-art update improved the building fronts, but the live screenshots showed that Port Felin was still drawing a second exterior doorway marker on top of the buildings, which made the visible doors appear offset. This hotfix corrects that.
+
+## New in v0.20.2
+
+- **Corrected exterior door alignment** for Port Felin buildings by anchoring the painted facade doors to the actual linked doorway object positions.
+- **Removed the duplicate chunky exterior door marker** from town building fronts, so the interaction doorway no longer looks like a second misplaced door pasted on top.
+- **Kept the facade polish** from the prior pass: improved framing, panels, thresholds, windows, trim, and building-specific frontage details remain intact.
+- **No gameplay or map logic changes.** This is a rendering/readability hotfix only.
+
+## Compatibility and deployment
+
+Upload the contents of the `PawsAndPlumes` directory to the root of the GitHub Pages deployment. There is no build step. The save key remains **`paws_plumes_traditional_v020`** and the installed PWA identity remains **`./paws-and-plumes-rpg`**. The service-worker cache advances to **`paws-plumes-v0202-20261009`**.
+
+## Evidence and limits
+
+See `QA_REPORT.md` and the updated screenshots `docs/screenshots/v0202_port_doors_mobile.png` and `v0202_port_doors_desktop.png`. The prior flawed pass is still visible in `v0201_port_doors_mobile.png` / `v0201_port_doors_desktop.png` for comparison.
+
+---
+
 # Paws & Plumes v0.20.0 — Weatherwise Wanderer
 
 This release extends **Living Weather** into a small, optional fieldcraft expedition, while preserving the same traditional cat RPG, character slots, worlds, saves, authored assets, and GitHub Pages deployment.

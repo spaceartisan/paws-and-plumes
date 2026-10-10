@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="34" height="20" tilewidth="64" tileheight="64" infinite="0" nextlayerid="3" nextobjectid="62">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="34" height="20" tilewidth="64" tileheight="64" infinite="0" nextlayerid="5" nextobjectid="2335">
   <tileset firstgid="1" name="world_tiles" tilewidth="64" tileheight="64" tilecount="6" columns="6">
     <image source="../world/world_tiles.png" width="384" height="64" />
   </tileset>
@@ -350,6 +350,290 @@
         <property name="sprite" value="11" />
         <property name="event_id" value="river" />
         <property name="contract_id" value="river_watch" />
+      </properties>
+    </object>
+  </objectgroup>
+  <objectgroup id="3" name="Scenery" visible="1">
+    <object id="1000" name="Town Lantern - South East" type="scenery" x="583" y="736" width="44" height="92">
+      <properties>
+        <property name="kind" value="lantern" />
+      </properties>
+    </object>
+    <object id="1001" name="Town Lantern - Exchange" type="scenery" x="713" y="281" width="44" height="92">
+      <properties>
+        <property name="kind" value="lantern" />
+      </properties>
+    </object>
+    <object id="1004" name="Saucer Planter" type="scenery" x="155" y="710" width="58" height="53">
+      <properties>
+        <property name="kind" value="planter" />
+      </properties>
+    </object>
+    <object id="1006" name="Exchange Planter West" type="scenery" x="528" y="310" width="58" height="53">
+      <properties>
+        <property name="kind" value="planter" />
+      </properties>
+    </object>
+    <object id="1007" name="Exchange Planter East" type="scenery" x="656" y="310" width="58" height="53">
+      <properties>
+        <property name="kind" value="planter" />
+      </properties>
+    </object>
+    <object id="1009" name="Market Supply Crates" type="scenery" x="700" y="746" width="56" height="60">
+      <properties>
+        <property name="kind" value="crate" />
+      </properties>
+    </object>
+    <object id="1010" name="Forge Supply Barrels" type="scenery" x="670" y="460" width="76" height="56">
+      <properties>
+        <property name="kind" value="barrels" />
+      </properties>
+    </object>
+    <object id="1011" name="Quay Supply Crates" type="scenery" x="1022" y="510" width="56" height="60">
+      <properties>
+        <property name="kind" value="crate" />
+      </properties>
+    </object>
+    <object id="1012" name="Guild Walk Bench" type="scenery" x="82" y="692" width="85" height="50">
+      <properties>
+        <property name="kind" value="bench" />
+      </properties>
+    </object>
+    <object id="1013" name="West Green Bench" type="scenery" x="248" y="845" width="85" height="50">
+      <properties>
+        <property name="kind" value="bench" />
+      </properties>
+    </object>
+    <object id="1014" name="Bank Garden Bench" type="scenery" x="650" y="385" width="85" height="50">
+      <properties>
+        <property name="kind" value="bench" />
+      </properties>
+    </object>
+    <object id="1015" name="Southflower Bed West" type="scenery" x="153" y="804" width="100" height="40">
+      <properties>
+        <property name="kind" value="flowerbed" />
+      </properties>
+    </object>
+    <object id="1016" name="Southflower Bed East" type="scenery" x="478" y="804" width="100" height="40">
+      <properties>
+        <property name="kind" value="flowerbed" />
+      </properties>
+    </object>
+    <object id="1017" name="South Green Rowan" type="scenery" x="205" y="939" width="100" height="112">
+      <properties>
+        <property name="kind" value="rowan" />
+      </properties>
+    </object>
+    <object id="1018" name="South Green Rowan East" type="scenery" x="532" y="928" width="100" height="112">
+      <properties>
+        <property name="kind" value="rowan" />
+      </properties>
+    </object>
+    <object id="1019" name="East Road Rowan" type="scenery" x="752" y="360" width="100" height="112">
+      <properties>
+        <property name="kind" value="rowan" />
+      </properties>
+    </object>
+    <object id="1020" name="Market Street Hedge" type="scenery" x="691" y="527" width="80" height="43">
+      <properties>
+        <property name="kind" value="hedge" />
+      </properties>
+    </object>
+    <object id="1021" name="South Garden Hedge A" type="scenery" x="103" y="813" width="80" height="43">
+      <properties>
+        <property name="kind" value="hedge" />
+      </properties>
+    </object>
+    <object id="1022" name="South Garden Hedge B" type="scenery" x="606" y="850" width="80" height="43">
+      <properties>
+        <property name="kind" value="hedge" />
+      </properties>
+    </object>
+    <object id="1024" name="West Meadow Blossoms" type="scenery" x="122" y="902" width="66" height="40">
+      <properties>
+        <property name="kind" value="flowerpatch" />
+      </properties>
+    </object>
+    <object id="1025" name="South Meadow Blossoms" type="scenery" x="382" y="857" width="66" height="40">
+      <properties>
+        <property name="kind" value="flowerpatch" />
+      </properties>
+    </object>
+    <object id="1026" name="South Meadow Blossoms II" type="scenery" x="462" y="999" width="66" height="40">
+      <properties>
+        <property name="kind" value="flowerpatch" />
+      </properties>
+    </object>
+    <object id="1027" name="East Meadow Blossoms" type="scenery" x="656" y="907" width="66" height="40">
+      <properties>
+        <property name="kind" value="flowerpatch" />
+      </properties>
+    </object>
+    <object id="1031" name="Quarry Herb Patch" type="scenery" x="1715" y="382" width="66" height="40">
+      <properties>
+        <property name="kind" value="flowerpatch" />
+      </properties>
+    </object>
+    <object id="1032" name="Riverside Herbs" type="scenery" x="973" y="442" width="66" height="40">
+      <properties>
+        <property name="kind" value="flowerpatch" />
+      </properties>
+    </object>
+  </objectgroup>
+  <objectgroup id="4" name="Wild Scenery" visible="1">
+    <object id="2300" name="South Road hedgerow" type="wilderness" x="780" y="120" width="83" height="55">
+      <properties>
+        <property name="kind" value="bramble" />
+      </properties>
+    </object>
+    <object id="2301" name="Roadside Ferns" type="wilderness" x="822" y="391" width="72" height="46">
+      <properties>
+        <property name="kind" value="fern_bank" />
+      </properties>
+    </object>
+    <object id="2302" name="Northbank Willow Fern" type="wilderness" x="1028" y="268" width="72" height="46">
+      <properties>
+        <property name="kind" value="fern_bank" />
+      </properties>
+    </object>
+    <object id="2303" name="Fishing Bank Reeds North" type="wilderness" x="1084" y="228" width="76" height="62">
+      <properties>
+        <property name="kind" value="river_reeds" />
+      </properties>
+    </object>
+    <object id="2304" name="Fishing Bank Reeds South" type="wilderness" x="1095" y="695" width="76" height="62">
+      <properties>
+        <property name="kind" value="river_reeds" />
+      </properties>
+    </object>
+    <object id="2305" name="Roadside Daisies" type="wilderness" x="802" y="625" width="73" height="42">
+      <properties>
+        <property name="kind" value="wildflowers" />
+      </properties>
+    </object>
+    <object id="2306" name="Meadow Flowers" type="wilderness" x="887" y="680" width="73" height="42">
+      <properties>
+        <property name="kind" value="wildflowers" />
+      </properties>
+    </object>
+    <object id="2307" name="South Lane Boulder" type="wilderness" x="949" y="1003" width="87" height="63">
+      <properties>
+        <property name="kind" value="moss_boulder" />
+      </properties>
+    </object>
+    <object id="2308" name="Road Ferns" type="wilderness" x="1060" y="882" width="72" height="46">
+      <properties>
+        <property name="kind" value="fern_bank" />
+      </properties>
+    </object>
+    <object id="2309" name="Bridge Bank Reeds" type="wilderness" x="1106" y="486" width="76" height="62">
+      <properties>
+        <property name="kind" value="river_reeds" />
+      </properties>
+    </object>
+    <object id="2310" name="Riverbank Bramble" type="wilderness" x="1065" y="955" width="83" height="55">
+      <properties>
+        <property name="kind" value="bramble" />
+      </properties>
+    </object>
+    <object id="2311" name="East Road Boulder" type="wilderness" x="1461" y="235" width="87" height="63">
+      <properties>
+        <property name="kind" value="moss_boulder" />
+      </properties>
+    </object>
+    <object id="2312" name="East Road Ferns" type="wilderness" x="1450" y="780" width="72" height="46">
+      <properties>
+        <property name="kind" value="fern_bank" />
+      </properties>
+    </object>
+    <object id="2313" name="East Road Flowers" type="wilderness" x="1550" y="700" width="73" height="42">
+      <properties>
+        <property name="kind" value="wildflowers" />
+      </properties>
+    </object>
+    <object id="2314" name="Mosswood Gate Ferns" type="wilderness" x="1645" y="606" width="72" height="46">
+      <properties>
+        <property name="kind" value="fern_bank" />
+      </properties>
+    </object>
+    <object id="2315" name="Mosswood North Pine" type="wilderness" x="1500" y="600" width="100" height="128">
+      <properties>
+        <property name="kind" value="pine_bough" />
+      </properties>
+    </object>
+    <object id="2316" name="Mosswood Boundary Oak" type="wilderness" x="1510" y="808" width="116" height="130">
+      <properties>
+        <property name="kind" value="oak_canopy" />
+      </properties>
+    </object>
+    <object id="2317" name="Mosswood West Bramble" type="wilderness" x="1583" y="987" width="83" height="55">
+      <properties>
+        <property name="kind" value="bramble" />
+      </properties>
+    </object>
+    <object id="2318" name="Mosswood Forest Ferns" type="wilderness" x="1684" y="1051" width="72" height="46">
+      <properties>
+        <property name="kind" value="fern_bank" />
+      </properties>
+    </object>
+    <object id="2319" name="Mosswood Mushroom Ring" type="wilderness" x="1760" y="1120" width="68" height="49">
+      <properties>
+        <property name="kind" value="mushroom_cluster" />
+      </properties>
+    </object>
+    <object id="2320" name="Mosswood Eastern Pine" type="wilderness" x="1842" y="987" width="100" height="128">
+      <properties>
+        <property name="kind" value="pine_bough" />
+      </properties>
+    </object>
+    <object id="2321" name="Mosswood Fallen Oak" type="wilderness" x="1890" y="1090" width="109" height="48">
+      <properties>
+        <property name="kind" value="fallen_log" />
+      </properties>
+    </object>
+    <object id="2322" name="Mosswood Bramble North" type="wilderness" x="1753" y="682" width="83" height="55">
+      <properties>
+        <property name="kind" value="bramble" />
+      </properties>
+    </object>
+    <object id="2323" name="Mosswood North Rock" type="wilderness" x="1973" y="1003" width="87" height="63">
+      <properties>
+        <property name="kind" value="moss_boulder" />
+      </properties>
+    </object>
+    <object id="2324" name="Mosswood West Flowers" type="wilderness" x="1604" y="783" width="73" height="42">
+      <properties>
+        <property name="kind" value="wildflowers" />
+      </properties>
+    </object>
+    <object id="2325" name="Mosswood Far Oak" type="wilderness" x="2000" y="1000" width="116" height="130">
+      <properties>
+        <property name="kind" value="oak_canopy" />
+      </properties>
+    </object>
+    <object id="2326" name="Eastroad Milestone Fern" type="wilderness" x="1365" y="697" width="72" height="46">
+      <properties>
+        <property name="kind" value="fern_bank" />
+      </properties>
+    </object>
+    <object id="2329" name="Quarry Backcountry Boulder" type="wilderness" x="2010" y="735" width="87" height="63">
+      <properties>
+        <property name="kind" value="moss_boulder" />
+      </properties>
+    </object>
+    <object id="2332" name="Quarry Road Rock" type="wilderness" x="1909" y="747" width="87" height="63">
+      <properties>
+        <property name="kind" value="moss_boulder" />
+      </properties>
+    </object>
+    <object id="2333" name="Quarry Wildflowers" type="wilderness" x="1700" y="674" width="73" height="42">
+      <properties>
+        <property name="kind" value="wildflowers" />
+      </properties>
+    </object>
+    <object id="2334" name="Quarry Ridgetop Pine" type="wilderness" x="1582" y="106" width="100" height="128">
+      <properties>
+        <property name="kind" value="pine_bough" />
       </properties>
     </object>
   </objectgroup>

@@ -1,0 +1,26 @@
+[
+  {
+    "width": 320,
+    "height": 568,
+    "map_loaded": true,
+    "facade_alignment_ok": true,
+    "runtime_errors": [],
+    "scroll_width": 320
+  },
+  {
+    "width": 390,
+    "height": 844,
+    "map_loaded": true,
+    "facade_alignment_ok": true,
+    "runtime_errors": [],
+    "scroll_width": 390
+  },
+  {
+    "width": 1280,
+    "height": 720,
+    "map_loaded": true,
+    "facade_alignment_ok": true,
+    "runtime_errors": [],
+    "scroll_width": 1280
+  }
+]

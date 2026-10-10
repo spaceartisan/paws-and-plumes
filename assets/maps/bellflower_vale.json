@@ -1,692 +1,1809 @@
-{ "compressionlevel":-1,
- "height":18,
- "infinite":false,
- "layers":[
-        {
-         "data":[6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6,
-            6, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 6,
-            6, 6, 6, 6, 1, 1, 1, 1, 1, 1, 1, 1, 4, 4, 1, 2, 2, 2, 2, 2, 2, 1, 1, 1, 6, 1, 6, 1, 6, 6,
-            6, 6, 6, 6, 1, 5, 5, 5, 5, 5, 5, 1, 4, 4, 1, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 6, 1, 6, 1, 6,
-            6, 6, 6, 6, 1, 5, 5, 5, 5, 5, 5, 1, 4, 4, 1, 2, 2, 2, 2, 2, 2, 1, 1, 1, 6, 1, 6, 1, 6, 6,
-            6, 6, 6, 6, 1, 5, 5, 5, 5, 5, 5, 1, 4, 4, 1, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 6, 1, 6, 1, 6,
-            6, 1, 1, 1, 1, 5, 5, 5, 5, 5, 5, 1, 4, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 6, 1, 6, 1, 6, 6,
-            6, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 6, 1, 6, 1, 6,
-            4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
-            4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
-            6, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 4, 1, 1, 1, 1, 1, 1, 1, 6,
-            6, 1, 6, 6, 1, 6, 6, 1, 1, 1, 1, 1, 1, 1, 1, 4, 4, 4, 4, 4, 4, 4, 4, 1, 1, 1, 1, 1, 1, 6,
-            6, 1, 6, 1, 6, 6, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 4, 4, 4, 4, 4, 4, 4, 1, 3, 3, 3, 3, 1, 6,
-            6, 1, 1, 6, 6, 1, 6, 1, 1, 1, 1, 1, 1, 1, 1, 4, 4, 4, 4, 4, 4, 4, 4, 1, 3, 3, 3, 3, 1, 6,
-            6, 1, 6, 6, 1, 6, 6, 1, 1, 1, 1, 1, 1, 1, 1, 4, 4, 4, 4, 4, 4, 4, 4, 1, 3, 3, 3, 3, 1, 6,
-            6, 1, 6, 1, 6, 6, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 4, 4, 4, 4, 4, 4, 4, 1, 3, 3, 3, 3, 1, 6,
-            6, 1, 1, 6, 6, 1, 6, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 6,
-            6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6],
-         "height":18,
-         "id":1,
-         "name":"Ground",
-         "opacity":1,
-         "type":"tilelayer",
-         "visible":true,
-         "width":30,
-         "x":0,
-         "y":0
-        }, 
-        {
-         "draworder":"topdown",
-         "id":2,
-         "name":"World Objects",
-         "objects":[
-                {
-                 "height":52,
-                 "id":500,
-                 "name":"Road to Port Felin",
-                 "opacity":1,
-                 "properties":[
-                        {
-                         "name":"destination",
-                         "type":"string",
-                         "value":"port_felin"
-                        }, 
-                        {
-                         "name":"label",
-                         "type":"string",
-                         "value":"Road to Port Felin"
-                        }, 
-                        {
-                         "name":"spawn_x",
-                         "type":"int",
-                         "value":2040
-                        }, 
-                        {
-                         "name":"spawn_y",
-                         "type":"int",
-                         "value":610
-                        }, 
-                        {
-                         "name":"style",
-                         "type":"string",
-                         "value":"road"
-                        }],
-                 "rotation":0,
-                 "type":"door",
-                 "visible":true,
-                 "width":62,
-                 "x":46,
-                 "y":545
-                }, 
-                {
-                 "height":105,
-                 "id":501,
-                 "name":"Bellflower Tollhouse",
-                 "opacity":1,
-                 "properties":[
-                        {
-                         "name":"blocking",
-                         "type":"string",
-                         "value":"true"
-                        }, 
-                        {
-                         "name":"kind",
-                         "type":"string",
-                         "value":"vale_tollhouse"
-                        }],
-                 "rotation":0,
-                 "type":"building",
-                 "visible":true,
-                 "width":155,
-                 "x":190,
-                 "y":400
-                }, 
-                {
-                 "height":48,
-                 "id":502,
-                 "name":"Warden Maribel",
-                 "opacity":1,
-                 "properties":[
-                        {
-                         "name":"kind",
-                         "type":"string",
-                         "value":"vale_warden"
-                        }, 
-                        {
-                         "name":"sprite",
-                         "type":"string",
-                         "value":"3"
-                        }],
-                 "rotation":0,
-                 "type":"npc",
-                 "visible":true,
-                 "width":48,
-                 "x":300,
-                 "y":535
-                }, 
-                {
-                 "height":46,
-                 "id":503,
-                 "name":"Bellflower Lavender",
-                 "opacity":1,
-                 "properties":[
-                        {
-                         "name":"resource",
-                         "type":"string",
-                         "value":"lavender"
-                        }],
-                 "rotation":0,
-                 "type":"resource",
-                 "visible":true,
-                 "width":46,
-                 "x":430,
-                 "y":300
-                }, 
-                {
-                 "height":46,
-                 "id":504,
-                 "name":"Field Lavender",
-                 "opacity":1,
-                 "properties":[
-                        {
-                         "name":"resource",
-                         "type":"string",
-                         "value":"lavender"
-                        }],
-                 "rotation":0,
-                 "type":"resource",
-                 "visible":true,
-                 "width":46,
-                 "x":620,
-                 "y":360
-                }, 
-                {
-                 "height":46,
-                 "id":505,
-                 "name":"Old Vale Oak",
-                 "opacity":1,
-                 "properties":[
-                        {
-                         "name":"resource",
-                         "type":"string",
-                         "value":"old_oak"
-                        }],
-                 "rotation":0,
-                 "type":"resource",
-                 "visible":true,
-                 "width":46,
-                 "x":470,
-                 "y":760
-                }, 
-                {
-                 "height":46,
-                 "id":506,
-                 "name":"Aqueduct Iron Vein",
-                 "opacity":1,
-                 "properties":[
-                        {
-                         "name":"resource",
-                         "type":"string",
-                         "value":"rich_iron"
-                        }],
-                 "rotation":0,
-                 "type":"resource",
-                 "visible":true,
-                 "width":46,
-                 "x":1040,
-                 "y":230
-                }, 
-                {
-                 "height":46,
-                 "id":507,
-                 "name":"South Pond Ripples",
-                 "opacity":1,
-                 "properties":[
-                        {
-                         "name":"resource",
-                         "type":"string",
-                         "value":"river_dace"
-                        }],
-                 "rotation":0,
-                 "type":"resource",
-                 "visible":true,
-                 "width":46,
-                 "x":1640,
-                 "y":850
-                }, 
-                {
-                 "height":46,
-                 "id":508,
-                 "name":"Vintner Rows",
-                 "opacity":1,
-                 "properties":[
-                        {
-                         "name":"resource",
-                         "type":"string",
-                         "value":"grape"
-                        }],
-                 "rotation":0,
-                 "type":"resource",
-                 "visible":true,
-                 "width":46,
-                 "x":720,
-                 "y":240
-                }, 
-                {
-                 "height":46,
-                 "id":509,
-                 "name":"Roadside Rosemary",
-                 "opacity":1,
-                 "properties":[
-                        {
-                         "name":"resource",
-                         "type":"string",
-                         "value":"rosemary"
-                        }],
-                 "rotation":0,
-                 "type":"resource",
-                 "visible":true,
-                 "width":46,
-                 "x":900,
-                 "y":610
-                }, 
-                {
-                 "height":50,
-                 "id":510,
-                 "name":"Sable Pikeman",
-                 "opacity":1,
-                 "properties":[
-                        {
-                         "name":"enemy",
-                         "type":"string",
-                         "value":"vale_pikeman"
-                        }, 
-                        {
-                         "name":"sprite",
-                         "type":"string",
-                         "value":"13"
-                        }],
-                 "rotation":0,
-                 "type":"enemy",
-                 "visible":true,
-                 "width":50,
-                 "x":980,
-                 "y":600
-                }, 
-                {
-                 "height":50,
-                 "id":511,
-                 "name":"Sable Pikeman",
-                 "opacity":1,
-                 "properties":[
-                        {
-                         "name":"enemy",
-                         "type":"string",
-                         "value":"vale_pikeman"
-                        }, 
-                        {
-                         "name":"sprite",
-                         "type":"string",
-                         "value":"13"
-                        }],
-                 "rotation":0,
-                 "type":"enemy",
-                 "visible":true,
-                 "width":50,
-                 "x":1110,
-                 "y":690
-                }, 
-                {
-                 "height":50,
-                 "id":512,
-                 "name":"Sable Pikeman",
-                 "opacity":1,
-                 "properties":[
-                        {
-                         "name":"enemy",
-                         "type":"string",
-                         "value":"vale_pikeman"
-                        }, 
-                        {
-                         "name":"sprite",
-                         "type":"string",
-                         "value":"13"
-                        }],
-                 "rotation":0,
-                 "type":"enemy",
-                 "visible":true,
-                 "width":50,
-                 "x":1260,
-                 "y":760
-                }, 
-                {
-                 "height":50,
-                 "id":513,
-                 "name":"Sable Arquebusier",
-                 "opacity":1,
-                 "properties":[
-                        {
-                         "name":"enemy",
-                         "type":"string",
-                         "value":"vale_arquebusier"
-                        }, 
-                        {
-                         "name":"sprite",
-                         "type":"string",
-                         "value":"14"
-                        }],
-                 "rotation":0,
-                 "type":"enemy",
-                 "visible":true,
-                 "width":50,
-                 "x":1180,
-                 "y":520
-                }, 
-                {
-                 "height":50,
-                 "id":514,
-                 "name":"Sable Arquebusier",
-                 "opacity":1,
-                 "properties":[
-                        {
-                         "name":"enemy",
-                         "type":"string",
-                         "value":"vale_arquebusier"
-                        }, 
-                        {
-                         "name":"sprite",
-                         "type":"string",
-                         "value":"14"
-                        }],
-                 "rotation":0,
-                 "type":"enemy",
-                 "visible":true,
-                 "width":50,
-                 "x":1390,
-                 "y":820
-                }, 
-                {
-                 "height":50,
-                 "id":515,
-                 "name":"Captain Vellum",
-                 "opacity":1,
-                 "properties":[
-                        {
-                         "name":"enemy",
-                         "type":"string",
-                         "value":"vale_captain"
-                        }, 
-                        {
-                         "name":"sprite",
-                         "type":"string",
-                         "value":"13"
-                        }],
-                 "rotation":0,
-                 "type":"enemy",
-                 "visible":true,
-                 "width":50,
-                 "x":1490,
-                 "y":700
-                }, 
-                {
-                 "height":50,
-                 "id":516,
-                 "name":"Vale Bristleback",
-                 "opacity":1,
-                 "properties":[
-                        {
-                         "name":"enemy",
-                         "type":"string",
-                         "value":"boar"
-                        }, 
-                        {
-                         "name":"sprite",
-                         "type":"string",
-                         "value":"6"
-                        }],
-                 "rotation":0,
-                 "type":"enemy",
-                 "visible":true,
-                 "width":50,
-                 "x":760,
-                 "y":930
-                }, 
-                {
-                 "height":36,
-                 "id":520,
-                 "name":"Bellflower Road Marker",
-                 "opacity":1,
-                 "properties":[
-                        {
-                         "name":"kind",
-                         "type":"string",
-                         "value":"bellflower_marker"
-                        }],
-                 "rotation":0,
-                 "type":"landmark",
-                 "visible":true,
-                 "width":36,
-                 "x":530,
-                 "y":560
-                }, 
-                {
-                 "height":36,
-                 "id":521,
-                 "name":"Old Aqueduct",
-                 "opacity":1,
-                 "properties":[
-                        {
-                         "name":"kind",
-                         "type":"string",
-                         "value":"vale_ruins"
-                        }],
-                 "rotation":0,
-                 "type":"landmark",
-                 "visible":true,
-                 "width":36,
-                 "x":1080,
-                 "y":260
-                }, 
-                {
-                 "height":36,
-                 "id":522,
-                 "name":"Sable Company Camp",
-                 "opacity":1,
-                 "properties":[
-                        {
-                         "name":"kind",
-                         "type":"string",
-                         "value":"vale_camp"
-                        }],
-                 "rotation":0,
-                 "type":"landmark",
-                 "visible":true,
-                 "width":36,
-                 "x":1380,
-                 "y":710
-                }, 
-                {
-                 "height":36,
-                 "id":523,
-                 "name":"Bellflower Wayshrine",
-                 "opacity":1,
-                 "properties":[
-                        {
-                         "name":"kind",
-                         "type":"string",
-                         "value":"vale_shrine"
-                        }, 
-                        {
-                         "name":"spawn_x",
-                         "type":"int",
-                         "value":858
-                        }, 
-                        {
-                         "name":"spawn_y",
-                         "type":"int",
-                         "value":480
-                        }, 
-                        {
-                         "name":"waypoint_id",
-                         "type":"string",
-                         "value":"bellflower"
-                        }, 
-                        {
-                         "name":"waypoint_label",
-                         "type":"string",
-                         "value":"Bellflower Vale"
-                        }],
-                 "rotation":0,
-                 "type":"landmark",
-                 "visible":true,
-                 "width":36,
-                 "x":840,
-                 "y":420
-                }, 
-                {
-                 "height":38,
-                 "id":524,
-                 "name":"Camp Supply Chest",
-                 "opacity":1,
-                 "properties":[
-                        {
-                         "name":"chest_id",
-                         "type":"string",
-                         "value":"vale_supply"
-                        }, 
-                        {
-                         "name":"kind",
-                         "type":"string",
-                         "value":"vale_chest"
-                        }],
-                 "rotation":0,
-                 "type":"landmark",
-                 "visible":true,
-                 "width":40,
-                 "x":1540,
-                 "y":760
-                }, 
-                {
-                 "height":52,
-                 "id":525,
-                 "name":"East Road Exit",
-                 "opacity":1,
-                 "properties":[
-                        {
-                         "name":"destination",
-                         "type":"string",
-                         "value":"port_felin"
-                        }, 
-                        {
-                         "name":"label",
-                         "type":"string",
-                         "value":"Eastroad to Port Felin"
-                        }, 
-                        {
-                         "name":"spawn_x",
-                         "type":"int",
-                         "value":2040
-                        }, 
-                        {
-                         "name":"spawn_y",
-                         "type":"int",
-                         "value":610
-                        }, 
-                        {
-                         "name":"style",
-                         "type":"string",
-                         "value":"road"
-                        }],
-                 "rotation":0,
-                 "type":"door",
-                 "visible":true,
-                 "width":62,
-                 "x":1810,
-                 "y":545
-                }, 
-                {
-                 "height":50,
-                 "id":530,
-                 "name":"Sable Deserter",
-                 "opacity":1,
-                 "properties":[
-                        {
-                         "name":"contract_id",
-                         "type":"string",
-                         "value":"vale_fair_watch"
-                        }, 
-                        {
-                         "name":"enemy",
-                         "type":"string",
-                         "value":"vale_raider"
-                        }, 
-                        {
-                         "name":"event_id",
-                         "type":"string",
-                         "value":"vale"
-                        }, 
-                        {
-                         "name":"sprite",
-                         "type":"string",
-                         "value":"13"
-                        }],
-                 "rotation":0,
-                 "type":"enemy",
-                 "visible":true,
-                 "width":50,
-                 "x":720,
-                 "y":555
-                }, 
-                {
-                 "height":50,
-                 "id":531,
-                 "name":"Sable Deserter",
-                 "opacity":1,
-                 "properties":[
-                        {
-                         "name":"contract_id",
-                         "type":"string",
-                         "value":"vale_fair_watch"
-                        }, 
-                        {
-                         "name":"enemy",
-                         "type":"string",
-                         "value":"vale_raider"
-                        }, 
-                        {
-                         "name":"event_id",
-                         "type":"string",
-                         "value":"vale"
-                        }, 
-                        {
-                         "name":"sprite",
-                         "type":"string",
-                         "value":"13"
-                        }],
-                 "rotation":0,
-                 "type":"enemy",
-                 "visible":true,
-                 "width":50,
-                 "x":860,
-                 "y":720
-                }, 
-                {
-                 "height":50,
-                 "id":532,
-                 "name":"Sable Deserter",
-                 "opacity":1,
-                 "properties":[
-                        {
-                         "name":"contract_id",
-                         "type":"string",
-                         "value":"vale_fair_watch"
-                        }, 
-                        {
-                         "name":"enemy",
-                         "type":"string",
-                         "value":"vale_raider"
-                        }, 
-                        {
-                         "name":"event_id",
-                         "type":"string",
-                         "value":"vale"
-                        }, 
-                        {
-                         "name":"sprite",
-                         "type":"string",
-                         "value":"13"
-                        }],
-                 "rotation":0,
-                 "type":"enemy",
-                 "visible":true,
-                 "width":50,
-                 "x":1010,
-                 "y":890
-                }],
-         "opacity":1,
-         "type":"objectgroup",
-         "visible":true,
-         "x":0,
-         "y":0
-        }],
- "nextlayerid":3,
- "nextobjectid":533,
- "orientation":"orthogonal",
- "renderorder":"right-down",
- "tiledversion":"1.12.2",
- "tileheight":64,
- "tilesets":[
-        {
-         "columns":6,
-         "firstgid":1,
-         "image":"..\/world\/world_tiles.png",
-         "imageheight":64,
-         "imagewidth":384,
-         "margin":0,
-         "name":"world_tiles",
-         "spacing":0,
-         "tilecount":6,
-         "tileheight":64,
-         "tilewidth":64
-        }],
- "tilewidth":64,
- "type":"map",
- "version":"1.10",
- "width":30
+{
+ "compressionlevel": -1,
+ "height": 18,
+ "infinite": false,
+ "layers": [
+  {
+   "data": [
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    6,
+    6,
+    6,
+    6,
+    6,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    4,
+    4,
+    1,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    1,
+    1,
+    1,
+    6,
+    1,
+    6,
+    1,
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+    1,
+    5,
+    5,
+    5,
+    5,
+    5,
+    5,
+    1,
+    4,
+    4,
+    1,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    1,
+    1,
+    1,
+    1,
+    6,
+    1,
+    6,
+    1,
+    6,
+    6,
+    6,
+    6,
+    6,
+    1,
+    5,
+    5,
+    5,
+    5,
+    5,
+    5,
+    1,
+    4,
+    4,
+    1,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    1,
+    1,
+    1,
+    6,
+    1,
+    6,
+    1,
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+    1,
+    5,
+    5,
+    5,
+    5,
+    5,
+    5,
+    1,
+    4,
+    4,
+    1,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    1,
+    1,
+    1,
+    1,
+    6,
+    1,
+    6,
+    1,
+    6,
+    6,
+    1,
+    1,
+    1,
+    1,
+    5,
+    5,
+    5,
+    5,
+    5,
+    5,
+    1,
+    4,
+    4,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    6,
+    1,
+    6,
+    1,
+    6,
+    6,
+    6,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    4,
+    4,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    6,
+    1,
+    6,
+    1,
+    6,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    6,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    4,
+    4,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    6,
+    6,
+    1,
+    6,
+    6,
+    1,
+    6,
+    6,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    6,
+    6,
+    1,
+    6,
+    1,
+    6,
+    6,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    1,
+    3,
+    3,
+    3,
+    3,
+    1,
+    6,
+    6,
+    1,
+    1,
+    6,
+    6,
+    1,
+    6,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    1,
+    3,
+    3,
+    3,
+    3,
+    1,
+    6,
+    6,
+    1,
+    6,
+    6,
+    1,
+    6,
+    6,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    1,
+    3,
+    3,
+    3,
+    3,
+    1,
+    6,
+    6,
+    1,
+    6,
+    1,
+    6,
+    6,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    1,
+    3,
+    3,
+    3,
+    3,
+    1,
+    6,
+    6,
+    1,
+    1,
+    6,
+    6,
+    1,
+    6,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+    6
+   ],
+   "height": 18,
+   "id": 1,
+   "name": "Ground",
+   "opacity": 1,
+   "type": "tilelayer",
+   "visible": true,
+   "width": 30,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "draworder": "topdown",
+   "id": 2,
+   "name": "World Objects",
+   "objects": [
+    {
+     "height": 52,
+     "id": 500,
+     "name": "Road to Port Felin",
+     "opacity": 1,
+     "properties": [
+      {
+       "name": "destination",
+       "type": "string",
+       "value": "port_felin"
+      },
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Road to Port Felin"
+      },
+      {
+       "name": "spawn_x",
+       "type": "int",
+       "value": 2040
+      },
+      {
+       "name": "spawn_y",
+       "type": "int",
+       "value": 610
+      },
+      {
+       "name": "style",
+       "type": "string",
+       "value": "road"
+      }
+     ],
+     "rotation": 0,
+     "type": "door",
+     "visible": true,
+     "width": 62,
+     "x": 46,
+     "y": 545
+    },
+    {
+     "height": 105,
+     "id": 501,
+     "name": "Bellflower Tollhouse",
+     "opacity": 1,
+     "properties": [
+      {
+       "name": "blocking",
+       "type": "string",
+       "value": "true"
+      },
+      {
+       "name": "kind",
+       "type": "string",
+       "value": "vale_tollhouse"
+      }
+     ],
+     "rotation": 0,
+     "type": "building",
+     "visible": true,
+     "width": 155,
+     "x": 190,
+     "y": 400
+    },
+    {
+     "height": 48,
+     "id": 502,
+     "name": "Warden Maribel",
+     "opacity": 1,
+     "properties": [
+      {
+       "name": "kind",
+       "type": "string",
+       "value": "vale_warden"
+      },
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "3"
+      }
+     ],
+     "rotation": 0,
+     "type": "npc",
+     "visible": true,
+     "width": 48,
+     "x": 300,
+     "y": 535
+    },
+    {
+     "height": 46,
+     "id": 503,
+     "name": "Bellflower Lavender",
+     "opacity": 1,
+     "properties": [
+      {
+       "name": "resource",
+       "type": "string",
+       "value": "lavender"
+      }
+     ],
+     "rotation": 0,
+     "type": "resource",
+     "visible": true,
+     "width": 46,
+     "x": 430,
+     "y": 300
+    },
+    {
+     "height": 46,
+     "id": 504,
+     "name": "Field Lavender",
+     "opacity": 1,
+     "properties": [
+      {
+       "name": "resource",
+       "type": "string",
+       "value": "lavender"
+      }
+     ],
+     "rotation": 0,
+     "type": "resource",
+     "visible": true,
+     "width": 46,
+     "x": 620,
+     "y": 360
+    },
+    {
+     "height": 46,
+     "id": 505,
+     "name": "Old Vale Oak",
+     "opacity": 1,
+     "properties": [
+      {
+       "name": "resource",
+       "type": "string",
+       "value": "old_oak"
+      }
+     ],
+     "rotation": 0,
+     "type": "resource",
+     "visible": true,
+     "width": 46,
+     "x": 470,
+     "y": 760
+    },
+    {
+     "height": 46,
+     "id": 506,
+     "name": "Aqueduct Iron Vein",
+     "opacity": 1,
+     "properties": [
+      {
+       "name": "resource",
+       "type": "string",
+       "value": "rich_iron"
+      }
+     ],
+     "rotation": 0,
+     "type": "resource",
+     "visible": true,
+     "width": 46,
+     "x": 1040,
+     "y": 230
+    },
+    {
+     "height": 46,
+     "id": 507,
+     "name": "South Pond Ripples",
+     "opacity": 1,
+     "properties": [
+      {
+       "name": "resource",
+       "type": "string",
+       "value": "river_dace"
+      }
+     ],
+     "rotation": 0,
+     "type": "resource",
+     "visible": true,
+     "width": 46,
+     "x": 1640,
+     "y": 850
+    },
+    {
+     "height": 46,
+     "id": 508,
+     "name": "Vintner Rows",
+     "opacity": 1,
+     "properties": [
+      {
+       "name": "resource",
+       "type": "string",
+       "value": "grape"
+      }
+     ],
+     "rotation": 0,
+     "type": "resource",
+     "visible": true,
+     "width": 46,
+     "x": 720,
+     "y": 240
+    },
+    {
+     "height": 46,
+     "id": 509,
+     "name": "Roadside Rosemary",
+     "opacity": 1,
+     "properties": [
+      {
+       "name": "resource",
+       "type": "string",
+       "value": "rosemary"
+      }
+     ],
+     "rotation": 0,
+     "type": "resource",
+     "visible": true,
+     "width": 46,
+     "x": 900,
+     "y": 610
+    },
+    {
+     "height": 50,
+     "id": 510,
+     "name": "Sable Pikeman",
+     "opacity": 1,
+     "properties": [
+      {
+       "name": "enemy",
+       "type": "string",
+       "value": "vale_pikeman"
+      },
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "13"
+      }
+     ],
+     "rotation": 0,
+     "type": "enemy",
+     "visible": true,
+     "width": 50,
+     "x": 980,
+     "y": 600
+    },
+    {
+     "height": 50,
+     "id": 511,
+     "name": "Sable Pikeman",
+     "opacity": 1,
+     "properties": [
+      {
+       "name": "enemy",
+       "type": "string",
+       "value": "vale_pikeman"
+      },
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "13"
+      }
+     ],
+     "rotation": 0,
+     "type": "enemy",
+     "visible": true,
+     "width": 50,
+     "x": 1110,
+     "y": 690
+    },
+    {
+     "height": 50,
+     "id": 512,
+     "name": "Sable Pikeman",
+     "opacity": 1,
+     "properties": [
+      {
+       "name": "enemy",
+       "type": "string",
+       "value": "vale_pikeman"
+      },
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "13"
+      }
+     ],
+     "rotation": 0,
+     "type": "enemy",
+     "visible": true,
+     "width": 50,
+     "x": 1260,
+     "y": 760
+    },
+    {
+     "height": 50,
+     "id": 513,
+     "name": "Sable Arquebusier",
+     "opacity": 1,
+     "properties": [
+      {
+       "name": "enemy",
+       "type": "string",
+       "value": "vale_arquebusier"
+      },
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "14"
+      }
+     ],
+     "rotation": 0,
+     "type": "enemy",
+     "visible": true,
+     "width": 50,
+     "x": 1180,
+     "y": 520
+    },
+    {
+     "height": 50,
+     "id": 514,
+     "name": "Sable Arquebusier",
+     "opacity": 1,
+     "properties": [
+      {
+       "name": "enemy",
+       "type": "string",
+       "value": "vale_arquebusier"
+      },
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "14"
+      }
+     ],
+     "rotation": 0,
+     "type": "enemy",
+     "visible": true,
+     "width": 50,
+     "x": 1390,
+     "y": 820
+    },
+    {
+     "height": 50,
+     "id": 515,
+     "name": "Captain Vellum",
+     "opacity": 1,
+     "properties": [
+      {
+       "name": "enemy",
+       "type": "string",
+       "value": "vale_captain"
+      },
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "13"
+      }
+     ],
+     "rotation": 0,
+     "type": "enemy",
+     "visible": true,
+     "width": 50,
+     "x": 1490,
+     "y": 700
+    },
+    {
+     "height": 50,
+     "id": 516,
+     "name": "Vale Bristleback",
+     "opacity": 1,
+     "properties": [
+      {
+       "name": "enemy",
+       "type": "string",
+       "value": "boar"
+      },
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "6"
+      }
+     ],
+     "rotation": 0,
+     "type": "enemy",
+     "visible": true,
+     "width": 50,
+     "x": 760,
+     "y": 930
+    },
+    {
+     "height": 36,
+     "id": 520,
+     "name": "Bellflower Road Marker",
+     "opacity": 1,
+     "properties": [
+      {
+       "name": "kind",
+       "type": "string",
+       "value": "bellflower_marker"
+      }
+     ],
+     "rotation": 0,
+     "type": "landmark",
+     "visible": true,
+     "width": 36,
+     "x": 530,
+     "y": 560
+    },
+    {
+     "height": 36,
+     "id": 521,
+     "name": "Old Aqueduct",
+     "opacity": 1,
+     "properties": [
+      {
+       "name": "kind",
+       "type": "string",
+       "value": "vale_ruins"
+      }
+     ],
+     "rotation": 0,
+     "type": "landmark",
+     "visible": true,
+     "width": 36,
+     "x": 1080,
+     "y": 260
+    },
+    {
+     "height": 36,
+     "id": 522,
+     "name": "Sable Company Camp",
+     "opacity": 1,
+     "properties": [
+      {
+       "name": "kind",
+       "type": "string",
+       "value": "vale_camp"
+      }
+     ],
+     "rotation": 0,
+     "type": "landmark",
+     "visible": true,
+     "width": 36,
+     "x": 1380,
+     "y": 710
+    },
+    {
+     "height": 36,
+     "id": 523,
+     "name": "Bellflower Wayshrine",
+     "opacity": 1,
+     "properties": [
+      {
+       "name": "kind",
+       "type": "string",
+       "value": "vale_shrine"
+      },
+      {
+       "name": "spawn_x",
+       "type": "int",
+       "value": 858
+      },
+      {
+       "name": "spawn_y",
+       "type": "int",
+       "value": 480
+      },
+      {
+       "name": "waypoint_id",
+       "type": "string",
+       "value": "bellflower"
+      },
+      {
+       "name": "waypoint_label",
+       "type": "string",
+       "value": "Bellflower Vale"
+      }
+     ],
+     "rotation": 0,
+     "type": "landmark",
+     "visible": true,
+     "width": 36,
+     "x": 840,
+     "y": 420
+    },
+    {
+     "height": 38,
+     "id": 524,
+     "name": "Camp Supply Chest",
+     "opacity": 1,
+     "properties": [
+      {
+       "name": "chest_id",
+       "type": "string",
+       "value": "vale_supply"
+      },
+      {
+       "name": "kind",
+       "type": "string",
+       "value": "vale_chest"
+      }
+     ],
+     "rotation": 0,
+     "type": "landmark",
+     "visible": true,
+     "width": 40,
+     "x": 1540,
+     "y": 760
+    },
+    {
+     "height": 52,
+     "id": 525,
+     "name": "East Road Exit",
+     "opacity": 1,
+     "properties": [
+      {
+       "name": "destination",
+       "type": "string",
+       "value": "port_felin"
+      },
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Eastroad to Port Felin"
+      },
+      {
+       "name": "spawn_x",
+       "type": "int",
+       "value": 2040
+      },
+      {
+       "name": "spawn_y",
+       "type": "int",
+       "value": 610
+      },
+      {
+       "name": "style",
+       "type": "string",
+       "value": "road"
+      }
+     ],
+     "rotation": 0,
+     "type": "door",
+     "visible": true,
+     "width": 62,
+     "x": 1810,
+     "y": 545
+    },
+    {
+     "height": 50,
+     "id": 530,
+     "name": "Sable Deserter",
+     "opacity": 1,
+     "properties": [
+      {
+       "name": "contract_id",
+       "type": "string",
+       "value": "vale_fair_watch"
+      },
+      {
+       "name": "enemy",
+       "type": "string",
+       "value": "vale_raider"
+      },
+      {
+       "name": "event_id",
+       "type": "string",
+       "value": "vale"
+      },
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "13"
+      }
+     ],
+     "rotation": 0,
+     "type": "enemy",
+     "visible": true,
+     "width": 50,
+     "x": 720,
+     "y": 555
+    },
+    {
+     "height": 50,
+     "id": 531,
+     "name": "Sable Deserter",
+     "opacity": 1,
+     "properties": [
+      {
+       "name": "contract_id",
+       "type": "string",
+       "value": "vale_fair_watch"
+      },
+      {
+       "name": "enemy",
+       "type": "string",
+       "value": "vale_raider"
+      },
+      {
+       "name": "event_id",
+       "type": "string",
+       "value": "vale"
+      },
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "13"
+      }
+     ],
+     "rotation": 0,
+     "type": "enemy",
+     "visible": true,
+     "width": 50,
+     "x": 860,
+     "y": 720
+    },
+    {
+     "height": 50,
+     "id": 532,
+     "name": "Sable Deserter",
+     "opacity": 1,
+     "properties": [
+      {
+       "name": "contract_id",
+       "type": "string",
+       "value": "vale_fair_watch"
+      },
+      {
+       "name": "enemy",
+       "type": "string",
+       "value": "vale_raider"
+      },
+      {
+       "name": "event_id",
+       "type": "string",
+       "value": "vale"
+      },
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "13"
+      }
+     ],
+     "rotation": 0,
+     "type": "enemy",
+     "visible": true,
+     "width": 50,
+     "x": 1010,
+     "y": 890
+    }
+   ],
+   "opacity": 1,
+   "type": "objectgroup",
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 3,
+   "name": "Wild Scenery",
+   "type": "objectgroup",
+   "draworder": "topdown",
+   "visible": true,
+   "opacity": 1,
+   "x": 0,
+   "y": 0,
+   "objects": [
+    {
+     "id": 2300,
+     "name": "West Vale Oak",
+     "type": "wilderness",
+     "x": 73,
+     "y": 82,
+     "width": 116,
+     "height": 130,
+     "rotation": 0,
+     "visible": true,
+     "opacity": 1,
+     "properties": [
+      {
+       "name": "kind",
+       "type": "string",
+       "value": "oak_canopy"
+      }
+     ]
+    },
+    {
+     "id": 2301,
+     "name": "West Vale Fern",
+     "type": "wilderness",
+     "x": 261,
+     "y": 175,
+     "width": 72,
+     "height": 46,
+     "rotation": 0,
+     "visible": true,
+     "opacity": 1,
+     "properties": [
+      {
+       "name": "kind",
+       "type": "string",
+       "value": "fern_bank"
+      }
+     ]
+    },
+    {
+     "id": 2302,
+     "name": "Tollhouse Wildflowers",
+     "type": "wilderness",
+     "x": 140,
+     "y": 340,
+     "width": 73,
+     "height": 42,
+     "rotation": 0,
+     "visible": true,
+     "opacity": 1,
+     "properties": [
+      {
+       "name": "kind",
+       "type": "string",
+       "value": "wildflowers"
+      }
+     ]
+    },
+    {
+     "id": 2303,
+     "name": "Lavender North Cluster",
+     "type": "wilderness",
+     "x": 415,
+     "y": 140,
+     "width": 93,
+     "height": 51,
+     "rotation": 0,
+     "visible": true,
+     "opacity": 1,
+     "properties": [
+      {
+       "name": "kind",
+       "type": "string",
+       "value": "lavender_cluster"
+      }
+     ]
+    },
+    {
+     "id": 2304,
+     "name": "Lavender East Cluster",
+     "type": "wilderness",
+     "x": 643,
+     "y": 168,
+     "width": 93,
+     "height": 51,
+     "rotation": 0,
+     "visible": true,
+     "opacity": 1,
+     "properties": [
+      {
+       "name": "kind",
+       "type": "string",
+       "value": "lavender_cluster"
+      }
+     ]
+    },
+    {
+     "id": 2305,
+     "name": "Lavender Upper Fern",
+     "type": "wilderness",
+     "x": 600,
+     "y": 300,
+     "width": 72,
+     "height": 46,
+     "rotation": 0,
+     "visible": true,
+     "opacity": 1,
+     "properties": [
+      {
+       "name": "kind",
+       "type": "string",
+       "value": "fern_bank"
+      }
+     ]
+    },
+    {
+     "id": 2306,
+     "name": "Vale Orchard Bramble",
+     "type": "wilderness",
+     "x": 870,
+     "y": 150,
+     "width": 83,
+     "height": 55,
+     "rotation": 0,
+     "visible": true,
+     "opacity": 1,
+     "properties": [
+      {
+       "name": "kind",
+       "type": "string",
+       "value": "bramble"
+      }
+     ]
+    },
+    {
+     "id": 2307,
+     "name": "Vale Vintner Flowers",
+     "type": "wilderness",
+     "x": 739,
+     "y": 407,
+     "width": 73,
+     "height": 42,
+     "rotation": 0,
+     "visible": true,
+     "opacity": 1,
+     "properties": [
+      {
+       "name": "kind",
+       "type": "string",
+       "value": "wildflowers"
+      }
+     ]
+    },
+    {
+     "id": 2308,
+     "name": "Old Road Flowers",
+     "type": "wilderness",
+     "x": 500,
+     "y": 660,
+     "width": 73,
+     "height": 42,
+     "rotation": 0,
+     "visible": true,
+     "opacity": 1,
+     "properties": [
+      {
+       "name": "kind",
+       "type": "string",
+       "value": "wildflowers"
+      }
+     ]
+    },
+    {
+     "id": 2309,
+     "name": "Bellflower Southern Oak",
+     "type": "wilderness",
+     "x": 166,
+     "y": 808,
+     "width": 116,
+     "height": 130,
+     "rotation": 0,
+     "visible": true,
+     "opacity": 1,
+     "properties": [
+      {
+       "name": "kind",
+       "type": "string",
+       "value": "oak_canopy"
+      }
+     ]
+    },
+    {
+     "id": 2310,
+     "name": "Southern Vale Pine",
+     "type": "wilderness",
+     "x": 302,
+     "y": 874,
+     "width": 100,
+     "height": 128,
+     "rotation": 0,
+     "visible": true,
+     "opacity": 1,
+     "properties": [
+      {
+       "name": "kind",
+       "type": "string",
+       "value": "pine_bough"
+      }
+     ]
+    },
+    {
+     "id": 2311,
+     "name": "South Meadow Fern",
+     "type": "wilderness",
+     "x": 586,
+     "y": 840,
+     "width": 72,
+     "height": 46,
+     "rotation": 0,
+     "visible": true,
+     "opacity": 1,
+     "properties": [
+      {
+       "name": "kind",
+       "type": "string",
+       "value": "fern_bank"
+      }
+     ]
+    },
+    {
+     "id": 2312,
+     "name": "South Meadow Lavender",
+     "type": "wilderness",
+     "x": 610,
+     "y": 1005,
+     "width": 93,
+     "height": 51,
+     "rotation": 0,
+     "visible": true,
+     "opacity": 1,
+     "properties": [
+      {
+       "name": "kind",
+       "type": "string",
+       "value": "lavender_cluster"
+      }
+     ]
+    },
+    {
+     "id": 2313,
+     "name": "South Field Bramble",
+     "type": "wilderness",
+     "x": 930,
+     "y": 936,
+     "width": 83,
+     "height": 55,
+     "rotation": 0,
+     "visible": true,
+     "opacity": 1,
+     "properties": [
+      {
+       "name": "kind",
+       "type": "string",
+       "value": "bramble"
+      }
+     ]
+    },
+    {
+     "id": 2314,
+     "name": "Ruins Broken Column",
+     "type": "wilderness",
+     "x": 956,
+     "y": 114,
+     "width": 93,
+     "height": 88,
+     "rotation": 0,
+     "visible": true,
+     "opacity": 1,
+     "properties": [
+      {
+       "name": "kind",
+       "type": "string",
+       "value": "aqueduct_fragment"
+      }
+     ]
+    },
+    {
+     "id": 2315,
+     "name": "Ruins Fallen Wall",
+     "type": "wilderness",
+     "x": 1193,
+     "y": 136,
+     "width": 105,
+     "height": 60,
+     "rotation": 0,
+     "visible": true,
+     "opacity": 1,
+     "properties": [
+      {
+       "name": "kind",
+       "type": "string",
+       "value": "quarry_rubble"
+      }
+     ]
+    },
+    {
+     "id": 2316,
+     "name": "Aqueduct Boulder",
+     "type": "wilderness",
+     "x": 1280,
+     "y": 271,
+     "width": 87,
+     "height": 63,
+     "rotation": 0,
+     "visible": true,
+     "opacity": 1,
+     "properties": [
+      {
+       "name": "kind",
+       "type": "string",
+       "value": "moss_boulder"
+      }
+     ]
+    },
+    {
+     "id": 2317,
+     "name": "Aqueduct Wildflowers",
+     "type": "wilderness",
+     "x": 1118,
+     "y": 413,
+     "width": 73,
+     "height": 42,
+     "rotation": 0,
+     "visible": true,
+     "opacity": 1,
+     "properties": [
+      {
+       "name": "kind",
+       "type": "string",
+       "value": "wildflowers"
+      }
+     ]
+    },
+    {
+     "id": 2318,
+     "name": "Old Aqueduct Fern",
+     "type": "wilderness",
+     "x": 990,
+     "y": 452,
+     "width": 72,
+     "height": 46,
+     "rotation": 0,
+     "visible": true,
+     "opacity": 1,
+     "properties": [
+      {
+       "name": "kind",
+       "type": "string",
+       "value": "fern_bank"
+      }
+     ]
+    },
+    {
+     "id": 2319,
+     "name": "Sable Camp Scrub",
+     "type": "wilderness",
+     "x": 1404,
+     "y": 625,
+     "width": 83,
+     "height": 55,
+     "rotation": 0,
+     "visible": true,
+     "opacity": 1,
+     "properties": [
+      {
+       "name": "kind",
+       "type": "string",
+       "value": "bramble"
+      }
+     ]
+    },
+    {
+     "id": 2320,
+     "name": "Sable Camp Quarry Stone",
+     "type": "wilderness",
+     "x": 1508,
+     "y": 589,
+     "width": 105,
+     "height": 60,
+     "rotation": 0,
+     "visible": true,
+     "opacity": 1,
+     "properties": [
+      {
+       "name": "kind",
+       "type": "string",
+       "value": "quarry_rubble"
+      }
+     ]
+    },
+    {
+     "id": 2321,
+     "name": "Sable Camp Road Flowers",
+     "type": "wilderness",
+     "x": 1246,
+     "y": 900,
+     "width": 73,
+     "height": 42,
+     "rotation": 0,
+     "visible": true,
+     "opacity": 1,
+     "properties": [
+      {
+       "name": "kind",
+       "type": "string",
+       "value": "wildflowers"
+      }
+     ]
+    },
+    {
+     "id": 2322,
+     "name": "Camp South Boulder",
+     "type": "wilderness",
+     "x": 1455,
+     "y": 1065,
+     "width": 87,
+     "height": 63,
+     "rotation": 0,
+     "visible": true,
+     "opacity": 1,
+     "properties": [
+      {
+       "name": "kind",
+       "type": "string",
+       "value": "moss_boulder"
+      }
+     ]
+    },
+    {
+     "id": 2323,
+     "name": "Vale Pond Reeds",
+     "type": "wilderness",
+     "x": 1563,
+     "y": 787,
+     "width": 76,
+     "height": 62,
+     "rotation": 0,
+     "visible": true,
+     "opacity": 1,
+     "properties": [
+      {
+       "name": "kind",
+       "type": "string",
+       "value": "river_reeds"
+      }
+     ]
+    },
+    {
+     "id": 2324,
+     "name": "Vale Pond Flowers",
+     "type": "wilderness",
+     "x": 1530,
+     "y": 905,
+     "width": 73,
+     "height": 42,
+     "rotation": 0,
+     "visible": true,
+     "opacity": 1,
+     "properties": [
+      {
+       "name": "kind",
+       "type": "string",
+       "value": "wildflowers"
+      }
+     ]
+    },
+    {
+     "id": 2325,
+     "name": "Bellflower Grove Fern",
+     "type": "wilderness",
+     "x": 1825,
+     "y": 197,
+     "width": 72,
+     "height": 46,
+     "rotation": 0,
+     "visible": true,
+     "opacity": 1,
+     "properties": [
+      {
+       "name": "kind",
+       "type": "string",
+       "value": "fern_bank"
+      }
+     ]
+    },
+    {
+     "id": 2326,
+     "name": "East Vale Pine",
+     "type": "wilderness",
+     "x": 1774,
+     "y": 170,
+     "width": 100,
+     "height": 128,
+     "rotation": 0,
+     "visible": true,
+     "opacity": 1,
+     "properties": [
+      {
+       "name": "kind",
+       "type": "string",
+       "value": "pine_bough"
+      }
+     ]
+    },
+    {
+     "id": 2327,
+     "name": "Vale Far Field Lavender",
+     "type": "wilderness",
+     "x": 1650,
+     "y": 319,
+     "width": 93,
+     "height": 51,
+     "rotation": 0,
+     "visible": true,
+     "opacity": 1,
+     "properties": [
+      {
+       "name": "kind",
+       "type": "string",
+       "value": "lavender_cluster"
+      }
+     ]
+    },
+    {
+     "id": 2328,
+     "name": "South East Fern",
+     "type": "wilderness",
+     "x": 1792,
+     "y": 999,
+     "width": 72,
+     "height": 46,
+     "rotation": 0,
+     "visible": true,
+     "opacity": 1,
+     "properties": [
+      {
+       "name": "kind",
+       "type": "string",
+       "value": "fern_bank"
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "nextlayerid": 4,
+ "nextobjectid": 2329,
+ "orientation": "orthogonal",
+ "renderorder": "right-down",
+ "tiledversion": "1.12.2",
+ "tileheight": 64,
+ "tilesets": [
+  {
+   "columns": 6,
+   "firstgid": 1,
+   "image": "../world/world_tiles.png",
+   "imageheight": 64,
+   "imagewidth": 384,
+   "margin": 0,
+   "name": "world_tiles",
+   "spacing": 0,
+   "tilecount": 6,
+   "tileheight": 64,
+   "tilewidth": 64
+  }
+ ],
+ "tilewidth": 64,
+ "type": "map",
+ "version": "1.10",
+ "width": 30
 }

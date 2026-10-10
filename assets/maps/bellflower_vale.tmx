@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="18" tilewidth="64" tileheight="64" infinite="0" nextlayerid="3" nextobjectid="533">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="18" tilewidth="64" tileheight="64" infinite="0" nextlayerid="4" nextobjectid="2329">
   <tileset firstgid="1" name="world_tiles" tilewidth="64" tileheight="64" tilecount="6" columns="6">
     <image source="../world/world_tiles.png" width="384" height="64" />
   </tileset>
@@ -166,6 +166,153 @@
         <property name="sprite" value="13" />
         <property name="event_id" value="vale" />
         <property name="contract_id" value="vale_fair_watch" />
+      </properties>
+    </object>
+  </objectgroup>
+  <objectgroup id="3" name="Wild Scenery" visible="1">
+    <object id="2300" name="West Vale Oak" type="wilderness" x="73" y="82" width="116" height="130">
+      <properties>
+        <property name="kind" value="oak_canopy" />
+      </properties>
+    </object>
+    <object id="2301" name="West Vale Fern" type="wilderness" x="261" y="175" width="72" height="46">
+      <properties>
+        <property name="kind" value="fern_bank" />
+      </properties>
+    </object>
+    <object id="2302" name="Tollhouse Wildflowers" type="wilderness" x="140" y="340" width="73" height="42">
+      <properties>
+        <property name="kind" value="wildflowers" />
+      </properties>
+    </object>
+    <object id="2303" name="Lavender North Cluster" type="wilderness" x="415" y="140" width="93" height="51">
+      <properties>
+        <property name="kind" value="lavender_cluster" />
+      </properties>
+    </object>
+    <object id="2304" name="Lavender East Cluster" type="wilderness" x="643" y="168" width="93" height="51">
+      <properties>
+        <property name="kind" value="lavender_cluster" />
+      </properties>
+    </object>
+    <object id="2305" name="Lavender Upper Fern" type="wilderness" x="600" y="300" width="72" height="46">
+      <properties>
+        <property name="kind" value="fern_bank" />
+      </properties>
+    </object>
+    <object id="2306" name="Vale Orchard Bramble" type="wilderness" x="870" y="150" width="83" height="55">
+      <properties>
+        <property name="kind" value="bramble" />
+      </properties>
+    </object>
+    <object id="2307" name="Vale Vintner Flowers" type="wilderness" x="739" y="407" width="73" height="42">
+      <properties>
+        <property name="kind" value="wildflowers" />
+      </properties>
+    </object>
+    <object id="2308" name="Old Road Flowers" type="wilderness" x="500" y="660" width="73" height="42">
+      <properties>
+        <property name="kind" value="wildflowers" />
+      </properties>
+    </object>
+    <object id="2309" name="Bellflower Southern Oak" type="wilderness" x="166" y="808" width="116" height="130">
+      <properties>
+        <property name="kind" value="oak_canopy" />
+      </properties>
+    </object>
+    <object id="2310" name="Southern Vale Pine" type="wilderness" x="302" y="874" width="100" height="128">
+      <properties>
+        <property name="kind" value="pine_bough" />
+      </properties>
+    </object>
+    <object id="2311" name="South Meadow Fern" type="wilderness" x="586" y="840" width="72" height="46">
+      <properties>
+        <property name="kind" value="fern_bank" />
+      </properties>
+    </object>
+    <object id="2312" name="South Meadow Lavender" type="wilderness" x="610" y="1005" width="93" height="51">
+      <properties>
+        <property name="kind" value="lavender_cluster" />
+      </properties>
+    </object>
+    <object id="2313" name="South Field Bramble" type="wilderness" x="930" y="936" width="83" height="55">
+      <properties>
+        <property name="kind" value="bramble" />
+      </properties>
+    </object>
+    <object id="2314" name="Ruins Broken Column" type="wilderness" x="956" y="114" width="93" height="88">
+      <properties>
+        <property name="kind" value="aqueduct_fragment" />
+      </properties>
+    </object>
+    <object id="2315" name="Ruins Fallen Wall" type="wilderness" x="1193" y="136" width="105" height="60">
+      <properties>
+        <property name="kind" value="quarry_rubble" />
+      </properties>
+    </object>
+    <object id="2316" name="Aqueduct Boulder" type="wilderness" x="1280" y="271" width="87" height="63">
+      <properties>
+        <property name="kind" value="moss_boulder" />
+      </properties>
+    </object>
+    <object id="2317" name="Aqueduct Wildflowers" type="wilderness" x="1118" y="413" width="73" height="42">
+      <properties>
+        <property name="kind" value="wildflowers" />
+      </properties>
+    </object>
+    <object id="2318" name="Old Aqueduct Fern" type="wilderness" x="990" y="452" width="72" height="46">
+      <properties>
+        <property name="kind" value="fern_bank" />
+      </properties>
+    </object>
+    <object id="2319" name="Sable Camp Scrub" type="wilderness" x="1404" y="625" width="83" height="55">
+      <properties>
+        <property name="kind" value="bramble" />
+      </properties>
+    </object>
+    <object id="2320" name="Sable Camp Quarry Stone" type="wilderness" x="1508" y="589" width="105" height="60">
+      <properties>
+        <property name="kind" value="quarry_rubble" />
+      </properties>
+    </object>
+    <object id="2321" name="Sable Camp Road Flowers" type="wilderness" x="1246" y="900" width="73" height="42">
+      <properties>
+        <property name="kind" value="wildflowers" />
+      </properties>
+    </object>
+    <object id="2322" name="Camp South Boulder" type="wilderness" x="1455" y="1065" width="87" height="63">
+      <properties>
+        <property name="kind" value="moss_boulder" />
+      </properties>
+    </object>
+    <object id="2323" name="Vale Pond Reeds" type="wilderness" x="1563" y="787" width="76" height="62">
+      <properties>
+        <property name="kind" value="river_reeds" />
+      </properties>
+    </object>
+    <object id="2324" name="Vale Pond Flowers" type="wilderness" x="1530" y="905" width="73" height="42">
+      <properties>
+        <property name="kind" value="wildflowers" />
+      </properties>
+    </object>
+    <object id="2325" name="Bellflower Grove Fern" type="wilderness" x="1825" y="197" width="72" height="46">
+      <properties>
+        <property name="kind" value="fern_bank" />
+      </properties>
+    </object>
+    <object id="2326" name="East Vale Pine" type="wilderness" x="1774" y="170" width="100" height="128">
+      <properties>
+        <property name="kind" value="pine_bough" />
+      </properties>
+    </object>
+    <object id="2327" name="Vale Far Field Lavender" type="wilderness" x="1650" y="319" width="93" height="51">
+      <properties>
+        <property name="kind" value="lavender_cluster" />
+      </properties>
+    </object>
+    <object id="2328" name="South East Fern" type="wilderness" x="1792" y="999" width="72" height="46">
+      <properties>
+        <property name="kind" value="fern_bank" />
       </properties>
     </object>
   </objectgroup>

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="56" height="60" viewBox="0 0 56 60"><title>Crate — Paws &amp; Plumes hand-authored town scenery</title><g stroke-linejoin="round" stroke-linecap="round"><ellipse cx="28" cy="55" rx="25" ry="3.5" fill="#222d26" opacity=".2"/>
+<path d="M4 17h42v37H4Z" fill="#896445" stroke="#3b3029" stroke-width="3"/>
+<path d="M7 21h36v30H7Z" fill="#b38a58" stroke="#584333" stroke-width="2"/>
+<path d="M9 22l32 27M41 22L9 49" stroke="#755138" stroke-width="5"/>
+<path d="M8 24v24M43 24v24" stroke="#e1b678" stroke-width="2"/>
+<path d="M19 4h33v26H19Z" fill="#8f6c48" stroke="#332b27" stroke-width="3"/>
+<path d="M23 7h25v19H23Z" fill="#bc8e57"/>
+<path d="M23 7l25 19M47 7L23 26" stroke="#79553b" stroke-width="4"/>
+<circle cx="8" cy="21" r="1.5" fill="#d3b179"/><circle cx="41" cy="49" r="1.5" fill="#d3b179"/></g></svg>

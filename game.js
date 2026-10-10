@@ -1,8 +1,8 @@
 (() => {
 'use strict';
-const VERSION='0.20.0', SAVE_KEY='paws_plumes_traditional_v020', SETTINGS_KEY='paws_plumes_settings_v1';
+const VERSION='0.25.0', SAVE_KEY='paws_plumes_traditional_v020', SETTINGS_KEY='paws_plumes_settings_v1';
 const root=document.getElementById('gameRoot'), modalLayer=document.getElementById('modalLayer'), toastLayer=document.getElementById('toastLayer');
-const APP={screen:'menu',save:loadSave(),settings:loadSettings(),selectedSlot:null,currentId:null,map:null,mapId:'port_felin',mapPath:null,tiles:null,sprites:null,worldReady:false,mapLoading:false,raf:null,lastFrame:0,camera:{x:0,y:0},canvas:null,ctx:null,miniCanvas:null,keys:new Set(),moveTarget:null,navPath:[],navDestination:null,navRepathAt:0,navBlockedFor:0,pendingInteraction:null,selectedObjectId:null,panelTab:'inventory',installPrompt:null,swRegistration:null,combat:{enemyId:null,lastPlayerHit:0,lastEnemyHit:0,flourishReadyAt:0,guardReadyAt:0,guardUntil:0,riposteUntil:0,telegraph:null,noAmmoWarnAt:0,noFocusWarnAt:0},motion:{actors:{},floaters:[],particles:[],projectiles:[],chatter:null,nextChatter:0,lastStep:0,playerMoving:false,worldTime:0,lastClockMinute:-1,lastTimeSave:0},log:'Welcome to Port Felin.',create:{name:'',appearance:'orange',background:'duelist'}};
+const APP={screen:'menu',save:loadSave(),settings:loadSettings(),selectedSlot:null,currentId:null,map:null,mapId:'port_felin',mapPath:null,tiles:null,sprites:null,directionalSprites:null,animationFx:null,worldReady:false,mapLoading:false,raf:null,lastFrame:0,camera:{x:0,y:0},canvas:null,ctx:null,miniCanvas:null,keys:new Set(),moveTarget:null,navPath:[],navDestination:null,navRepathAt:0,navBlockedFor:0,pendingInteraction:null,selectedObjectId:null,panelTab:'inventory',installPrompt:null,swRegistration:null,combat:{enemyId:null,lastPlayerHit:0,lastEnemyHit:0,flourishReadyAt:0,guardReadyAt:0,guardUntil:0,riposteUntil:0,telegraph:null,noAmmoWarnAt:0,noFocusWarnAt:0},motion:{actors:{},floaters:[],particles:[],projectiles:[],chatter:null,nextChatter:0,lastStep:0,playerMoving:false,worldTime:0,poses:{},spriteActions:{},lastClockMinute:-1,lastTimeSave:0},log:'Welcome to Port Felin.',create:{name:'',appearance:'orange',background:'duelist'}};
 
 const MAPS={
  port_felin:{file:'port_felin_world.json',name:'Port Felin',sub:'Guild streets • shops • Warm Saucer',outdoor:true},
@@ -237,15 +237,109 @@ function openSettings(){const installText=installStatusText();modal('Settings',`
 function enterCharacter(cid){APP.currentId=cid;const c=current();if(!c){go('select');return}migrateCharacter(c);c.lastPlayed=Date.now();APP.save.lastCharacterId=cid;persist();clearNavigation();APP.selectedObjectId=null;APP.combat={enemyId:null,lastPlayerHit:0,lastEnemyHit:0,flourishReadyAt:0,guardReadyAt:0,guardUntil:0,riposteUntil:0,telegraph:null,noAmmoWarnAt:0};go('game')}
 function renderGameShell(){const c=current();root.innerHTML=`<section class="play-screen"><header class="hud-top"><div class="hud-portrait"><img src="${APPEARANCES[c.appearance].portrait}" alt=""></div><div><div class="hud-name"><strong>${escapeHtml(c.name)}</strong><span class="hud-level">Lv ${c.level}</span></div><div class="bars"><div class="bar hp" title="Health"><span id="hpBar"></span></div><div class="bar focus" title="Focus"><span id="focusBar"></span></div><div class="bar xp" title="Adventure XP"><span id="xpBar"></span></div></div></div><div class="hud-money"><div>◈ <span id="coinCount">${c.coins}</span> <span class="coins-word">crowns</span></div><span class="hud-clock" id="worldClock">${formatWorldTime()}</span><span class="hud-weather-chip" id="worldWeatherChip"></span><span class="hud-event-chip" id="worldEventChip"></span></div></header><div class="world-layout"><div class="world-wrap" id="worldWrap"><canvas id="worldCanvas" tabindex="0" aria-label="Paws and Plumes game world"></canvas><div class="map-fade" id="mapFade"></div><div class="world-label"><strong id="areaTitle">Port Felin</strong><span id="areaSub">Guild streets • shops • inn</span></div><div class="target-float" id="targetFloat"><strong id="targetName"></strong><span class="target-intent" id="targetIntent"></span><div class="target-bar"><span id="targetHp"></span></div></div></div><aside class="side-panel" id="sidePanel"><div class="mini-map"><canvas id="miniCanvas"></canvas></div><div class="panel-tabs"><button class="panel-tab active" data-tab="inventory" title="Inventory">🎒</button><button class="panel-tab" data-tab="skills" title="Skills">✦</button><button class="panel-tab" data-tab="quests" title="Quests">📜</button><button class="panel-tab" data-tab="equipment" title="Equipment">⚔</button><button class="panel-tab" data-tab="map" title="World Map">🗺</button></div><div class="panel-body" id="panelBody"></div></aside></div><footer class="bottom-bar"><button class="utility-btn mobile-panel-btn" id="mobilePanelBtn" aria-label="Open character panel">☰</button><div class="combat-log" id="combatLog">${escapeHtml(APP.log)}</div><div class="hotbar"><button class="hotkey active" data-hot="attack" title="Attack"><span>1</span>⚔</button><button class="hotkey" data-hot="flourish" title="Flourish"><span>2</span>✦</button><button class="hotkey" data-hot="guard" title="Guard"><span>3</span>🛡</button><button class="hotkey" data-hot="tonic" title="Red Tonic"><span>4</span>🧪</button><button class="hotkey" data-hot="interact" title="Interact / collect nearby loot (5, E, L)"><span>5</span>☝</button></div><div class="utility-btns"><button class="utility-btn" data-audio-toggle title="Mute audio">🔊</button><button class="utility-btn" data-menu-game title="Game menu">☰</button></div></footer></section>`;APP.canvas=document.getElementById('worldCanvas');APP.ctx=APP.canvas.getContext('2d');APP.miniCanvas=document.getElementById('miniCanvas');bindGameUI();updateHud();updateAudioButton();renderPanel();loadWorld()}
 function bindGameUI(){const canvas=APP.canvas;canvas.addEventListener('pointerup',worldPointer);canvas.addEventListener('contextmenu',e=>e.preventDefault());document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()=>{APP.panelTab=b.dataset.tab;document.querySelectorAll('[data-tab]').forEach(x=>x.classList.toggle('active',x===b));renderPanel()}));document.getElementById('mobilePanelBtn').addEventListener('click',()=>{const panel=document.getElementById('sidePanel');panel.classList.toggle('mobile-open');requestAnimationFrame(()=>{resizeWorld();drawMiniMap()})});APP.miniCanvas.addEventListener('click',()=>{APP.panelTab='map';document.querySelectorAll('[data-tab]').forEach(x=>x.classList.toggle('active',x.dataset.tab==='map'));renderPanel()});document.querySelector('[data-menu-game]').addEventListener('click',openGameMenu);document.querySelector('[data-audio-toggle]').addEventListener('click',toggleMute);document.querySelectorAll('[data-hot]').forEach(b=>b.addEventListener('click',()=>useHotbar(b.dataset.hot)));window.addEventListener('resize',resizeWorld,{once:true});}
-async function loadWorld(){try{if(!APP.sprites)APP.sprites=await loadImage('assets/world/cat_sprites.png');await loadMap(current()?.world?.location||'port_felin');APP.lastFrame=performance.now();if(APP.raf)cancelAnimationFrame(APP.raf);APP.raf=requestAnimationFrame(loop)}catch(e){console.error(e);toast('Could not load the world map.');}}
+async function loadWorld(){try{if(!APP.sprites)APP.sprites=await loadImage('assets/world/cat_sprites.png');if(!APP.directionalSprites)APP.directionalSprites=await loadImage('assets/world/directional_sprites.png').catch(()=>null);if(!APP.animationFx)APP.animationFx=await loadImage('assets/world/animation_fx.png').catch(()=>null);await Promise.all([loadFacadeAssets(),loadSceneryAssets(),loadWildernessAssets()]);await loadMap(current()?.world?.location||'port_felin');APP.lastFrame=performance.now();if(APP.raf)cancelAnimationFrame(APP.raf);APP.raf=requestAnimationFrame(loop)}catch(e){console.error(e);toast('Could not load the world map.');}}
 async function loadMap(mapId){const def=MAPS[mapId]||MAPS.port_felin,path='assets/maps/'+def.file;APP.mapLoading=true;APP.worldReady=false;clearNavigation();APP.combat.enemyId=null;APP.combat.telegraph=null;const map=await fetch(path).then(r=>{if(!r.ok)throw new Error('Map load failed '+path);return r.json()});const tileImage=map.tilesets?.[0]?.image||'../world/world_tiles.png',tilePath=String(tileImage).startsWith('data:')?tileImage:'assets/maps/'+tileImage;APP.map=map;APP.mapId=mapId;APP.mapPath=path;APP.tiles=await loadImage(tilePath);APP.worldReady=true;APP.mapLoading=false;initializeWorldState();ensureSafePlayerPosition();resizeWorld();updateAreaState();syncWeather();updateWorldClock();updateAudioZone();saveCharacter()}
 async function transitionMap(door){if(APP.mapLoading||!door)return;const dest=String(prop(door,'destination','port_felin')),sx=Number(prop(door,'spawn_x',384)),sy=Number(prop(door,'spawn_y',470));if(!MAPS[dest]){toast('That doorway does not lead anywhere yet.');return}const fade=document.getElementById('mapFade');APP.mapLoading=true;clearNavigation();APP.pendingInteraction=null;APP.selectedObjectId=null;if(fade)fade.classList.add('active');await new Promise(r=>setTimeout(r,140));const c=current();c.world.location=dest;c.position={x:sx,y:sy};playSfx('ui_click',.45);try{await loadMap(dest);APP.log=`Entered ${MAPS[dest].name}.`;updateHud()}finally{APP.mapLoading=false;if(fade){requestAnimationFrame(()=>fade.classList.remove('active'))}}}
 function loadImage(src){return new Promise((resolve,reject)=>{const i=new Image();i.onload=()=>resolve(i);i.onerror=reject;i.src=src})}
-function initializeWorldState(){const c=current();migrateCharacter(c);cleanupDrops();const objs=worldObjects();APP.motion.actors={};APP.motion.civilianScheduleSig=null;APP.motion.civilians=makeCivilianTemplates().map((v,i)=>({...v,homeX:v.x,homeY:v.y,targetX:v.x,targetY:v.y,nextMove:performance.now()+randomRange(400,2500),speed:18+Math.random()*8,id:'civilian_'+i}));APP.motion.floaters=[];APP.motion.particles=[];APP.motion.projectiles=[];APP.motion.chatter=null;APP.motion.nextChatter=performance.now()+randomRange(3500,6500);APP.motion.areaKey=null;APP.motion.exploreStamp=null;APP.motion.lastClockMinute=-1;APP.motion.weatherKey=null;APP.motion.lastTimeSave=performance.now();for(const o of objs){const ctr={x:o.x+(o.width||0)/2,y:o.y+(o.height||0)/2};if(o.type==='enemy'){const kind=prop(o,'enemy');if(!c.world.enemies[o.id])c.world.enemies[o.id]={hp:ENEMIES[kind].maxHp,alive:true,respawnAt:0};APP.motion.actors[o.id]={x:ctr.x,y:ctr.y,homeX:ctr.x,homeY:ctr.y,targetX:ctr.x,targetY:ctr.y,nextMove:0,speed:kind==='boar'?52:kind==='fox_captain'?55:kind==='fox_marksman'?51:kind==='fox'?50:kind==='rat_captain'?56:kind==='rat_foreman'?49:kind==='rat_skirmisher'?53:kind==='rat_hexer'?48:kind==='vale_captain'?57:kind==='vale_arquebusier'?49:kind==='vale_pikeman'?54:43,kind:'enemy'}}else if(o.type==='npc'){APP.motion.actors[o.id]={x:ctr.x,y:ctr.y,homeX:ctr.x,homeY:ctr.y,targetX:ctr.x,targetY:ctr.y,nextMove:performance.now()+randomRange(500,2800),speed:22+Math.random()*9,kind:'npc',stationary:String(prop(o,'stationary','false'))==='true'}}else if(o.type==='resource'&&!c.world.resources[o.id])c.world.resources[o.id]={readyAt:0}}for(let i=0;i<(MAPS[APP.mapId]?.indoor?7:24);i++)APP.motion.particles.push({ambient:true,x:Math.random()*APP.map.width*64,y:Math.random()*APP.map.height*64,vx:MAPS[APP.mapId]?.indoor?randomRange(-1,1):randomRange(3,9),vy:randomRange(-2,2),life:999,max:999,color:MAPS[APP.mapId]?.indoor?'rgba(255,220,150,.13)':'rgba(244,222,160,.20)',size:randomRange(1,2.7)});revealExploration(true);saveCharacter()}
+// Editable facade artwork lives in assets/src/world/facades, exported to these PNGs with Inkscape.
+// These images are visual only: map-authored buildings and doorway objects retain the collision and interaction logic.
+async function loadFacadeAssets(){
+ if(APP.facades)return;
+ const kinds=['guild','smith','inn','market','bank','quarry_hut'];
+ const images=await Promise.all(kinds.map(async key=>{try{return await loadImage(`assets/world/facades/${key}.png`)}catch(e){console.warn('Facade art failed to load:',key,e);return null}}));
+ APP.facades=Object.fromEntries(kinds.map((key,i)=>[key,images[i]]));
+}
+
+// Editable scene dressing is stored as Tiled objects in the Scenery layer.
+// These sprites never affect pathfinding, collisions, or clickable interactions.
+async function loadSceneryAssets(){
+ if(APP.scenery)return;
+ const kinds=['lantern','planter','flowerbed','barrels','bench','hedge','flowerpatch','crate','rowan','fence','cobble_edge'];
+ const images=await Promise.all(kinds.map(async key=>{
+  try{return await loadImage(`assets/world/scenery/${key}.png`)}
+  catch(err){console.warn('Scenery art unavailable:',key,err);return null}
+ }));
+ APP.scenery=Object.fromEntries(kinds.map((key,i)=>[key,images[i]]));
+}
+function drawTerrainEdges(ctx){
+ const edge=APP.scenery?.cobble_edge;if(!edge||APP.mapId!=='port_felin')return;
+ const layer=APP.map.layers.find(l=>l.name==='Ground');if(!layer)return;
+ const cols=APP.map.width,rows=APP.map.height,tiles=layer.data;
+ const w=APP.canvas._cssW||800,h=APP.canvas._cssH||600;
+ const minX=Math.max(0,Math.floor(APP.camera.x/64)-1),maxX=Math.min(cols,Math.ceil((APP.camera.x+w)/64)+1);
+ const minY=Math.max(0,Math.floor(APP.camera.y/64)-1),maxY=Math.min(rows,Math.ceil((APP.camera.y+h)/64)+1);
+ for(let yy=minY;yy<maxY;yy++)for(let xx=minX;xx<maxX;xx++){
+  if(tiles[yy*cols+xx]!==2)continue;
+  const sides=[[0,-1,0],[1,0,Math.PI/2],[0,1,Math.PI],[-1,0,-Math.PI/2]];
+  for(const [dx,dy,angle] of sides){const nx=xx+dx,ny=yy+dy;
+   if(nx<0||ny<0||nx>=cols||ny>=rows||tiles[ny*cols+nx]!==1)continue;
+   ctx.save();ctx.translate(xx*64+32,yy*64+32);ctx.rotate(angle);ctx.drawImage(edge,-32,-32,64,64);ctx.restore();
+  }
+ }
+}
+function drawScenery(ctx){
+ if(APP.mapId!=='port_felin'||!APP.scenery)return;
+ const objects=APP.map.layers.find(l=>l.name==='Scenery')?.objects||[];
+ const dark=nightLevel();
+ for(const o of objects){
+  const img=APP.scenery[String(prop(o,'kind',''))];if(!img)continue;
+  if(o.x+o.width<APP.camera.x-64||o.x>APP.camera.x+(APP.canvas._cssW||800)+64||o.y+o.height<APP.camera.y-64||o.y>APP.camera.y+(APP.canvas._cssH||600)+64)continue;
+  if(prop(o,'kind')==='lantern'&&dark>.1){
+   const cx=o.x+o.width*.5,cy=o.y+o.height*.39;
+   const glow=ctx.createRadialGradient(cx,cy,2,cx,cy,85);
+   glow.addColorStop(0,`rgba(247,190,94,${Math.min(.24,dark*.65)})`);
+   glow.addColorStop(1,'rgba(247,190,94,0)');
+   ctx.fillStyle=glow;ctx.fillRect(cx-85,cy-85,170,170);
+  }
+  ctx.drawImage(img,o.x,o.y,o.width,o.height);
+ }
+}
+// Wilderness dressing is authored as named, editable Tiled objects in the
+// Wild Scenery layer. This presentation layer has no collision or interactions.
+async function loadWildernessAssets(){
+ if(APP.wildScenery)return;
+ const keys=['oak_canopy','pine_bough','fern_bank','bramble','mushroom_cluster','moss_boulder','river_reeds','fallen_log','lavender_cluster','wildflowers','quarry_rubble','aqueduct_fragment','forest_edge','river_bank'];
+ const imgs=await Promise.all(keys.map(async key=>{
+  try{return await loadImage(`assets/world/wilderness/${key}.png`)}
+  catch(error){console.warn('Wilderness art unavailable:',key,error);return null}
+ }));
+ APP.wildScenery=Object.fromEntries(keys.map((key,i)=>[key,imgs[i]]));
+}
+function drawWildernessEdges(ctx){
+ if(!MAPS[APP.mapId]?.outdoor||!APP.wildScenery)return;
+ const forest=APP.wildScenery.forest_edge,river=APP.wildScenery.river_bank;
+ if(!forest&&!river)return;
+ const layer=APP.map.layers.find(l=>l.name==='Ground');if(!layer)return;
+ const tile=64,cols=APP.map.width,rows=APP.map.height,ids=layer.data;
+ const startX=Math.max(0,Math.floor(APP.camera.x/tile)-1),endX=Math.min(cols,Math.ceil((APP.camera.x+(APP.canvas._cssW||800))/tile)+1),
+       startY=Math.max(0,Math.floor(APP.camera.y/tile)-1),endY=Math.min(rows,Math.ceil((APP.camera.y+(APP.canvas._cssH||600))/tile)+1);
+ const sides=[[0,-1,0],[1,0,Math.PI/2],[0,1,Math.PI],[-1,0,-Math.PI/2]];
+ for(let y=startY;y<endY;y++)for(let x=startX;x<endX;x++){
+  const kind=ids[y*cols+x];if(kind!==6&&kind!==3)continue;
+  const img=kind===6?forest:river;if(!img)continue;
+  for(const [dx,dy,angle] of sides){
+   const nx=x+dx,ny=y+dy;
+   if(nx<0||ny<0||nx>=cols||ny>=rows)continue;
+   const adjacent=ids[ny*cols+nx];
+   if(kind===6?adjacent===6:adjacent===3)continue;
+   ctx.save();ctx.translate((x+.5)*64,(y+.5)*64);ctx.rotate(angle);ctx.drawImage(img,-32,-32,64,64);ctx.restore();
+  }
+ }
+}
+function drawWildernessScenery(ctx){
+ if(!MAPS[APP.mapId]?.outdoor||!APP.wildScenery)return;
+ const objects=APP.map.layers.find(l=>l.name==='Wild Scenery')?.objects||[];
+ const x0=APP.camera.x-120,y0=APP.camera.y-140,x1=APP.camera.x+(APP.canvas._cssW||800)+120,y1=APP.camera.y+(APP.canvas._cssH||600)+140;
+ for(const o of objects){
+  if(o.x+o.width<x0||o.x>x1||o.y+o.height<y0||o.y>y1)continue;
+  const img=APP.wildScenery[String(prop(o,'kind',''))];if(img)ctx.drawImage(img,o.x,o.y,o.width,o.height);
+ }
+}
+function initializeWorldState(){const c=current();migrateCharacter(c);cleanupDrops();const objs=worldObjects();APP.motion.actors={};APP.motion.poses={};APP.motion.spriteActions={};APP.motion.civilianScheduleSig=null;APP.motion.civilians=makeCivilianTemplates().map((v,i)=>({...v,homeX:v.x,homeY:v.y,targetX:v.x,targetY:v.y,nextMove:performance.now()+randomRange(400,2500),speed:18+Math.random()*8,id:'civilian_'+i}));APP.motion.floaters=[];APP.motion.particles=[];APP.motion.projectiles=[];APP.motion.chatter=null;APP.motion.nextChatter=performance.now()+randomRange(3500,6500);APP.motion.areaKey=null;APP.motion.exploreStamp=null;APP.motion.lastClockMinute=-1;APP.motion.weatherKey=null;APP.motion.lastTimeSave=performance.now();for(const o of objs){const ctr={x:o.x+(o.width||0)/2,y:o.y+(o.height||0)/2};if(o.type==='enemy'){const kind=prop(o,'enemy');if(!c.world.enemies[o.id])c.world.enemies[o.id]={hp:ENEMIES[kind].maxHp,alive:true,respawnAt:0};APP.motion.actors[o.id]={x:ctr.x,y:ctr.y,homeX:ctr.x,homeY:ctr.y,targetX:ctr.x,targetY:ctr.y,nextMove:0,speed:kind==='boar'?52:kind==='fox_captain'?55:kind==='fox_marksman'?51:kind==='fox'?50:kind==='rat_captain'?56:kind==='rat_foreman'?49:kind==='rat_skirmisher'?53:kind==='rat_hexer'?48:kind==='vale_captain'?57:kind==='vale_arquebusier'?49:kind==='vale_pikeman'?54:43,kind:'enemy'}}else if(o.type==='npc'){APP.motion.actors[o.id]={x:ctr.x,y:ctr.y,homeX:ctr.x,homeY:ctr.y,targetX:ctr.x,targetY:ctr.y,nextMove:performance.now()+randomRange(500,2800),speed:22+Math.random()*9,kind:'npc',stationary:String(prop(o,'stationary','false'))==='true'}}else if(o.type==='resource'&&!c.world.resources[o.id])c.world.resources[o.id]={readyAt:0}}for(let i=0;i<(MAPS[APP.mapId]?.indoor?7:24);i++)APP.motion.particles.push({ambient:true,x:Math.random()*APP.map.width*64,y:Math.random()*APP.map.height*64,vx:MAPS[APP.mapId]?.indoor?randomRange(-1,1):randomRange(3,9),vy:randomRange(-2,2),life:999,max:999,color:MAPS[APP.mapId]?.indoor?'rgba(255,220,150,.13)':'rgba(244,222,160,.20)',size:randomRange(1,2.7)});revealExploration(true);saveCharacter()}
 function worldObjects(){return APP.map?.layers.find(l=>l.name==='World Objects')?.objects||[]}
 function resizeWorld(){if(APP.screen!=='game'||!APP.canvas)return;const wrap=document.getElementById('worldWrap');if(!wrap)return;const r=wrap.getBoundingClientRect(),dpr=Math.min(window.devicePixelRatio||1,2);APP.canvas.width=Math.max(1,Math.floor(r.width*dpr));APP.canvas.height=Math.max(1,Math.floor(r.height*dpr));APP.canvas._cssW=r.width;APP.canvas._cssH=r.height;APP.canvas._dpr=dpr;const mr=APP.miniCanvas.getBoundingClientRect();APP.miniCanvas.width=Math.max(1,Math.floor(mr.width*dpr));APP.miniCanvas.height=Math.max(1,Math.floor(mr.height*dpr));drawMiniMap()}
 function loop(now){if(APP.screen!=='game')return;const dt=Math.min(.05,(now-APP.lastFrame)/1000||0);APP.lastFrame=now;updateWorld(dt,now);drawWorld();APP.raf=requestAnimationFrame(loop)}
-function updateWorld(dt,now){const c=current();if(!c||APP.mapLoading)return;APP.motion.worldTime+=dt;c.world.timeMinutes=c.world.timeMinutes+dt*2;const fmax=playerFocusMax();if(c.focus<fmax){c.focus=Math.min(fmax,c.focus+dt*(APP.combat.enemyId?1.15:2.8));const fb=document.getElementById('focusBar');if(fb)fb.style.width=`${clamp(c.focus/fmax*100,0,100)}%`}const minute=Math.floor(c.world.timeMinutes);if(minute!==APP.motion.lastClockMinute){APP.motion.lastClockMinute=minute;updateWorldClock();syncWorldSchedule();syncWeather()}if(now-APP.motion.lastTimeSave>10000){APP.motion.lastTimeSave=now;saveCharacter()}cleanupDrops();APP.motion.playerMoving=false;let dx=0,dy=0;if(APP.keys.has('w')||APP.keys.has('arrowup'))dy-=1;if(APP.keys.has('s')||APP.keys.has('arrowdown'))dy+=1;if(APP.keys.has('a')||APP.keys.has('arrowleft'))dx-=1;if(APP.keys.has('d')||APP.keys.has('arrowright'))dx+=1;if(dx||dy){clearNavigation();const mag=Math.hypot(dx,dy);movePlayer(dx/mag*165*dt,dy/mag*165*dt)}else updateNavigation(dt,now);if(APP.motion.playerMoving&&now-APP.motion.lastStep>390){APP.motion.lastStep=now;playSfx('footstep',.34)}updateActors(dt,now);updateEffects(dt);if(APP.pendingInteraction){const o=objectById(APP.pendingInteraction);if(o){const ctr=objectCenter(o);if(dist(c.position.x,c.position.y,ctr.x,ctr.y)<110){const oid=APP.pendingInteraction;clearNavigation(false);APP.pendingInteraction=null;interactObject(objectById(oid))}}}updateEnemyRespawns(now);updateCombat(now);updateAudioZone();updateAreaState();revealExploration();updateCamera();}
+function updateWorld(dt,now){const c=current();if(!c||APP.mapLoading)return;APP.motion.worldTime+=dt;c.world.timeMinutes=c.world.timeMinutes+dt*2;const fmax=playerFocusMax();if(c.focus<fmax){c.focus=Math.min(fmax,c.focus+dt*(APP.combat.enemyId?1.15:2.8));const fb=document.getElementById('focusBar');if(fb)fb.style.width=`${clamp(c.focus/fmax*100,0,100)}%`}const minute=Math.floor(c.world.timeMinutes);if(minute!==APP.motion.lastClockMinute){APP.motion.lastClockMinute=minute;updateWorldClock();syncWorldSchedule();syncWeather()}if(now-APP.motion.lastTimeSave>10000){APP.motion.lastTimeSave=now;saveCharacter()}cleanupDrops();APP.motion.playerMoving=false;let dx=0,dy=0;if(APP.keys.has('w')||APP.keys.has('arrowup'))dy-=1;if(APP.keys.has('s')||APP.keys.has('arrowdown'))dy+=1;if(APP.keys.has('a')||APP.keys.has('arrowleft'))dx-=1;if(APP.keys.has('d')||APP.keys.has('arrowright'))dx+=1;if(dx||dy){clearNavigation();const mag=Math.hypot(dx,dy);movePlayer(dx/mag*165*dt,dy/mag*165*dt)}else updateNavigation(dt,now);if(APP.motion.playerMoving&&now-APP.motion.lastStep>390){APP.motion.lastStep=now;playSfx('footstep',.34)}updateActors(dt,now);updateSpritePoses(dt);updateEffects(dt);if(APP.pendingInteraction){const o=objectById(APP.pendingInteraction);if(o){const ctr=objectCenter(o);if(dist(c.position.x,c.position.y,ctr.x,ctr.y)<110){const oid=APP.pendingInteraction;clearNavigation(false);APP.pendingInteraction=null;interactObject(objectById(oid))}}}updateEnemyRespawns(now);updateCombat(now);updateAudioZone();updateAreaState();revealExploration();updateCamera();}
 function movePlayer(dx,dy){const c=current(),ox=c.position.x,oy=c.position.y,nx=clamp(ox+dx,24,APP.map.width*64-24),ny=clamp(oy+dy,24,APP.map.height*64-24);let mx=ox,my=oy;if(positionIsFree(nx,ny)){mx=nx;my=ny}else{const xok=Math.abs(dx)>.001&&positionIsFree(nx,oy),yok=Math.abs(dy)>.001&&positionIsFree(ox,ny);if(xok){mx=nx;my=oy}else if(yok){mx=ox;my=ny}else return false}if(Math.abs(mx-ox)+Math.abs(my-oy)>.05)APP.motion.playerMoving=true;c.position.x=mx;c.position.y=my;saveCharacterThrottled();return true}
 function isWalkable(x,y){const tx=clamp(Math.floor(x/64),0,APP.map.width-1),ty=clamp(Math.floor(y/64),0,APP.map.height-1);const ground=APP.map.layers.find(l=>l.name==='Ground');const gid=ground.data[ty*APP.map.width+tx];return gid!==3&&gid!==6}
 function gateIsOpen(o){const flag=prop(o,'flag');return Boolean(flag&&current()?.world?.flags?.[flag])}
@@ -358,14 +452,262 @@ function drawWeatherOverlay(ctx,w,h){
 function drawLightTint(ctx,w,h){if(MAPS[APP.mapId]?.dungeon){const c=current(),px=c.position.x-APP.camera.x,py=c.position.y-APP.camera.y;ctx.save();const g=ctx.createRadialGradient(px,py,95,px,py,350);g.addColorStop(0,'rgba(8,12,15,.03)');g.addColorStop(.48,'rgba(8,12,15,.18)');g.addColorStop(1,'rgba(5,8,10,.58)');ctx.fillStyle=g;ctx.fillRect(0,0,w,h);ctx.restore();return}const alpha=MAPS[APP.mapId]?.indoor?Math.min(.08,nightLevel()*.22):nightLevel();if(alpha<=.025)return;ctx.save();ctx.fillStyle=`rgba(18,29,49,${alpha})`;ctx.fillRect(0,0,w,h);ctx.restore()}
 let saveTimer=0;function saveCharacterThrottled(){const n=Date.now();if(n-saveTimer>700){saveTimer=n;saveCharacter()}}
 function updateCamera(){const c=current(),cw=APP.canvas._cssW||800,ch=APP.canvas._cssH||600,worldW=APP.map.width*64,worldH=APP.map.height*64;APP.camera.x=clamp(c.position.x-cw/2,0,Math.max(0,worldW-cw));APP.camera.y=clamp(c.position.y-ch/2,0,Math.max(0,worldH-ch))}
-function drawWorld(){if(!APP.worldReady||!APP.ctx)return;const ctx=APP.ctx,dpr=APP.canvas._dpr||1,cw=APP.canvas._cssW||APP.canvas.width,ch=APP.canvas._cssH||APP.canvas.height;ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,cw,ch);ctx.save();ctx.translate(-APP.camera.x,-APP.camera.y);drawTiles(ctx);drawCloudShadows(ctx);drawBuildings(ctx);drawInteriorProps(ctx);drawAmbientParticles(ctx);drawWorldObjects(ctx);drawNavigationHint(ctx);drawPlayer(ctx);drawEffects(ctx);ctx.restore();drawLightTint(ctx,cw,ch);drawWeatherOverlay(ctx,cw,ch);drawTargetUI();drawMiniMap()}
+function linkedExteriorDoor(building){
+ const doors=worldObjects().filter(o=>o.type==='door'&&!prop(o,'style'));
+ let best=null,bestScore=1e9;
+ for(const o of doors){
+  const ctr=objectCenter(o);
+  const withinX=ctr.x>=building.x-8&&ctr.x<=building.x+building.width+8;
+  const withinY=ctr.y>=building.y+building.height-44&&ctr.y<=building.y+building.height+58;
+  if(!withinX||!withinY)continue;
+  const score=Math.abs(ctr.y-(building.y+building.height-4))+Math.abs(ctr.x-(building.x+building.width/2))*.35;
+  if(score<bestScore){best=o;bestScore=score}
+ }
+ return best;
+}
+function isFacadeExteriorDoor(o){
+ if(APP.mapId!=='port_felin'||prop(o,'style'))return false;
+ const ctr=objectCenter(o);
+ return worldObjects().some(b=>b.type==='building'&&ctr.x>=b.x-8&&ctr.x<=b.x+b.width+8&&ctr.y>=b.y+b.height-44&&ctr.y<=b.y+b.height+58);
+}
+
+function drawWorld(){if(!APP.worldReady||!APP.ctx)return;const ctx=APP.ctx,dpr=APP.canvas._dpr||1,cw=APP.canvas._cssW||APP.canvas.width,ch=APP.canvas._cssH||APP.canvas.height;ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,cw,ch);ctx.save();ctx.translate(-APP.camera.x,-APP.camera.y);drawTiles(ctx);drawTerrainEdges(ctx);drawWildernessEdges(ctx);drawCloudShadows(ctx);drawBuildings(ctx);drawScenery(ctx);drawWildernessScenery(ctx);drawInteriorProps(ctx);drawAmbientParticles(ctx);drawWorldObjects(ctx);drawNavigationHint(ctx);drawPlayer(ctx);drawEffects(ctx);ctx.restore();drawLightTint(ctx,cw,ch);drawWeatherOverlay(ctx,cw,ch);drawTargetUI();drawMiniMap()}
 function drawTiles(ctx){const ground=APP.map.layers.find(l=>l.name==='Ground'),tile=64,startX=Math.max(0,Math.floor(APP.camera.x/tile)-1),endX=Math.min(APP.map.width,Math.ceil((APP.camera.x+(APP.canvas._cssW||800))/tile)+1),startY=Math.max(0,Math.floor(APP.camera.y/tile)-1),endY=Math.min(APP.map.height,Math.ceil((APP.camera.y+(APP.canvas._cssH||600))/tile)+1);ctx.imageSmoothingEnabled=false;for(let y=startY;y<endY;y++)for(let x=startX;x<endX;x++){const gid=ground.data[y*APP.map.width+x];if(gid)ctx.drawImage(APP.tiles,(gid-1)*64,0,64,64,x*64,y*64,64,64)}}
-function drawBuildings(ctx){const dark=nightLevel();for(const o of worldObjects().filter(x=>x.type==='building')){ctx.fillStyle='#6d4a35';ctx.strokeStyle='#2a2420';ctx.lineWidth=4;ctx.fillRect(o.x,o.y,o.width,o.height);ctx.strokeRect(o.x,o.y,o.width,o.height);ctx.fillStyle='#884c39';ctx.beginPath();ctx.moveTo(o.x-8,o.y);ctx.lineTo(o.x+o.width/2,o.y-38);ctx.lineTo(o.x+o.width+8,o.y);ctx.closePath();ctx.fill();ctx.stroke();ctx.fillStyle='#d3b567';ctx.fillRect(o.x+o.width*.42,o.y+o.height-38,o.width*.16,38);const wy=o.y+o.height*.46;for(const wx of[o.x+o.width*.23,o.x+o.width*.77]){if(dark>.07){const g=ctx.createRadialGradient(wx,wy,2,wx,wy,28);g.addColorStop(0,`rgba(255,210,99,${Math.min(.42,dark*1.5)})`);g.addColorStop(1,'rgba(255,210,99,0)');ctx.fillStyle=g;ctx.beginPath();ctx.arc(wx,wy,28,0,Math.PI*2);ctx.fill()}ctx.fillStyle=dark>.07?'#e4b85e':'#7e8e83';ctx.fillRect(wx-8,wy-7,16,14);ctx.strokeStyle='#382f28';ctx.lineWidth=2;ctx.strokeRect(wx-8,wy-7,16,14)}ctx.fillStyle='#f0dfad';ctx.font='bold 12px Georgia';ctx.textAlign='center';ctx.fillText(o.name,o.x+o.width/2,o.y+o.height+17)}}
+function drawBuildings(ctx){
+ const buildings=worldObjects().filter(o=>o.type==='building');
+ // Keep the old Canvas renderer as a safe fallback if any offline asset has failed to load.
+ if(buildings.some(o=>!APP.facades?.[String(prop(o,'kind','default'))])){drawLegacyBuildings(ctx);return}
+ const dark=nightLevel();
+ for(const o of buildings){
+  const kind=String(prop(o,'kind','default')),img=APP.facades[kind];
+  // SVG source uses 16px side margins and a 48px top gutter for roofs/chimneys.
+  ctx.drawImage(img,o.x-16,o.y-48,img.width,img.height);
+  // Preserve the dynamic in-game night illumination on top of the authored panes.
+  if(dark>.07&&kind!=='quarry_hut'){
+   const glow=Math.min(.35,dark*1.25),py=o.y+32;
+   for(const offset of [31,o.width-31]){
+    const wx=o.x+offset;
+    const gradient=ctx.createRadialGradient(wx,py+11,2,wx,py+11,30);
+    gradient.addColorStop(0,`rgba(255,205,109,${glow})`);
+    gradient.addColorStop(1,'rgba(255,205,109,0)');
+    ctx.fillStyle=gradient;ctx.fillRect(wx-30,py-19,60,60);
+    ctx.fillStyle=`rgba(255,207,123,${glow*.68})`;
+    ctx.fillRect(wx-9,py+1,18,17);
+   }
+  }
+  // Building names stay readable as world labels; the sign emblem is part of the SVG sprite.
+  ctx.font='bold 11px Georgia';ctx.textAlign='center';ctx.lineWidth=2.5;
+  ctx.strokeStyle='rgba(27,28,25,.85)';ctx.fillStyle='#f0dfad';
+  ctx.strokeText(o.name,o.x+o.width/2,o.y+o.height+16);
+  ctx.fillText(o.name,o.x+o.width/2,o.y+o.height+16);
+ }
+}
+
+function drawLegacyBuildings(ctx){
+ const dark=nightLevel(),themes={
+  guild:{body:'#76503e',bodyAlt:'#87604a',roof:'#6f4136',trim:'#d8ba73',window:'#95a29b',sign:'#8a5c43'},
+  smith:{body:'#6d4d39',bodyAlt:'#7b5944',roof:'#5b362d',trim:'#c39c57',window:'#7b8782',sign:'#7a5642'},
+  inn:{body:'#7a563f',bodyAlt:'#8b6750',roof:'#74463a',trim:'#dfc179',window:'#96a2a0',sign:'#8f6248'},
+  market:{body:'#81614a',bodyAlt:'#94705a',roof:'#7e4539',trim:'#e1bf73',window:'#9daba5',sign:'#916449'},
+  bank:{body:'#70604f',bodyAlt:'#7d6d5b',roof:'#5c4439',trim:'#d8bb7a',window:'#98a4a0',sign:'#836652'},
+  quarry_hut:{body:'#685240',bodyAlt:'#766050',roof:'#59463a',trim:'#c3a36a',window:'#8e9b91',sign:'#7b604c'},
+  default:{body:'#72513d',bodyAlt:'#84614a',roof:'#7a483b',trim:'#d7bb74',window:'#94a19a',sign:'#8a6046'}
+ };
+ for(const o of worldObjects().filter(x=>x.type==='building')){
+  const kind=String(prop(o,'kind','default')),
+        theme=themes[kind]||themes.default,
+        x=o.x,y=o.y,w=o.width,h=o.height,
+        cx=x+w/2,
+        linkedDoor=linkedExteriorDoor(o),
+        doorCenterX=linkedDoor?objectCenter(linkedDoor).x:cx,
+        doorW=Math.max(28,Math.min(38,Math.round(linkedDoor?linkedDoor.width*.56:w*.21))),
+        doorH=Math.max(42,Math.round(h*.38)),
+        doorX=Math.round(doorCenterX-doorW/2),
+        doorY=Math.round(y+h-doorH),
+        winY=Math.round(y+h*.43),
+        signW=Math.min(w-28,Math.max(56,Math.round(w*.5))),
+        signH=15,
+        eaveY=y+8;
+
+  ctx.save();
+  ctx.fillStyle='rgba(26,21,18,.26)';ctx.fillRect(x+10,y+h+4,w-20,10);
+  ctx.restore();
+
+  ctx.fillStyle=theme.body;
+  ctx.strokeStyle='#2b241f';
+  ctx.lineWidth=4;
+  ctx.fillRect(x,y,w,h);
+  ctx.strokeRect(x,y,w,h);
+
+  ctx.fillStyle=theme.bodyAlt;
+  ctx.fillRect(x+8,y+8,w-16,h-16);
+  ctx.strokeStyle='rgba(47,36,29,.35)';
+  ctx.lineWidth=1;
+  for(let yy=y+16;yy<y+h-18;yy+=18){ctx.beginPath();ctx.moveTo(x+10,yy);ctx.lineTo(x+w-10,yy);ctx.stroke()}
+
+  ctx.fillStyle=theme.roof;
+  ctx.strokeStyle='#2d2521';
+  ctx.lineWidth=4;
+  ctx.beginPath();
+  ctx.moveTo(x-10,y+2);
+  ctx.lineTo(cx,y-42);
+  ctx.lineTo(x+w+10,y+2);
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+
+  ctx.strokeStyle='rgba(248,226,171,.24)';
+  ctx.lineWidth=2;
+  ctx.beginPath();ctx.moveTo(cx,y-37);ctx.lineTo(cx,y+2);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(x+14,eaveY);ctx.lineTo(x+w-14,eaveY);ctx.stroke();
+
+  ctx.fillStyle='#5f4739';ctx.fillRect(x+6,y+h-10,w-12,10);
+  ctx.fillStyle=theme.trim;ctx.fillRect(x+4,y+h-14,w-8,4);
+  ctx.fillStyle='#4b3529';ctx.fillRect(x+6,y+10,7,h-18);ctx.fillRect(x+w-13,y+10,7,h-18);
+
+  const leftWinX=Math.round(x+w*.24),rightWinX=Math.round(x+w*.76),windowGlow=dark>.07;
+  for(const wx of [leftWinX,rightWinX]){
+   if(windowGlow){
+    const g=ctx.createRadialGradient(wx,winY,2,wx,winY,28);
+    g.addColorStop(0,`rgba(255,212,104,${Math.min(.44,dark*1.55)})`);
+    g.addColorStop(1,'rgba(255,212,104,0)');
+    ctx.fillStyle=g;ctx.beginPath();ctx.arc(wx,winY,28,0,Math.PI*2);ctx.fill();
+   }
+   ctx.fillStyle=windowGlow?'#e3b75e':theme.window;
+   ctx.fillRect(wx-11,winY-9,22,18);
+   ctx.strokeStyle='#3a2e28';ctx.lineWidth=2;ctx.strokeRect(wx-11,winY-9,22,18);
+   ctx.beginPath();ctx.moveTo(wx,winY-9);ctx.lineTo(wx,winY+9);ctx.moveTo(wx-11,winY);ctx.lineTo(wx+11,winY);ctx.stroke();
+  }
+
+  if(kind==='smith' || kind==='inn'){
+   const chimneyX=kind==='smith'?x+w-30:x+20,chBaseY=y-6;
+   ctx.fillStyle=kind==='smith'?'#6b5e54':'#776154';
+   ctx.strokeStyle='#2f2a25';ctx.lineWidth=3;
+   ctx.fillRect(chimneyX,chBaseY-22,16,32);ctx.strokeRect(chimneyX,chBaseY-22,16,32);
+   if(kind==='smith'){
+    ctx.fillStyle='rgba(64,61,58,.35)';ctx.beginPath();ctx.arc(chimneyX+8,chBaseY-28,12,0,Math.PI*2);ctx.fill();
+   }
+  }
+
+  if(kind==='market'){
+   ctx.fillStyle='#b65245';ctx.fillRect(x+18,y+h-58,w-36,8);
+   ctx.fillStyle='#e7d8b6';for(let i=0;i<5;i++)ctx.fillRect(x+20+i*(w-40)/5,y+h-50,(w-46)/10,18);
+  }
+
+  ctx.fillStyle='#d1b479';ctx.fillRect(doorX-8,doorY+doorH-2,doorW+16,7);
+  ctx.fillStyle='#654734';ctx.strokeStyle='#31261f';ctx.lineWidth=3;
+  ctx.fillRect(doorX-3,doorY-4,doorW+6,doorH+4);ctx.strokeRect(doorX-3,doorY-4,doorW+6,doorH+4);
+  ctx.fillStyle=kind==='bank'?'#5f4336':kind==='guild'?'#6f4c39':'#7a543d';
+  ctx.fillRect(doorX,doorY,doorW,doorH);ctx.strokeRect(doorX,doorY,doorW,doorH);
+  ctx.fillStyle='rgba(255,236,186,.15)';ctx.fillRect(doorX+4,doorY+5,doorW-8,7);ctx.fillRect(doorX+4,doorY+doorH*.48,doorW-8,6);
+  ctx.strokeStyle='rgba(44,30,24,.75)';ctx.beginPath();ctx.moveTo(doorX+doorW/2,doorY+4);ctx.lineTo(doorX+doorW/2,doorY+doorH-4);ctx.stroke();
+  ctx.fillStyle=theme.trim;ctx.beginPath();ctx.arc(doorX+doorW-7,doorY+doorH*.56,2.5,0,Math.PI*2);ctx.fill();
+  if(kind==='bank' || kind==='guild'){ctx.fillStyle='rgba(239,222,170,.75)';ctx.fillRect(doorX+doorW/2-8,doorY-14,16,8);ctx.strokeStyle='#3d3027';ctx.lineWidth=2;ctx.strokeRect(doorX+doorW/2-8,doorY-14,16,8)}
+
+  ctx.fillStyle=theme.sign;ctx.strokeStyle='#3a2b22';ctx.lineWidth=2;
+  ctx.fillRect(cx-signW/2,y+h-58,signW,signH);ctx.strokeRect(cx-signW/2,y+h-58,signW,signH);
+  ctx.fillStyle='#f2e0b0';ctx.font='bold 11px Georgia';ctx.textAlign='center';
+  const signText=kind==='guild'?'Guild Hall':kind==='smith'?'Ironpaw Forge':kind==='inn'?'Warm Saucer':kind==='market'?'Mercato':kind==='bank'?'Exchange':o.name;
+  ctx.fillText(signText,cx,y+h-47);
+
+  if(kind==='bank'){ctx.fillStyle='#d8bb7a';ctx.font='bold 14px Georgia';ctx.fillText('✦',cx,y+h-73)}
+  else if(kind==='inn'){ctx.fillStyle='#d8bb7a';ctx.font='bold 14px Georgia';ctx.fillText('✶',cx,y+h-73)}
+  else if(kind==='smith'){ctx.fillStyle='#d8bb7a';ctx.font='bold 14px Georgia';ctx.fillText('⚒',cx,y+h-73)}
+
+  ctx.fillStyle='#f0dfad';ctx.font='bold 12px Georgia';ctx.fillText(o.name,cx,y+h+17)
+ }
+}
+
 function drawInteriorProps(ctx){if(APP.mapId==='port_felin')return;for(const o of worldObjects().filter(x=>x.type==='obstacle')){const k=String(prop(o,'kind',''));ctx.save();ctx.fillStyle=k==='table'?'#72513a':k==='counter'?'#604333':k==='anvil'?'#51545a':k==='rack'?'#624638':k==='shelf'?'#573c31':k==='crates'?'#80613d':'#694b37';ctx.strokeStyle='#2b241f';ctx.lineWidth=3;if(k==='anvil'){ctx.fillRect(o.x+12,o.y+10,o.width-24,o.height-18);ctx.fillStyle='#7b7f84';ctx.fillRect(o.x,o.y+4,o.width*.72,18)}else{ctx.fillRect(o.x,o.y,o.width,o.height)}ctx.strokeRect(o.x,o.y,o.width,o.height);if(k==='table'){ctx.fillStyle='#c9ac6e';ctx.fillRect(o.x+10,o.y+9,16,12);ctx.fillRect(o.x+o.width-28,o.y+o.height-22,14,11)}if(k==='shelf'||k==='rack'){ctx.strokeStyle='#b18b59';for(let y=o.y+28;y<o.y+o.height;y+=34){ctx.beginPath();ctx.moveTo(o.x+5,y);ctx.lineTo(o.x+o.width-5,y);ctx.stroke()}}ctx.restore()}}
-function drawWorldObjects(ctx){const c=current(),now=Date.now(),t=APP.motion.worldTime;for(const o of worldObjects()){if(o.type==='spawn'||o.type==='building'||o.type==='obstacle'||!objectIsActive(o))continue;const ctr=objectCenter(o),selected=String(APP.selectedObjectId)===String(o.id);if(o.type==='enemy'){const ws=c.world.enemies[o.id];if(!ws?.alive)continue;const sprite=Number(prop(o,'sprite',5)),bob=Math.sin(t*6+o.id)*1.4;drawSprite(ctx,sprite,ctr.x,ctr.y+bob);drawName(ctx,o.name,ctr.x,ctr.y-40+bob,selected);if(APP.motion.actors[o.id]?.alerted&&!APP.combat.telegraph){ctx.save();ctx.fillStyle='#ffdd91';ctx.font='bold 17px Georgia';ctx.textAlign='center';ctx.fillText('!',ctr.x+25,ctr.y-47+bob);ctx.restore()}if(ws.hp<ENEMIES[prop(o,'enemy')].maxHp)drawSmallHp(ctx,ctr.x,ctr.y-31+bob,ws.hp/ENEMIES[prop(o,'enemy')].maxHp);if(APP.combat.telegraph?.enemyId===o.id)drawCombatWarning(ctx,ctr.x,ctr.y-63+bob,APP.combat.telegraph.label)}else if(o.type==='npc'){const bob=Math.sin(t*2.5+o.id)*1.1,kind=prop(o,'kind');drawSprite(ctx,Number(prop(o,'sprite',3)),ctr.x,ctr.y+bob);drawName(ctx,o.name,ctr.x,ctr.y-40+bob,selected);drawQuestMarker(ctx,kind,ctr.x,ctr.y+bob);if(APP.motion.chatter?.id===o.id&&APP.motion.chatter.until>performance.now())drawSpeech(ctx,APP.motion.chatter.text,ctr.x,ctr.y-58)}else if(o.type==='resource'){const rs=c.world.resources[o.id],ready=!rs||rs.readyAt<=now,sway=Math.sin(t*2+o.id)*3;drawResource(ctx,prop(o,'resource'),ctr.x+sway,ctr.y,ready,selected);drawName(ctx,o.name,ctr.x,ctr.y-31,selected)}else if(o.type==='door'){ctx.save();if(prop(o,'style')==='road'){ctx.strokeStyle='#715738';ctx.lineWidth=5;ctx.beginPath();ctx.moveTo(ctr.x,ctr.y+25);ctx.lineTo(ctr.x,ctr.y-21);ctx.stroke();ctx.fillStyle=selected?'#ead07a':'#c9ad6a';ctx.strokeStyle='#34281f';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(ctr.x-20,ctr.y-22);ctx.lineTo(ctr.x+20,ctr.y-22);ctx.lineTo(ctr.x+30,ctr.y-12);ctx.lineTo(ctr.x+20,ctr.y-2);ctx.lineTo(ctr.x-20,ctr.y-2);ctx.closePath();ctx.fill();ctx.stroke()}else if(prop(o,'style')==='cave'){ctx.fillStyle=selected?'#706449':'#514c42';ctx.strokeStyle='#272822';ctx.lineWidth=4;ctx.beginPath();ctx.arc(ctr.x,ctr.y+12,30,Math.PI,0);ctx.lineTo(ctr.x+30,ctr.y+27);ctx.lineTo(ctr.x-30,ctr.y+27);ctx.closePath();ctx.fill();ctx.stroke();ctx.fillStyle='#111a1b';ctx.beginPath();ctx.arc(ctr.x,ctr.y+12,20,Math.PI,0);ctx.lineTo(ctr.x+20,ctr.y+26);ctx.lineTo(ctr.x-20,ctr.y+26);ctx.closePath();ctx.fill();ctx.fillStyle='#b9a46f';for(const dx of[-26,-13,0,13,26]){ctx.fillRect(ctr.x+dx-3,ctr.y-9+Math.abs(dx)*.18,6,7)}}else{ctx.fillStyle=selected?'#e5c56e':'#b8894f';ctx.strokeStyle='#34281f';ctx.lineWidth=3;ctx.fillRect(ctr.x-16,ctr.y-23,32,46);ctx.strokeRect(ctr.x-16,ctr.y-23,32,46);ctx.fillStyle='#f1d58a';ctx.beginPath();ctx.arc(ctr.x+9,ctr.y,3,0,Math.PI*2);ctx.fill()}ctx.restore();if(APP.mapId!=='port_felin'||selected||dist(current().position.x,current().position.y,ctr.x,ctr.y)<110)drawName(ctx,prop(o,'label',o.name),ctr.x,ctr.y-31,selected)}else if(o.type==='landmark'){const lk=prop(o,'kind'),icons={contract_board:'📋',guild_ledger:'📖',forge:'🔥',masterwork_bench:'🛠️',cook_hearth:'🔥',inn_bed:'🛏',price_slate:'🪧',bank_chest:'🧰',bank_ledger:'📒',supply_chest:'🧰',cache_chest:'🧰',boss_chest:'🔒',quarry_tunnel:'🕳️',old_guild_mark:'🔰',collapsed_lift:'⚙️',dungeon_notice:'📜',bellflower_marker:'🪧',vale_ruins:'🏛️',vale_camp:'⛺',vale_shrine:'🔔',waystone:'✥',calendar_bell:'🔔',market_stall:'🧺',vale_chest:'🧰'};if(lk==='locked_gate'){ctx.save();if(gateIsOpen(o)){ctx.strokeStyle='rgba(151,129,83,.5)';ctx.lineWidth=4;ctx.beginPath();ctx.moveTo(o.x+4,o.y+4);ctx.lineTo(o.x+4,o.y+o.height-4);ctx.stroke()}else{ctx.fillStyle=selected?'#c9ab61':'#6f6652';ctx.strokeStyle='#2a2722';ctx.lineWidth=4;ctx.fillRect(o.x,o.y,o.width,o.height);ctx.strokeRect(o.x,o.y,o.width,o.height);ctx.strokeStyle='#c2ae78';ctx.lineWidth=3;for(let gx=o.x+8;gx<o.x+o.width;gx+=10){ctx.beginPath();ctx.moveTo(gx,o.y+5);ctx.lineTo(gx,o.y+o.height-5);ctx.stroke()}}ctx.restore();drawName(ctx,gateIsOpen(o)?'Open Quarry Gate':o.name,ctr.x,o.y-8,selected)}else{const opened=['supply_chest','cache_chest','boss_chest'].includes(lk)&&chestIsOpened(o);ctx.fillStyle='#d5bf72';ctx.font=lk==='contract_board'?'25px serif':'28px Georgia';ctx.textAlign='center';ctx.fillText(opened?'▣':icons[lk]||'⌘',ctr.x,ctr.y);drawName(ctx,o.name,ctr.x,ctr.y-26,selected);if(lk==='calendar_bell')drawQuestMarker(ctx,'calendar_bell',ctr.x,ctr.y)}}}for(const d of mapDrops()){const bob=Math.sin(t*5+d.x*.01)*2,selected=APP.selectedObjectId===d.id;ctx.save();ctx.translate(d.x,d.y+bob);ctx.fillStyle=selected?'#f0cb63':'#b99448';ctx.strokeStyle='#30271d';ctx.lineWidth=2;ctx.beginPath();ctx.arc(0,-4,11,0,Math.PI*2);ctx.fill();ctx.stroke();ctx.fillStyle='#efe0a2';ctx.font='bold 13px Georgia';ctx.textAlign='center';ctx.fillText('✦',0,1);ctx.restore();if(selected)drawName(ctx,'Loot',d.x,d.y-24+bob,true)}for(const m of APP.motion.civilians||[]){const bob=Math.sin(t*3+Number(String(m.id).split('_').pop()))*.8;ctx.save();ctx.globalAlpha=.92;drawSprite(ctx,m.sprite,m.x,m.y+bob);ctx.restore()}}
-function drawSprite(ctx,index,x,y){ctx.drawImage(APP.sprites,index*64,0,64,64,x-32,y-50,64,64)}
+// Walk cycles follow real movement; no gameplay positions or collision shapes are changed.
+function updateSpritePoses(dt){
+ const c=current();if(!c)return;
+ updateSpritePose('player',c.position.x,c.position.y,dt);
+ for(const [id,m] of Object.entries(APP.motion.actors||{}))updateSpritePose('actor_'+id,m.x,m.y,dt);
+ for(const m of APP.motion.civilians||[])updateSpritePose('civ_'+m.id,m.x,m.y,dt);
+ const now=performance.now();for(const [key,fx] of Object.entries(APP.motion.spriteActions||{}))if(now-fx.at>380)delete APP.motion.spriteActions[key];
+}
+function updateSpritePose(key,x,y,dt){
+ const poses=APP.motion.poses||(APP.motion.poses={});let pose=poses[key];
+ if(!pose){poses[key]={x,y,phase:0,facing:1,direction:'south',blend:0,moving:false,seed:[...key].reduce((hash,ch)=>(hash*31+ch.charCodeAt(0))%997,23)*.013};return}
+ const dx=x-pose.x,dy=y-pose.y,travel=Math.hypot(dx,dy),moving=travel>.12&&travel<40;
+ if(moving){
+  pose.phase+=travel*(key==='player'?.078:.15);
+  if(Math.abs(dx)>Math.abs(dy)*.8){pose.direction=dx<0?'west':'east';pose.facing=dx<0?-1:1}
+  else if(Math.abs(dy)>.15)pose.direction=dy<0?'north':'south';
+ }
+ pose.blend=Math.max(0,Math.min(1,pose.blend+(moving?dt*9:-dt*11)));
+ pose.moving=moving;pose.x=x;pose.y=y;
+}
+function faceSpriteToward(key,sourceX,sourceY,targetX,targetY){
+ const pose=APP.motion.poses?.[key];if(!pose)return;
+ const dx=targetX-sourceX,dy=targetY-sourceY;
+ if(Math.abs(dx)+Math.abs(dy)<2)return;
+ if(Math.abs(dx)>Math.abs(dy)*.8){pose.direction=dx<0?'west':'east';pose.facing=dx<0?-1:1}
+ else pose.direction=dy<0?'north':'south';
+}
+function spriteAction(key,type){if(!APP.motion.spriteActions)APP.motion.spriteActions={};APP.motion.spriteActions[key]={type,at:performance.now()}}
+function drawActorSprite(ctx,index,x,y,key){
+ const pose=APP.motion.poses?.[key],t=APP.motion.worldTime,reduced=window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
+ const blend=reduced?0:(pose?.blend||0),step=pose?.phase||0,phase=Math.sin(step),
+       sway=Math.sin(step*.5)*.065*blend,
+       bounce=Math.abs(phase)*1.8*blend,
+       breath=reduced?0:Math.sin(t*1.65+(pose?.seed||0))*.010,
+       direction=pose?.direction||'south',
+       flip=direction==='west'?-1:1;
+ const fx=APP.motion.spriteActions?.[key],age=fx?(performance.now()-fx.at)/1000:999,
+       active=age>=0&&age<.34,
+       hit=active&&fx.type==='hit',attack=active&&(fx.type==='melee'||fx.type==='ranged'||fx.type==='magic');
+ const enemyId=key.startsWith('actor_')?key.slice(6):null,
+       windup=enemyId!=null&&String(APP.combat.telegraph?.enemyId)===enemyId?APP.combat.telegraph:null,
+       charge=windup?Math.max(0,Math.min(1,1-(windup.hitAt-performance.now())/(windup.duration||850))):0;
+ // All directions share a fixed foot position and shadow so facing changes never move the hitbox.
+ ctx.save();ctx.fillStyle='rgba(19,22,18,.30)';ctx.beginPath();ctx.ellipse(x,y+9,17-2*blend,5,0,0,Math.PI*2);ctx.fill();ctx.restore();
+ if(windup){
+  ctx.save();ctx.strokeStyle='#df9868';ctx.lineWidth=2.5;ctx.globalAlpha=.42+charge*.48;
+  ctx.beginPath();ctx.ellipse(x,y+8,20+charge*5,8+charge*2,0,0,Math.PI*2);ctx.stroke();
+  ctx.beginPath();ctx.arc(x,y-26,3+charge*3,0,Math.PI*2);ctx.fillStyle='#f6c17c';ctx.fill();ctx.restore();
+ }
+ ctx.save();
+ const attackProgress=attack?Math.sin(Math.PI*Math.min(1,age/.34)):0;
+ const tilt=attack&&!reduced?(fx.type==='melee'?.24:fx.type==='ranged'?-.14:.08)*attackProgress:0;
+ const shove=attack&&!reduced?(fx.type==='melee'?7:fx.type==='ranged'?-3:0)*attackProgress:0;
+ ctx.translate(x+((direction==='east'?1:direction==='west'?-1:0)*shove),y-bounce+(hit&&!reduced?Math.sin(age/.34*Math.PI)*2:0)-(windup&&!reduced?charge*3:0));
+ ctx.rotate(sway+tilt*flip+(hit&&!reduced?-.09*Math.sin(age/.34*Math.PI):0));
+ ctx.scale(flip*(1+.028*blend*Math.abs(phase)),1+breath-.04*blend*Math.abs(phase));
+ if(hit)ctx.filter='brightness(1.65) sepia(.35)';
+ const sheet=APP.directionalSprites||APP.sprites;
+ const row=APP.directionalSprites?(direction==='north'?2:direction==='east'||direction==='west'?1:0):0;
+ ctx.drawImage(sheet,index*64,row*64,64,64,-32,-50,64,64);
+ ctx.filter='none';
+ if(blend>.15&&[0,1,2,3,4,5,7,11,12,13,14,15].includes(index)){
+  const lift=3.2*blend,stepL=Math.sin(step),stepR=-stepL;
+  ctx.fillStyle='#292522';ctx.strokeStyle='#171b1b';ctx.lineWidth=1.1;
+  for(const [px,offset] of [[-11,stepL],[11,stepR]]){
+   const py=7-Math.max(0,offset)*lift;
+   ctx.beginPath();ctx.ellipse(px+offset*2*blend,py,4.5,2.8,0,0,Math.PI*2);ctx.fill();ctx.stroke();
+  }
+ }
+ if(!reduced&&direction==='south'&&[0,1,2,3,4,5,7].includes(index)&&blend<.2){
+  const cycle=(t+(pose?.seed||0))%6.7;
+  if(cycle>.08&&cycle<.19){ctx.strokeStyle='#282421';ctx.lineWidth=2.2;ctx.beginPath();ctx.moveTo(-9,-22);ctx.lineTo(-4,-22);ctx.moveTo(4,-22);ctx.lineTo(9,-22);ctx.stroke()}
+ }
+ ctx.restore();
+ if(active&&APP.animationFx){
+  const tile=fx.type==='hit'?1:fx.type==='magic'?2:fx.type==='ranged'?3:0;
+  ctx.save();ctx.globalAlpha=reduced?.88:1-age/.34;
+  const spread=reduced?1:1+age*.65,sz=64*spread;
+  ctx.drawImage(APP.animationFx,tile*64,0,64,64,x-sz/2,y-sz*.82,sz,sz);
+  ctx.restore();
+ }
+}
+function drawWorldObjects(ctx){const c=current(),now=Date.now(),t=APP.motion.worldTime;for(const o of worldObjects()){if(o.type==='spawn'||o.type==='building'||o.type==='obstacle'||!objectIsActive(o))continue;const ctr=objectCenter(o),selected=String(APP.selectedObjectId)===String(o.id);if(o.type==='enemy'){const ws=c.world.enemies[o.id];if(!ws?.alive)continue;const sprite=Number(prop(o,'sprite',5)),bob=Math.sin(t*6+o.id)*1.4;drawActorSprite(ctx,sprite,ctr.x,ctr.y,'actor_'+o.id);drawName(ctx,o.name,ctr.x,ctr.y-40,selected);if(APP.motion.actors[o.id]?.alerted&&!APP.combat.telegraph){ctx.save();ctx.fillStyle='#ffdd91';ctx.font='bold 17px Georgia';ctx.textAlign='center';ctx.fillText('!',ctr.x+25,ctr.y-47+bob);ctx.restore()}if(ws.hp<ENEMIES[prop(o,'enemy')].maxHp)drawSmallHp(ctx,ctr.x,ctr.y-31+bob,ws.hp/ENEMIES[prop(o,'enemy')].maxHp);if(APP.combat.telegraph?.enemyId===o.id)drawCombatWarning(ctx,ctr.x,ctr.y-63+bob,APP.combat.telegraph.label)}else if(o.type==='npc'){const bob=Math.sin(t*2.5+o.id)*1.1,kind=prop(o,'kind');drawActorSprite(ctx,Number(prop(o,'sprite',3)),ctr.x,ctr.y,'actor_'+o.id);drawName(ctx,o.name,ctr.x,ctr.y-40,selected);drawQuestMarker(ctx,kind,ctr.x,ctr.y+bob);if(APP.motion.chatter?.id===o.id&&APP.motion.chatter.until>performance.now())drawSpeech(ctx,APP.motion.chatter.text,ctr.x,ctr.y-58)}else if(o.type==='resource'){const rs=c.world.resources[o.id],ready=!rs||rs.readyAt<=now,sway=Math.sin(t*2+o.id)*3;drawResource(ctx,prop(o,'resource'),ctr.x+sway,ctr.y,ready,selected);drawName(ctx,o.name,ctr.x,ctr.y-31,selected)}else if(o.type==='door'){const facadeDoor=isFacadeExteriorDoor(o);if(!facadeDoor){ctx.save();if(prop(o,'style')==='road'){ctx.strokeStyle='#715738';ctx.lineWidth=5;ctx.beginPath();ctx.moveTo(ctr.x,ctr.y+25);ctx.lineTo(ctr.x,ctr.y-21);ctx.stroke();ctx.fillStyle=selected?'#ead07a':'#c9ad6a';ctx.strokeStyle='#34281f';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(ctr.x-20,ctr.y-22);ctx.lineTo(ctr.x+20,ctr.y-22);ctx.lineTo(ctr.x+30,ctr.y-12);ctx.lineTo(ctr.x+20,ctr.y-2);ctx.lineTo(ctr.x-20,ctr.y-2);ctx.closePath();ctx.fill();ctx.stroke()}else if(prop(o,'style')==='cave'){ctx.fillStyle=selected?'#706449':'#514c42';ctx.strokeStyle='#272822';ctx.lineWidth=4;ctx.beginPath();ctx.arc(ctr.x,ctr.y+12,30,Math.PI,0);ctx.lineTo(ctr.x+30,ctr.y+27);ctx.lineTo(ctr.x-30,ctr.y+27);ctx.closePath();ctx.fill();ctx.stroke();ctx.fillStyle='#111a1b';ctx.beginPath();ctx.arc(ctr.x,ctr.y+12,20,Math.PI,0);ctx.lineTo(ctr.x+20,ctr.y+26);ctx.lineTo(ctr.x-20,ctr.y+26);ctx.closePath();ctx.fill();ctx.fillStyle='#b9a46f';for(const dx of[-26,-13,0,13,26]){ctx.fillRect(ctr.x+dx-3,ctr.y-9+Math.abs(dx)*.18,6,7)}}else{ctx.fillStyle=selected?'#e5c56e':'#b8894f';ctx.strokeStyle='#34281f';ctx.lineWidth=3;ctx.fillRect(ctr.x-16,ctr.y-23,32,46);ctx.strokeRect(ctr.x-16,ctr.y-23,32,46);ctx.fillStyle='#f1d58a';ctx.beginPath();ctx.arc(ctr.x+9,ctr.y,3,0,Math.PI*2);ctx.fill()}ctx.restore()}else if(selected){ctx.save();ctx.strokeStyle='#f0d37a';ctx.lineWidth=2;ctx.strokeRect(ctr.x-18,ctr.y-24,36,48);ctx.restore()}if((facadeDoor&&selected)||(!facadeDoor&&(APP.mapId!=='port_felin'||selected||dist(current().position.x,current().position.y,ctr.x,ctr.y)<110)))drawName(ctx,prop(o,'label',o.name),ctr.x,ctr.y-31,selected)}else if(o.type==='landmark'){const lk=prop(o,'kind'),icons={contract_board:'📋',guild_ledger:'📖',forge:'🔥',masterwork_bench:'🛠️',cook_hearth:'🔥',inn_bed:'🛏',price_slate:'🪧',bank_chest:'🧰',bank_ledger:'📒',supply_chest:'🧰',cache_chest:'🧰',boss_chest:'🔒',quarry_tunnel:'🕳️',old_guild_mark:'🔰',collapsed_lift:'⚙️',dungeon_notice:'📜',bellflower_marker:'🪧',vale_ruins:'🏛️',vale_camp:'⛺',vale_shrine:'🔔',waystone:'✥',calendar_bell:'🔔',market_stall:'🧺',vale_chest:'🧰'};if(lk==='locked_gate'){ctx.save();if(gateIsOpen(o)){ctx.strokeStyle='rgba(151,129,83,.5)';ctx.lineWidth=4;ctx.beginPath();ctx.moveTo(o.x+4,o.y+4);ctx.lineTo(o.x+4,o.y+o.height-4);ctx.stroke()}else{ctx.fillStyle=selected?'#c9ab61':'#6f6652';ctx.strokeStyle='#2a2722';ctx.lineWidth=4;ctx.fillRect(o.x,o.y,o.width,o.height);ctx.strokeRect(o.x,o.y,o.width,o.height);ctx.strokeStyle='#c2ae78';ctx.lineWidth=3;for(let gx=o.x+8;gx<o.x+o.width;gx+=10){ctx.beginPath();ctx.moveTo(gx,o.y+5);ctx.lineTo(gx,o.y+o.height-5);ctx.stroke()}}ctx.restore();drawName(ctx,gateIsOpen(o)?'Open Quarry Gate':o.name,ctr.x,o.y-8,selected)}else{const opened=['supply_chest','cache_chest','boss_chest'].includes(lk)&&chestIsOpened(o);ctx.fillStyle='#d5bf72';ctx.font=lk==='contract_board'?'25px serif':'28px Georgia';ctx.textAlign='center';ctx.fillText(opened?'▣':icons[lk]||'⌘',ctr.x,ctr.y);drawName(ctx,o.name,ctr.x,ctr.y-26,selected);if(lk==='calendar_bell')drawQuestMarker(ctx,'calendar_bell',ctr.x,ctr.y)}}}for(const d of mapDrops()){const bob=Math.sin(t*5+d.x*.01)*2,selected=APP.selectedObjectId===d.id;ctx.save();ctx.translate(d.x,d.y+bob);ctx.fillStyle=selected?'#f0cb63':'#b99448';ctx.strokeStyle='#30271d';ctx.lineWidth=2;ctx.beginPath();ctx.arc(0,-4,11,0,Math.PI*2);ctx.fill();ctx.stroke();ctx.fillStyle='#efe0a2';ctx.font='bold 13px Georgia';ctx.textAlign='center';ctx.fillText('✦',0,1);ctx.restore();if(selected)drawName(ctx,'Loot',d.x,d.y-24+bob,true)}for(const m of APP.motion.civilians||[]){const bob=Math.sin(t*3+Number(String(m.id).split('_').pop()))*.8;ctx.save();ctx.globalAlpha=.92;drawActorSprite(ctx,m.sprite,m.x,m.y,'civ_'+m.id);ctx.restore()}}
 function drawNavigationHint(ctx){const d=APP.navDestination;if(!d?.showMarker)return;const points=[];if(APP.moveTarget)points.push(APP.moveTarget);points.push(...APP.navPath);if(!points.length)return;ctx.save();ctx.globalAlpha=.52;ctx.fillStyle='#f0cf63';for(let i=0;i<points.length;i++){const p=points[i];ctx.beginPath();ctx.arc(p.x,p.y,Math.max(2.2,4-i*.25),0,Math.PI*2);ctx.fill()}const last=points[points.length-1];ctx.globalAlpha=.72;ctx.strokeStyle='#f0cf63';ctx.lineWidth=2;ctx.beginPath();ctx.arc(last.x,last.y,10+Math.sin(APP.motion.worldTime*5)*2,0,Math.PI*2);ctx.stroke();ctx.restore()}
-function drawPlayer(ctx){const c=current(),idx=APPEARANCES[c.appearance].sprite,bob=APP.motion.playerMoving?Math.sin(APP.motion.worldTime*14)*2.2:Math.sin(APP.motion.worldTime*2.6)*.7;ctx.save();ctx.shadowColor='rgba(0,0,0,.38)';ctx.shadowBlur=4;ctx.shadowOffsetY=4;drawSprite(ctx,idx,c.position.x,c.position.y+bob);ctx.restore();ctx.fillStyle='#fff1bd';ctx.font='bold 12px Georgia';ctx.textAlign='center';ctx.fillText(c.name,c.position.x,c.position.y-43+bob)}
+function drawPlayer(ctx){
+ const c=current(),idx=APPEARANCES[c.appearance].sprite;
+ drawActorSprite(ctx,idx,c.position.x,c.position.y,'player');
+ ctx.fillStyle='#fff1bd';ctx.font='bold 12px Georgia';ctx.textAlign='center';ctx.fillText(c.name,c.position.x,c.position.y-43)
+}
 function drawName(ctx,name,x,y,selected){ctx.font='bold 11px Georgia';ctx.textAlign='center';const w=ctx.measureText(name).width+12;ctx.fillStyle=selected?'rgba(116,58,61,.94)':'rgba(24,30,27,.78)';ctx.fillRect(x-w/2,y-11,w,16);ctx.fillStyle='#f1e5c6';ctx.fillText(name,x,y+1)}
 function drawSmallHp(ctx,x,y,p){ctx.fillStyle='#1c1816';ctx.fillRect(x-22,y,44,5);ctx.fillStyle='#a34a46';ctx.fillRect(x-21,y+1,42*clamp(p,0,1),3)}
 function drawCombatWarning(ctx,x,y,label){ctx.save();ctx.fillStyle='rgba(129,48,45,.94)';ctx.strokeStyle='#f1d17b';ctx.lineWidth=2;ctx.beginPath();ctx.arc(x,y,12,0,Math.PI*2);ctx.fill();ctx.stroke();ctx.fillStyle='#fff1bd';ctx.font='bold 15px Georgia';ctx.textAlign='center';ctx.fillText('!',x,y+5);ctx.font='bold 9px system-ui,sans-serif';ctx.fillStyle='#f1d17b';ctx.fillText(label,x,y-16);ctx.restore()}
@@ -426,9 +768,9 @@ function playerAttackInterval(){const w=equippedWeapon();return w.style==='range
 function rangedAccuracy(){const c=current(),w=equippedWeapon(),body=ITEMS[c.equipment.body]||{};return clamp(.86+c.skills.archery.level*.012+(w.accuracy||0)+(body.rangedAccuracy||0)+(disciplineActive('ranger')?.08:0)-(MAPS[APP.mapId]?.outdoor&&currentWeather()==='wind'?Math.max(0,.08-(body.windProtection||0)):0),.62,.985)}
 function magicAccuracy(){const c=current(),w=equippedWeapon(),body=ITEMS[c.equipment.body]||{};return clamp(.84+c.skills.aethercraft.level*.014+(w.accuracy||0)+(body.magicAccuracy||0)-(body.defense||0)*.012+(disciplineActive('hermeticist')?.08:0),.60,.99)}
 function startCombat(o){const c=current(),ws=c.world.enemies[o.id];if(!ws?.alive)return;if(APP.combat.enemyId!==o.id)APP.combat.telegraph=null;APP.combat.enemyId=o.id;APP.selectedObjectId=o.id;const style=weaponStyle(),ammo=equippedWeapon().ammo;APP.log=`Targeting ${o.name}. ${style==='ranged'?`Keep your distance • ${countItem(ammo)} ammo ready.`:style==='magic'?`Aethercraft ready • ${Math.floor(c.focus)}/${playerFocusMax()} Focus.`:'Watch for heavy attacks and Guard at the right moment.'}`;const ctr=objectCenter(o),range=playerAttackRange();APP.pendingInteraction=null;if(dist(c.position.x,c.position.y,ctr.x,ctr.y)>range)setNavigation(ctr.x,ctr.y,Math.max(64,range-20),o.id,false,true,true);else if(navLineClear(c.position,ctr))clearNavigation(false);else setNavigation(ctr.x,ctr.y,Math.max(64,range-20),o.id,false,true,true);updateHud()}
-function updateCombat(now){const c=current(),id=APP.combat.enemyId;if(!id)return;const o=objectById(id),ws=o&&c.world.enemies[id];if(!o||!ws?.alive){APP.combat.enemyId=null;APP.combat.telegraph=null;if(APP.navDestination?.targetId===id)clearNavigation(false);return}const ctr=objectCenter(o),range=dist(c.position.x,c.position.y,ctr.x,ctr.y),e=ENEMIES[prop(o,'enemy')],enemyRange=e.range||86,playerRange=playerAttackRange();if(APP.combat.telegraph){if(APP.combat.telegraph.enemyId!==id)APP.combat.telegraph=null;else if(now>=APP.combat.telegraph.hitAt){const t=APP.combat.telegraph;APP.combat.telegraph=null;APP.combat.lastEnemyHit=now;if(range<=enemyRange+18&&navLineClear(c.position,ctr))enemyStrike(o,t.mult,t.label,true);else{addFloater(c.position.x,c.position.y-52,'OUT OF RANGE','#b9f0d6');APP.log=`You move clear of ${e.name}'s ${t.label}.`;updateHud()}}}if(!ws.alive)return;if(!APP.combat.telegraph&&range<=enemyRange&&navLineClear(c.position,ctr)&&now-APP.combat.lastEnemyHit>1450){ws.attackCount=(ws.attackCount||0)+1;if(e.special&&ws.attackCount%e.special.every===0){APP.combat.telegraph={enemyId:o.id,label:e.special.name,mult:e.special.mult,hitAt:now+e.special.windup};playSfx('enemy_warning',.75);APP.log=`${e.name} prepares ${e.special.name}! ${e.range?'Move away or Guard.':'Guard now.'}`;updateHud()}else{APP.combat.lastEnemyHit=now;enemyStrike(o,1,'',false)}}if(range>playerRange||!navLineClear(c.position,ctr)){if(APP.navDestination?.targetId!==id||(!APP.moveTarget&&!APP.navPath.length&&now>=APP.navRepathAt))setNavigation(ctr.x,ctr.y,Math.max(64,playerRange-20),o.id,false,true,true);return}if(APP.navDestination?.targetId===id)clearNavigation(false);if(now-APP.combat.lastPlayerHit>playerAttackInterval()){APP.combat.lastPlayerHit=now;playerStrike(false)}}
-function playerStrike(special){const c=current(),id=APP.combat.enemyId,o=objectById(id),ws=o&&c.world.enemies[id];if(!o||!ws?.alive)return;const e=ENEMIES[prop(o,'enemy')],weapon=equippedWeapon(),style=weapon.style||'melee',ranged=style==='ranged',magic=style==='magic',now=performance.now(),riposte=style==='melee'&&now<APP.combat.riposteUntil,skill=magic?c.skills.aethercraft:ranged?c.skills.archery:c.skills.fencing,armor=ITEMS[c.equipment.body]||{},ctr=objectCenter(o);if(dist(c.position.x,c.position.y,ctr.x,ctr.y)>playerAttackRange()+10){toast('Target is out of range.');return}if(!navLineClear(c.position,ctr)){toast('Solid cover blocks your attack. Move for a clear shot.');return}if(ranged){const ammo=weapon.ammo;if(countItem(ammo)<1){if(now-(APP.combat.noAmmoWarnAt||0)>2600){APP.combat.noAmmoWarnAt=now;toast(`Out of ${ITEMS[ammo].name}. Fletch more or switch weapons.`)}APP.log='Your quiver is empty.';updateHud();return}const conserved=disciplineActive('ranger')&&Math.random()<.20;if(!conserved)removeItem(ammo,1);else addFloater(c.position.x,c.position.y-48,'AMMO RECOVERED','#b9f0d6');addProjectile(c.position.x,c.position.y-24,ctr.x,ctr.y-22,weapon===ITEMS.quarry_crossbow?'#e7d39a':'#f4ddb0');playSfx('bow_shot',weapon===ITEMS.quarry_crossbow?0.95:0.72);if(Math.random()>rangedAccuracy()){addFloater(ctr.x,ctr.y-48,'MISS','#d8cfb0');APP.log=`Your shot misses ${e.name}.`;addSkillXp('archery',1);saveCharacterThrottled();updateHud();renderPanel();return}}if(magic){const cost=Math.max(1,(weapon.focusCost||3)+(special?5:0)-(disciplineActive('hermeticist')?1:0));if(c.focus<cost){if(now-(APP.combat.noFocusWarnAt||0)>2200){APP.combat.noFocusWarnAt=now;toast(`Not enough Focus (${Math.ceil(cost)} needed).`)}APP.log='Your concentration slips; Focus is too low.';updateHud();return}c.focus-=cost;addProjectile(c.position.x,c.position.y-22,ctr.x,ctr.y-20,special?'#d58cff':'#9fdcff');playSfx(special?'arcane_burst':'arcane_bolt',special?.9:.65);if(Math.random()>magicAccuracy()){addFloater(ctr.x,ctr.y-48,'DISSIPATE','#cbb9dd');APP.log=`Your aether bolt dissipates before reaching ${e.name}.`;addSkillXp('aethercraft',1);saveCharacterThrottled();updateHud();renderPanel();return}}const crit=Math.random()<Math.min(style==='melee'?0.34:0.24,(style==='melee'?0.045:0.035)+skill.level*(style==='melee'?0.014:0.012)+(style==='melee'?((weapon.meleeCrit||0)+(armor.meleeCrit||0)+(disciplineActive('duelist')?.08:0)):0)),base=2+skill.level*(magic?.76:ranged?.72:.8)+(weapon.attack||0),armorPierce=(ranged||magic)?(weapon.armorPierce||0):0,mult=(special?(magic?1.48:1.65):1)*(riposte?(disciplineActive('duelist')?1.58:1.35):1)*(crit?1.5:1),effectiveDefense=e.defense*(1-armorPierce),dmg=Math.max(1,Math.round(base*(.8+Math.random()*.45)*mult-effectiveDefense*.35));ws.hp-=dmg;if(riposte)APP.combat.riposteUntil=0;const label=crit?'CRIT':riposte?'RIPOSTE':special?(magic?'ARC BURST':ranged?'AIMED':'FLOURISH'):'';addFloater(ctr.x,ctr.y-48,`-${dmg}${label?' '+label:''}`,crit?'#ffe58d':magic?'#b9d9ff':riposte?'#b9f0d6':special?'#ffe08b':'#ffffff');addBurst(ctr.x,ctr.y-8,magic?(special?'#cf8cff':'#8ec9e8'):crit?'#f7df7d':riposte?'#8fd8b4':special?'#f5cf61':'#e7e0c9',special||crit?10:6);if(style==='melee')playSfx('sword_hit',special||crit?1:.75);addSkillXp(magic?'aethercraft':ranged?'archery':'fencing',special?5:riposte?4:3);APP.log=`You ${magic?'cast at':ranged?'shoot':'hit'} ${e.name} for ${dmg}${crit?' (critical)':''}${riposte?' with a riposte':''}.`;if(magic&&special){for(const other of worldObjects().filter(x=>x.type==='enemy'&&String(x.id)!==String(o.id))){const ow=c.world.enemies[other.id];if(!ow?.alive)continue;const op=objectCenter(other);if(dist(op.x,op.y,ctr.x,ctr.y)>92||!navLineClear(ctr,op))continue;const oe=ENEMIES[prop(other,'enemy')],splash=Math.max(1,Math.round(dmg*.5-oe.defense*.18));ow.hp-=splash;addFloater(op.x,op.y-46,`-${splash} ARC`,'#cfa0ff');addBurst(op.x,op.y-7,'#b77ce0',6);if(ow.hp<=0)defeatEnemy(other,'magic',true)}}if(ws.hp<=0)defeatEnemy(o,style);saveCharacterThrottled();updateHud();renderPanel()}
-function enemyStrike(o,mult=1,label='',special=false){const c=current(),e=ENEMIES[prop(o,'enemy')],armor=ITEMS[c.equipment.body]||{defense:0},now=performance.now(),guarded=now<APP.combat.guardUntil;if(e.range){const ctr=objectCenter(o);addProjectile(ctr.x,ctr.y-24,c.position.x,c.position.y-22,e.magic?'#cc83ef':'#e4aa78');playSfx(e.magic?'arcane_bolt':prop(o,'enemy')==='vale_arquebusier'?'arquebus_shot':'bow_shot',e.magic?.5:prop(o,'enemy')==='vale_arquebusier'?.82:.45)}let dmg=Math.max(1,Math.round((e.attack*mult)*(.75+Math.random()*.5)-(armor.defense||0)*.45-c.skills.defense.level*.15));if(guarded){dmg=Math.max(0,Math.floor(dmg*.32));APP.combat.guardUntil=0;APP.combat.riposteUntil=e.range?0:now+2600;addFloater(c.position.x,c.position.y-58,dmg?`BLOCK • -${dmg}`:'BLOCK!','#b9f0d6');addBurst(c.position.x,c.position.y-12,'#d8d0a4',10);playSfx('guard_block',1);addSkillXp('defense',special?5:3)}else{addFloater(c.position.x,c.position.y-52,`-${dmg}`,'#ff9a8f');addBurst(c.position.x,c.position.y-8,'#c76c62',special?8:5);playSfx('hurt',special?0.95:0.75);addSkillXp('defense',2)}if(e.magic&&special){c.focus=Math.max(0,c.focus-4);addFloater(c.position.x,c.position.y-72,'-4 FOCUS','#d4a8f1')}c.hp-=dmg;APP.log=guarded?`You guard ${e.name}${label?`'s ${label}`:''}${e.magic?' spell.':e.range?' shot.':' and open a riposte!'}`:`${e.name}${label?` uses ${label} and`:''} ${e.magic?'casts at':e.range?'shoots':'hits'} you for ${dmg}.`;if(c.hp<=0)playerDefeated();saveCharacter();updateHud()}
+function updateCombat(now){const c=current(),id=APP.combat.enemyId;if(!id)return;const o=objectById(id),ws=o&&c.world.enemies[id];if(!o||!ws?.alive){APP.combat.enemyId=null;APP.combat.telegraph=null;if(APP.navDestination?.targetId===id)clearNavigation(false);return}const ctr=objectCenter(o),range=dist(c.position.x,c.position.y,ctr.x,ctr.y),e=ENEMIES[prop(o,'enemy')],enemyRange=e.range||86,playerRange=playerAttackRange();if(APP.combat.telegraph){if(APP.combat.telegraph.enemyId!==id)APP.combat.telegraph=null;else if(now>=APP.combat.telegraph.hitAt){const t=APP.combat.telegraph;APP.combat.telegraph=null;APP.combat.lastEnemyHit=now;if(range<=enemyRange+18&&navLineClear(c.position,ctr))enemyStrike(o,t.mult,t.label,true);else{addFloater(c.position.x,c.position.y-52,'OUT OF RANGE','#b9f0d6');APP.log=`You move clear of ${e.name}'s ${t.label}.`;updateHud()}}}if(!ws.alive)return;if(!APP.combat.telegraph&&range<=enemyRange&&navLineClear(c.position,ctr)&&now-APP.combat.lastEnemyHit>1450){ws.attackCount=(ws.attackCount||0)+1;if(e.special&&ws.attackCount%e.special.every===0){faceSpriteToward('actor_'+o.id,ctr.x,ctr.y,c.position.x,c.position.y);APP.combat.telegraph={enemyId:o.id,label:e.special.name,mult:e.special.mult,hitAt:now+e.special.windup,duration:e.special.windup};playSfx('enemy_warning',.75);APP.log=`${e.name} prepares ${e.special.name}! ${e.range?'Move away or Guard.':'Guard now.'}`;updateHud()}else{APP.combat.lastEnemyHit=now;enemyStrike(o,1,'',false)}}if(range>playerRange||!navLineClear(c.position,ctr)){if(APP.navDestination?.targetId!==id||(!APP.moveTarget&&!APP.navPath.length&&now>=APP.navRepathAt))setNavigation(ctr.x,ctr.y,Math.max(64,playerRange-20),o.id,false,true,true);return}if(APP.navDestination?.targetId===id)clearNavigation(false);if(now-APP.combat.lastPlayerHit>playerAttackInterval()){APP.combat.lastPlayerHit=now;playerStrike(false)}}
+function playerStrike(special){const c=current(),id=APP.combat.enemyId,o=objectById(id),ws=o&&c.world.enemies[id];if(!o||!ws?.alive)return;const e=ENEMIES[prop(o,'enemy')],weapon=equippedWeapon(),style=weapon.style||'melee',ranged=style==='ranged',magic=style==='magic',now=performance.now(),riposte=style==='melee'&&now<APP.combat.riposteUntil,skill=magic?c.skills.aethercraft:ranged?c.skills.archery:c.skills.fencing,armor=ITEMS[c.equipment.body]||{},ctr=objectCenter(o);if(dist(c.position.x,c.position.y,ctr.x,ctr.y)>playerAttackRange()+10){toast('Target is out of range.');return}if(!navLineClear(c.position,ctr)){toast('Solid cover blocks your attack. Move for a clear shot.');return}faceSpriteToward('player',c.position.x,c.position.y,ctr.x,ctr.y);faceSpriteToward('actor_'+o.id,ctr.x,ctr.y,c.position.x,c.position.y);if(ranged){const ammo=weapon.ammo;if(countItem(ammo)<1){if(now-(APP.combat.noAmmoWarnAt||0)>2600){APP.combat.noAmmoWarnAt=now;toast(`Out of ${ITEMS[ammo].name}. Fletch more or switch weapons.`)}APP.log='Your quiver is empty.';updateHud();return}const conserved=disciplineActive('ranger')&&Math.random()<.20;if(!conserved)removeItem(ammo,1);else addFloater(c.position.x,c.position.y-48,'AMMO RECOVERED','#b9f0d6');spriteAction('player','ranged');addProjectile(c.position.x,c.position.y-24,ctr.x,ctr.y-22,weapon===ITEMS.quarry_crossbow?'#e7d39a':'#f4ddb0');playSfx('bow_shot',weapon===ITEMS.quarry_crossbow?0.95:0.72);if(Math.random()>rangedAccuracy()){addFloater(ctr.x,ctr.y-48,'MISS','#d8cfb0');APP.log=`Your shot misses ${e.name}.`;addSkillXp('archery',1);saveCharacterThrottled();updateHud();renderPanel();return}}if(magic){const cost=Math.max(1,(weapon.focusCost||3)+(special?5:0)-(disciplineActive('hermeticist')?1:0));if(c.focus<cost){if(now-(APP.combat.noFocusWarnAt||0)>2200){APP.combat.noFocusWarnAt=now;toast(`Not enough Focus (${Math.ceil(cost)} needed).`)}APP.log='Your concentration slips; Focus is too low.';updateHud();return}c.focus-=cost;spriteAction('player','magic');addProjectile(c.position.x,c.position.y-22,ctr.x,ctr.y-20,special?'#d58cff':'#9fdcff');playSfx(special?'arcane_burst':'arcane_bolt',special?.9:.65);if(Math.random()>magicAccuracy()){addFloater(ctr.x,ctr.y-48,'DISSIPATE','#cbb9dd');APP.log=`Your aether bolt dissipates before reaching ${e.name}.`;addSkillXp('aethercraft',1);saveCharacterThrottled();updateHud();renderPanel();return}}const crit=Math.random()<Math.min(style==='melee'?0.34:0.24,(style==='melee'?0.045:0.035)+skill.level*(style==='melee'?0.014:0.012)+(style==='melee'?((weapon.meleeCrit||0)+(armor.meleeCrit||0)+(disciplineActive('duelist')?.08:0)):0)),base=2+skill.level*(magic?.76:ranged?.72:.8)+(weapon.attack||0),armorPierce=(ranged||magic)?(weapon.armorPierce||0):0,mult=(special?(magic?1.48:1.65):1)*(riposte?(disciplineActive('duelist')?1.58:1.35):1)*(crit?1.5:1),effectiveDefense=e.defense*(1-armorPierce),dmg=Math.max(1,Math.round(base*(.8+Math.random()*.45)*mult-effectiveDefense*.35));ws.hp-=dmg;if(style==='melee')spriteAction('player','melee');spriteAction('actor_'+o.id,'hit');if(riposte)APP.combat.riposteUntil=0;const label=crit?'CRIT':riposte?'RIPOSTE':special?(magic?'ARC BURST':ranged?'AIMED':'FLOURISH'):'';addFloater(ctr.x,ctr.y-48,`-${dmg}${label?' '+label:''}`,crit?'#ffe58d':magic?'#b9d9ff':riposte?'#b9f0d6':special?'#ffe08b':'#ffffff');addBurst(ctr.x,ctr.y-8,magic?(special?'#cf8cff':'#8ec9e8'):crit?'#f7df7d':riposte?'#8fd8b4':special?'#f5cf61':'#e7e0c9',special||crit?10:6);if(style==='melee')playSfx('sword_hit',special||crit?1:.75);addSkillXp(magic?'aethercraft':ranged?'archery':'fencing',special?5:riposte?4:3);APP.log=`You ${magic?'cast at':ranged?'shoot':'hit'} ${e.name} for ${dmg}${crit?' (critical)':''}${riposte?' with a riposte':''}.`;if(magic&&special){for(const other of worldObjects().filter(x=>x.type==='enemy'&&String(x.id)!==String(o.id))){const ow=c.world.enemies[other.id];if(!ow?.alive)continue;const op=objectCenter(other);if(dist(op.x,op.y,ctr.x,ctr.y)>92||!navLineClear(ctr,op))continue;const oe=ENEMIES[prop(other,'enemy')],splash=Math.max(1,Math.round(dmg*.5-oe.defense*.18));ow.hp-=splash;spriteAction('actor_'+other.id,'hit');addFloater(op.x,op.y-46,`-${splash} ARC`,'#cfa0ff');addBurst(op.x,op.y-7,'#b77ce0',6);if(ow.hp<=0)defeatEnemy(other,'magic',true)}}if(ws.hp<=0)defeatEnemy(o,style);saveCharacterThrottled();updateHud();renderPanel()}
+function enemyStrike(o,mult=1,label='',special=false){const c=current(),e=ENEMIES[prop(o,'enemy')],armor=ITEMS[c.equipment.body]||{defense:0},now=performance.now(),guarded=now<APP.combat.guardUntil;const foeCenter=objectCenter(o);faceSpriteToward('actor_'+o.id,foeCenter.x,foeCenter.y,c.position.x,c.position.y);faceSpriteToward('player',c.position.x,c.position.y,foeCenter.x,foeCenter.y);spriteAction('actor_'+o.id,e.magic?'magic':e.range?'ranged':'melee');if(e.range){const ctr=objectCenter(o);addProjectile(ctr.x,ctr.y-24,c.position.x,c.position.y-22,e.magic?'#cc83ef':'#e4aa78');playSfx(e.magic?'arcane_bolt':prop(o,'enemy')==='vale_arquebusier'?'arquebus_shot':'bow_shot',e.magic?.5:prop(o,'enemy')==='vale_arquebusier'?.82:.45)}let dmg=Math.max(1,Math.round((e.attack*mult)*(.75+Math.random()*.5)-(armor.defense||0)*.45-c.skills.defense.level*.15));if(guarded){dmg=Math.max(0,Math.floor(dmg*.32));APP.combat.guardUntil=0;APP.combat.riposteUntil=e.range?0:now+2600;addFloater(c.position.x,c.position.y-58,dmg?`BLOCK • -${dmg}`:'BLOCK!','#b9f0d6');addBurst(c.position.x,c.position.y-12,'#d8d0a4',10);playSfx('guard_block',1);addSkillXp('defense',special?5:3)}else{addFloater(c.position.x,c.position.y-52,`-${dmg}`,'#ff9a8f');addBurst(c.position.x,c.position.y-8,'#c76c62',special?8:5);playSfx('hurt',special?0.95:0.75);addSkillXp('defense',2)}if(e.magic&&special){c.focus=Math.max(0,c.focus-4);addFloater(c.position.x,c.position.y-72,'-4 FOCUS','#d4a8f1')}c.hp-=dmg;if(dmg>0)spriteAction('player','hit');APP.log=guarded?`You guard ${e.name}${label?`'s ${label}`:''}${e.magic?' spell.':e.range?' shot.':' and open a riposte!'}`:`${e.name}${label?` uses ${label} and`:''} ${e.magic?'casts at':e.range?'shoots':'hits'} you for ${dmg}.`;if(c.hp<=0)playerDefeated();saveCharacter();updateHud()}
 function defeatEnemy(o,killStyle='melee',preserveTarget=false){const c=current(),kind=prop(o,'enemy'),e=ENEMIES[kind],ws=c.world.enemies[o.id];ws.alive=false;ws.hp=0;ws.respawnAt=Date.now()+(kind==='rat_captain'?180000:kind==='rat_foreman'?60000:30000);c.counters.kills[kind]=(c.counters.kills[kind]||0)+1;if(MAPS[APP.mapId]?.outdoor&&currentWeather()==='wind')recordFieldcraftAction('weather_wind_victories');if(killStyle==='ranged')c.counters.combat.ranged_kills=(c.counters.combat.ranged_kills||0)+1;if(killStyle==='magic')c.counters.combat.magic_kills=(c.counters.combat.magic_kills||0)+1;const coins=Math.floor(e.coins[0]+Math.random()*(e.coins[1]-e.coins[0]+1)),items={};for(const[item,chance]of e.loot)if(Math.random()<chance){const amount=(item==='arrow'&&kind==='fox_marksman')?Math.floor(3+Math.random()*5):1;items[item]=(items[item]||0)+amount}addPlayerXp(e.xp);const ctr=objectCenter(o);spawnDrop(ctr.x+18,ctr.y+8,coins,items);addFloater(ctr.x,ctr.y-60,`+${e.xp} XP`,'#9ee6ce');addFloater(ctr.x,ctr.y-42,'Loot dropped','#f6d66d');if(!preserveTarget){APP.combat.enemyId=null;APP.combat.telegraph=null;APP.combat.guardUntil=0;}APP.log=`Defeated ${e.name}. +${e.xp} XP. Loot is on the ground.`;toast(APP.log);saveCharacter();renderPanel();updateHud()}
 function updateEnemyRespawns(now){const c=current();for(const o of worldObjects().filter(x=>x.type==='enemy')){const ws=c.world.enemies[o.id],kind=prop(o,'enemy');if(ws&&!ws.alive&&ws.respawnAt<=Date.now()){ws.alive=true;ws.hp=ENEMIES[kind].maxHp;ws.respawnAt=0;ws.attackCount=0}}}
 function playerDefeated(){const c=current(),lost=Math.min(c.coins,Math.floor(c.coins*.1));c.coins-=lost;c.hp=c.maxHp;c.focus=playerFocusMax();c.position={x:346,y:670};c.world.location='port_felin';clearNavigation();APP.combat.enemyId=null;APP.combat.telegraph=null;APP.combat.guardUntil=0;APP.combat.riposteUntil=0;APP.log=`You wake at the Warm Saucer. Lost ${lost} crowns.`;toast(APP.log);saveCharacter();if(APP.mapId!=='port_felin')loadMap('port_felin').catch(()=>{})}
