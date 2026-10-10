@@ -1,4 +1,4 @@
-const CACHE='paws-plumes-v0250-20261009';
+const CACHE='paws-plumes-v0260-20261010';
 const CORE=[
   './','./index.html','./style.css','./game.js','./manifest.webmanifest',
   './assets/icons/icon-192.png','./assets/icons/icon-512.png',
@@ -19,7 +19,7 @@ const CORE=[
   './assets/world/wilderness/fern_bank.png',
   './assets/world/wilderness/bramble.png',
   './assets/world/wilderness/fallen_log.png',
-  './assets/world/title_scene.png','./assets/world/world_tiles.png','./assets/world/animation_fx.png','./assets/world/directional_sprites.png',
+  './assets/world/title_scene.png','./assets/world/world_tiles.png','./assets/world/animation_fx.png','./assets/world/directional_sprites.png','./assets/src/world/walk_cycles.svg',
   './assets/world/facades/guild.png','./assets/world/facades/smith.png','./assets/world/facades/inn.png',
   './assets/world/facades/market.png','./assets/world/facades/bank.png','./assets/world/facades/quarry_hut.png','./assets/world/interior_tiles.png','./assets/world/dungeon_tiles.png','./assets/world/cat_sprites.png',
   './assets/world/portrait_orange.png','./assets/world/portrait_tuxedo.png','./assets/world/portrait_gray.png',

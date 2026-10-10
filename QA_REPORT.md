@@ -1,3 +1,16 @@
+# v0.26.0 — Animated Footfalls QA
+
+The real release assets were served to headless Chromium through an in-memory request harness at **320×568**, **390×844**, and **1280×720**. Game entry used normal character creation; keyboard movement verified all four compass directions.
+
+- The new SVG atlas loaded at 1024×768 in all three viewports.
+- Keyboard movement advanced distance-driven stride phases and switched east/south/west/north facing.
+- No JavaScript page errors or horizontal overflow were observed.
+- Transitioning through the Felin Exchange door loaded the bank correctly.
+- Walking frames and the actual game screenshots were inspected before release. An initial SVG clipping/row-offset mistake was found and fixed.
+- Existing save key, PWA identity, maps, and gameplay data are preserved. Physical-device testing is still needed for visual cadence and installed-app refresh behavior.
+
+---
+
 # v0.25.0 — Directional Characters QA
 
 ## Real browser verification

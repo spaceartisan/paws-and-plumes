@@ -1,3 +1,20 @@
+# Paws & Plumes v0.26.0 — Animated Footfalls
+
+This release continues **v0.25.0 Directional Characters** with genuine four-pose stride frames for the existing 16 player/NPC/enemy silhouettes. The world, saves, quests, map geometry and combat timing have not been changed.
+
+## New in v0.26
+
+- **Directional walking frames:** four poses each for south, east and north, mirrored for west, across all sixteen sprites. Existing upper silhouettes remain, while paws are authored as individually editable vectors per step in `assets/src/world/walk_cycles.svg`.
+- **Distance-driven animation:** existing distance-traveled pose phase selects frames. Idle characters use their original full v0.25 art instead of marching in place.
+- **Enemy anticipation:** special-attack warnings include a subtle facing-aware windup recoil and direction indicator; combat balance and timing are unchanged.
+- **Performance and accessibility:** the walk atlas loads once, is precached for offline play, falls back to older sprites if unavailable, and is disabled in reduced-motion mode.
+
+## Compatibility and deployment
+
+Deploy these repo contents to GitHub Pages as before. Character save key `paws_plumes_traditional_v020` and PWA identity `./paws-and-plumes-rpg` are unchanged. Offline cache advances to `paws-plumes-v0260-20261010`. Browser QA covers small-phone, phone, desktop, directional movement, and the Felin Exchange transition. The release ZIP also contains reviewed new screenshots and an animated walk-cycle preview.
+
+---
+
 # Paws & Plumes v0.25.0 — Turning Tides (Directional Characters)
 
 This release continues directly from v0.24.0 Living Characters. It gives the player, townsfolk, and hostile creatures **readable compass facing** while keeping the traditional overworld RPG gameplay unchanged.

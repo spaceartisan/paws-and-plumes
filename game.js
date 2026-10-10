@@ -1,8 +1,8 @@
 (() => {
 'use strict';
-const VERSION='0.25.0', SAVE_KEY='paws_plumes_traditional_v020', SETTINGS_KEY='paws_plumes_settings_v1';
+const VERSION='0.26.0', SAVE_KEY='paws_plumes_traditional_v020', SETTINGS_KEY='paws_plumes_settings_v1';
 const root=document.getElementById('gameRoot'), modalLayer=document.getElementById('modalLayer'), toastLayer=document.getElementById('toastLayer');
-const APP={screen:'menu',save:loadSave(),settings:loadSettings(),selectedSlot:null,currentId:null,map:null,mapId:'port_felin',mapPath:null,tiles:null,sprites:null,directionalSprites:null,animationFx:null,worldReady:false,mapLoading:false,raf:null,lastFrame:0,camera:{x:0,y:0},canvas:null,ctx:null,miniCanvas:null,keys:new Set(),moveTarget:null,navPath:[],navDestination:null,navRepathAt:0,navBlockedFor:0,pendingInteraction:null,selectedObjectId:null,panelTab:'inventory',installPrompt:null,swRegistration:null,combat:{enemyId:null,lastPlayerHit:0,lastEnemyHit:0,flourishReadyAt:0,guardReadyAt:0,guardUntil:0,riposteUntil:0,telegraph:null,noAmmoWarnAt:0,noFocusWarnAt:0},motion:{actors:{},floaters:[],particles:[],projectiles:[],chatter:null,nextChatter:0,lastStep:0,playerMoving:false,worldTime:0,poses:{},spriteActions:{},lastClockMinute:-1,lastTimeSave:0},log:'Welcome to Port Felin.',create:{name:'',appearance:'orange',background:'duelist'}};
+const APP={screen:'menu',save:loadSave(),settings:loadSettings(),selectedSlot:null,currentId:null,map:null,mapId:'port_felin',mapPath:null,tiles:null,sprites:null,directionalSprites:null,walkCycles:null,animationFx:null,worldReady:false,mapLoading:false,raf:null,lastFrame:0,camera:{x:0,y:0},canvas:null,ctx:null,miniCanvas:null,keys:new Set(),moveTarget:null,navPath:[],navDestination:null,navRepathAt:0,navBlockedFor:0,pendingInteraction:null,selectedObjectId:null,panelTab:'inventory',installPrompt:null,swRegistration:null,combat:{enemyId:null,lastPlayerHit:0,lastEnemyHit:0,flourishReadyAt:0,guardReadyAt:0,guardUntil:0,riposteUntil:0,telegraph:null,noAmmoWarnAt:0,noFocusWarnAt:0},motion:{actors:{},floaters:[],particles:[],projectiles:[],chatter:null,nextChatter:0,lastStep:0,playerMoving:false,worldTime:0,poses:{},spriteActions:{},lastClockMinute:-1,lastTimeSave:0},log:'Welcome to Port Felin.',create:{name:'',appearance:'orange',background:'duelist'}};
 
 const MAPS={
  port_felin:{file:'port_felin_world.json',name:'Port Felin',sub:'Guild streets • shops • Warm Saucer',outdoor:true},
@@ -237,7 +237,7 @@ function openSettings(){const installText=installStatusText();modal('Settings',`
 function enterCharacter(cid){APP.currentId=cid;const c=current();if(!c){go('select');return}migrateCharacter(c);c.lastPlayed=Date.now();APP.save.lastCharacterId=cid;persist();clearNavigation();APP.selectedObjectId=null;APP.combat={enemyId:null,lastPlayerHit:0,lastEnemyHit:0,flourishReadyAt:0,guardReadyAt:0,guardUntil:0,riposteUntil:0,telegraph:null,noAmmoWarnAt:0};go('game')}
 function renderGameShell(){const c=current();root.innerHTML=`<section class="play-screen"><header class="hud-top"><div class="hud-portrait"><img src="${APPEARANCES[c.appearance].portrait}" alt=""></div><div><div class="hud-name"><strong>${escapeHtml(c.name)}</strong><span class="hud-level">Lv ${c.level}</span></div><div class="bars"><div class="bar hp" title="Health"><span id="hpBar"></span></div><div class="bar focus" title="Focus"><span id="focusBar"></span></div><div class="bar xp" title="Adventure XP"><span id="xpBar"></span></div></div></div><div class="hud-money"><div>◈ <span id="coinCount">${c.coins}</span> <span class="coins-word">crowns</span></div><span class="hud-clock" id="worldClock">${formatWorldTime()}</span><span class="hud-weather-chip" id="worldWeatherChip"></span><span class="hud-event-chip" id="worldEventChip"></span></div></header><div class="world-layout"><div class="world-wrap" id="worldWrap"><canvas id="worldCanvas" tabindex="0" aria-label="Paws and Plumes game world"></canvas><div class="map-fade" id="mapFade"></div><div class="world-label"><strong id="areaTitle">Port Felin</strong><span id="areaSub">Guild streets • shops • inn</span></div><div class="target-float" id="targetFloat"><strong id="targetName"></strong><span class="target-intent" id="targetIntent"></span><div class="target-bar"><span id="targetHp"></span></div></div></div><aside class="side-panel" id="sidePanel"><div class="mini-map"><canvas id="miniCanvas"></canvas></div><div class="panel-tabs"><button class="panel-tab active" data-tab="inventory" title="Inventory">🎒</button><button class="panel-tab" data-tab="skills" title="Skills">✦</button><button class="panel-tab" data-tab="quests" title="Quests">📜</button><button class="panel-tab" data-tab="equipment" title="Equipment">⚔</button><button class="panel-tab" data-tab="map" title="World Map">🗺</button></div><div class="panel-body" id="panelBody"></div></aside></div><footer class="bottom-bar"><button class="utility-btn mobile-panel-btn" id="mobilePanelBtn" aria-label="Open character panel">☰</button><div class="combat-log" id="combatLog">${escapeHtml(APP.log)}</div><div class="hotbar"><button class="hotkey active" data-hot="attack" title="Attack"><span>1</span>⚔</button><button class="hotkey" data-hot="flourish" title="Flourish"><span>2</span>✦</button><button class="hotkey" data-hot="guard" title="Guard"><span>3</span>🛡</button><button class="hotkey" data-hot="tonic" title="Red Tonic"><span>4</span>🧪</button><button class="hotkey" data-hot="interact" title="Interact / collect nearby loot (5, E, L)"><span>5</span>☝</button></div><div class="utility-btns"><button class="utility-btn" data-audio-toggle title="Mute audio">🔊</button><button class="utility-btn" data-menu-game title="Game menu">☰</button></div></footer></section>`;APP.canvas=document.getElementById('worldCanvas');APP.ctx=APP.canvas.getContext('2d');APP.miniCanvas=document.getElementById('miniCanvas');bindGameUI();updateHud();updateAudioButton();renderPanel();loadWorld()}
 function bindGameUI(){const canvas=APP.canvas;canvas.addEventListener('pointerup',worldPointer);canvas.addEventListener('contextmenu',e=>e.preventDefault());document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()=>{APP.panelTab=b.dataset.tab;document.querySelectorAll('[data-tab]').forEach(x=>x.classList.toggle('active',x===b));renderPanel()}));document.getElementById('mobilePanelBtn').addEventListener('click',()=>{const panel=document.getElementById('sidePanel');panel.classList.toggle('mobile-open');requestAnimationFrame(()=>{resizeWorld();drawMiniMap()})});APP.miniCanvas.addEventListener('click',()=>{APP.panelTab='map';document.querySelectorAll('[data-tab]').forEach(x=>x.classList.toggle('active',x.dataset.tab==='map'));renderPanel()});document.querySelector('[data-menu-game]').addEventListener('click',openGameMenu);document.querySelector('[data-audio-toggle]').addEventListener('click',toggleMute);document.querySelectorAll('[data-hot]').forEach(b=>b.addEventListener('click',()=>useHotbar(b.dataset.hot)));window.addEventListener('resize',resizeWorld,{once:true});}
-async function loadWorld(){try{if(!APP.sprites)APP.sprites=await loadImage('assets/world/cat_sprites.png');if(!APP.directionalSprites)APP.directionalSprites=await loadImage('assets/world/directional_sprites.png').catch(()=>null);if(!APP.animationFx)APP.animationFx=await loadImage('assets/world/animation_fx.png').catch(()=>null);await Promise.all([loadFacadeAssets(),loadSceneryAssets(),loadWildernessAssets()]);await loadMap(current()?.world?.location||'port_felin');APP.lastFrame=performance.now();if(APP.raf)cancelAnimationFrame(APP.raf);APP.raf=requestAnimationFrame(loop)}catch(e){console.error(e);toast('Could not load the world map.');}}
+async function loadWorld(){try{if(!APP.sprites)APP.sprites=await loadImage('assets/world/cat_sprites.png');if(!APP.directionalSprites)APP.directionalSprites=await loadImage('assets/world/directional_sprites.png').catch(()=>null);if(!APP.walkCycles)APP.walkCycles=await loadImage('assets/src/world/walk_cycles.svg').catch(()=>null);if(!APP.animationFx)APP.animationFx=await loadImage('assets/world/animation_fx.png').catch(()=>null);await Promise.all([loadFacadeAssets(),loadSceneryAssets(),loadWildernessAssets()]);await loadMap(current()?.world?.location||'port_felin');APP.lastFrame=performance.now();if(APP.raf)cancelAnimationFrame(APP.raf);APP.raf=requestAnimationFrame(loop)}catch(e){console.error(e);toast('Could not load the world map.');}}
 async function loadMap(mapId){const def=MAPS[mapId]||MAPS.port_felin,path='assets/maps/'+def.file;APP.mapLoading=true;APP.worldReady=false;clearNavigation();APP.combat.enemyId=null;APP.combat.telegraph=null;const map=await fetch(path).then(r=>{if(!r.ok)throw new Error('Map load failed '+path);return r.json()});const tileImage=map.tilesets?.[0]?.image||'../world/world_tiles.png',tilePath=String(tileImage).startsWith('data:')?tileImage:'assets/maps/'+tileImage;APP.map=map;APP.mapId=mapId;APP.mapPath=path;APP.tiles=await loadImage(tilePath);APP.worldReady=true;APP.mapLoading=false;initializeWorldState();ensureSafePlayerPosition();resizeWorld();updateAreaState();syncWeather();updateWorldClock();updateAudioZone();saveCharacter()}
 async function transitionMap(door){if(APP.mapLoading||!door)return;const dest=String(prop(door,'destination','port_felin')),sx=Number(prop(door,'spawn_x',384)),sy=Number(prop(door,'spawn_y',470));if(!MAPS[dest]){toast('That doorway does not lead anywhere yet.');return}const fade=document.getElementById('mapFade');APP.mapLoading=true;clearNavigation();APP.pendingInteraction=null;APP.selectedObjectId=null;if(fade)fade.classList.add('active');await new Promise(r=>setTimeout(r,140));const c=current();c.world.location=dest;c.position={x:sx,y:sy};playSfx('ui_click',.45);try{await loadMap(dest);APP.log=`Entered ${MAPS[dest].name}.`;updateHud()}finally{APP.mapLoading=false;if(fade){requestAnimationFrame(()=>fade.classList.remove('active'))}}}
 function loadImage(src){return new Promise((resolve,reject)=>{const i=new Image();i.onload=()=>resolve(i);i.onerror=reject;i.src=src})}
@@ -651,7 +651,7 @@ function drawActorSprite(ctx,index,x,y,key){
  const pose=APP.motion.poses?.[key],t=APP.motion.worldTime,reduced=window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
  const blend=reduced?0:(pose?.blend||0),step=pose?.phase||0,phase=Math.sin(step),
        sway=Math.sin(step*.5)*.065*blend,
-       bounce=Math.abs(phase)*1.8*blend,
+       bounce=Math.abs(phase)*1.05*blend,
        breath=reduced?0:Math.sin(t*1.65+(pose?.seed||0))*.010,
        direction=pose?.direction||'south',
        flip=direction==='west'?-1:1;
@@ -666,28 +666,26 @@ function drawActorSprite(ctx,index,x,y,key){
  if(windup){
   ctx.save();ctx.strokeStyle='#df9868';ctx.lineWidth=2.5;ctx.globalAlpha=.42+charge*.48;
   ctx.beginPath();ctx.ellipse(x,y+8,20+charge*5,8+charge*2,0,0,Math.PI*2);ctx.stroke();
-  ctx.beginPath();ctx.arc(x,y-26,3+charge*3,0,Math.PI*2);ctx.fillStyle='#f6c17c';ctx.fill();ctx.restore();
+  ctx.beginPath();ctx.arc(x,y-26,3+charge*3,0,Math.PI*2);ctx.fillStyle='#f6c17c';ctx.fill();
+  const arrow=direction==='north'?-1:direction==='south'?1:0;const sidestep=direction==='east'?1:direction==='west'?-1:0;
+  ctx.strokeStyle='#ffe2a0';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(x-sidestep*24,y-25-arrow*8);ctx.lineTo(x+sidestep*(18+charge*9),y-25+arrow*(6+charge*5));ctx.stroke();ctx.restore();
  }
  ctx.save();
  const attackProgress=attack?Math.sin(Math.PI*Math.min(1,age/.34)):0;
  const tilt=attack&&!reduced?(fx.type==='melee'?.24:fx.type==='ranged'?-.14:.08)*attackProgress:0;
  const shove=attack&&!reduced?(fx.type==='melee'?7:fx.type==='ranged'?-3:0)*attackProgress:0;
+ const recoil=windup&&!reduced?Math.sin(charge*Math.PI*.85)*.095:0;
  ctx.translate(x+((direction==='east'?1:direction==='west'?-1:0)*shove),y-bounce+(hit&&!reduced?Math.sin(age/.34*Math.PI)*2:0)-(windup&&!reduced?charge*3:0));
- ctx.rotate(sway+tilt*flip+(hit&&!reduced?-.09*Math.sin(age/.34*Math.PI):0));
+ ctx.rotate(sway+tilt*flip-recoil*flip+(hit&&!reduced?-.09*Math.sin(age/.34*Math.PI):0));
  ctx.scale(flip*(1+.028*blend*Math.abs(phase)),1+breath-.04*blend*Math.abs(phase));
  if(hit)ctx.filter='brightness(1.65) sepia(.35)';
- const sheet=APP.directionalSprites||APP.sprites;
- const row=APP.directionalSprites?(direction==='north'?2:direction==='east'||direction==='west'?1:0):0;
- ctx.drawImage(sheet,index*64,row*64,64,64,-32,-50,64,64);
+ const walking=Boolean(!reduced&&APP.walkCycles&&blend>.20&&!hit&&!attack&&!windup);
+ const row=direction==='north'?2:direction==='east'||direction==='west'?1:0;
+ const sheet=walking?APP.walkCycles:(APP.directionalSprites||APP.sprites);
+ const frame=walking?(Math.floor(((step%(Math.PI*2))+(Math.PI*2))%(Math.PI*2)/(Math.PI/2))%4):0;
+ const spriteY=walking?(row*4+frame)*64:(APP.directionalSprites?row*64:0);
+ ctx.drawImage(sheet,index*64,spriteY,64,64,-32,-50,64,64);
  ctx.filter='none';
- if(blend>.15&&[0,1,2,3,4,5,7,11,12,13,14,15].includes(index)){
-  const lift=3.2*blend,stepL=Math.sin(step),stepR=-stepL;
-  ctx.fillStyle='#292522';ctx.strokeStyle='#171b1b';ctx.lineWidth=1.1;
-  for(const [px,offset] of [[-11,stepL],[11,stepR]]){
-   const py=7-Math.max(0,offset)*lift;
-   ctx.beginPath();ctx.ellipse(px+offset*2*blend,py,4.5,2.8,0,0,Math.PI*2);ctx.fill();ctx.stroke();
-  }
- }
  if(!reduced&&direction==='south'&&[0,1,2,3,4,5,7].includes(index)&&blend<.2){
   const cycle=(t+(pose?.seed||0))%6.7;
   if(cycle>.08&&cycle<.19){ctx.strokeStyle='#282421';ctx.lineWidth=2.2;ctx.beginPath();ctx.moveTo(-9,-22);ctx.lineTo(-4,-22);ctx.moveTo(4,-22);ctx.lineTo(9,-22);ctx.stroke()}
